@@ -1,0 +1,5 @@
+<root>
+  <item name='org.hibernate.annotations.CascadeType ALL'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+</root>
