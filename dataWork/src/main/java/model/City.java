@@ -1,35 +1,29 @@
 package model;
 
-
 import javax.persistence.*;
+import java.io.Serializable;
 
+/**
+ * Created by Rafa on 25.06.2015.
+ */
 @Entity
-@Table(name = "cities")
-public class City {
-    @Id
-    @Column(name = "id_city")
-    private long id;
-    @Column(name = "name")
+@Table(name = "city")
+public class City implements Serializable {
+    private int id;
     private String name;
 
-    @Column(name = "comment")
-    private String comment;
-
-    public City() {
-    }
-
-    public City(String name) {
-        this.name = name;
-    }
-
-    public long getId() {
+    @Id
+    @Column(name = "id")
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
+    @Basic
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -38,11 +32,18 @@ public class City {
         this.name = name;
     }
 
-    public String getComment() {
-        return comment;
+    public City() {
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public City(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

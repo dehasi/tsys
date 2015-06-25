@@ -1,11 +1,15 @@
 import DAO.*;
+import model.Baggage;
+import model.City;
+import model.Driver;
+import model.Truck;
 
 public class Factory {
 
-    private static CargoDAO cargoDAO = null;
-    private static CityDAO cityDAO = null;
-    private static TruckDAO truckDAO = null;
-    private static DriverDAO driverDAO = null;
+    private static BaggageDAOImpl baggageDAO= null;
+    private static CityDAOImpl cityDAO = null;
+    private static TruckDAOImpl truckDAO = null;
+    private static DriverDAOImpl driverDAO = null;
 
     private static Factory instance = null;
 
@@ -16,30 +20,30 @@ public class Factory {
         return instance;
     }
 
-    public CargoDAO getCargoDAO(){
-        if (cargoDAO == null){
-            cargoDAO = new CargoDAOImpl();
+    public BaggageDAOImpl getBaggageDAO() throws ClassNotFoundException {
+        if (baggageDAO == null){
+            baggageDAO = new BaggageDAOImpl((Class<Baggage>) Class.forName("model.Baggage"));
         }
-        return cargoDAO;
+        return baggageDAO;
     }
 
-    public CityDAO getCityDAO() {
+    public CityDAOImpl getCityDAO() throws ClassNotFoundException {
         if (cityDAO == null) {
-            cityDAO = new CityDAOImpl();
+            cityDAO = new CityDAOImpl((Class<City>) Class.forName("model.City"));
         }
         return cityDAO;
     }
 
-    public TruckDAO getTruckDAO() {
+    public TruckDAOImpl getTruckDAO() throws ClassNotFoundException {
         if (truckDAO == null) {
-            truckDAO = new TruckDAOImpl();
+            truckDAO = new TruckDAOImpl((Class<Truck>) Class.forName("model.Truck"));
         }
         return truckDAO;
     }
 
-    public DriverDAO getDriverDAO() {
+    public DriverDAOImpl getDriverDAO() throws ClassNotFoundException {
         if (driverDAO == null) {
-            driverDAO = new DriverDAOImpl();
+            driverDAO = new DriverDAOImpl((Class<Driver>) Class.forName("model.Driver"));
         }
         return driverDAO;
     }

@@ -14,9 +14,9 @@ import static org.hibernate.annotations.CascadeType.*;
 @Table(name = "truck")
 public class Truck {
     @Id
-    @Column(name = "id_truck")
+    @Column(name = "id")
     private String id;
-    @Column(name = "duty")
+    @Column(name = "duty_time")
     private long dutySize;
     @Column(name = "capacity")
     private long capacity;
@@ -68,5 +68,26 @@ public class Truck {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+
+
+    public Truck(String id, long dutySize, long capacity, TruckStatus status, City city) {
+        this.id = id;
+        this.dutySize = dutySize;
+        this.capacity = capacity;
+        this.status = status;
+        this.city = city;
+    }
+
+    @Override
+    public String toString() {
+        return "Truck{" +
+                "id='" + id + '\'' +
+                ", dutySize=" + dutySize +
+                ", capacity=" + capacity +
+                ", status=" + status +
+                ", city=" + city +
+                '}';
     }
 }
