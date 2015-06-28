@@ -50,3 +50,5 @@ crashlytics-build.properties
 
 # target directory
 target/
+
+lib/
