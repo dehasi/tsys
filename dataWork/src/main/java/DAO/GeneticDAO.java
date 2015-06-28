@@ -8,7 +8,7 @@ import java.util.Collection;
  */
 public interface GeneticDAO <T> {
     void add(T t) throws SQLException;
-    void update(Long id, T t) throws SQLException;
+    void update(T t) throws SQLException;
     void delete(T t) throws SQLException;
     Collection getAll() throws SQLException;
     public T getById(Integer id) throws SQLException;

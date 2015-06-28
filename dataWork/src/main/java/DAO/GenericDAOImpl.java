@@ -36,7 +36,7 @@ public class GenericDAOImpl<T> implements GeneticDAO<T>{
         }
     }
     @Override
-    public void update(Long id, T t) throws SQLException {
+    public void update(T t) throws SQLException {
             try (Session session = HibernateUtil.getSessionFactory().openSession()){
                 session.beginTransaction();
                 session.update(t);

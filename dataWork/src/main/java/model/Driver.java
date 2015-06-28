@@ -1,5 +1,6 @@
 package model;
 
+import com.sun.istack.internal.Nullable;
 import model.statuses.DriverStatus;
 
 import javax.persistence.*;
@@ -32,9 +33,10 @@ public class Driver {
     private City city;
 
 
-    @ManyToMany
-    @JoinColumn(name = "order_id")
-    private Set<OrderRoute> orderRoute;
+//    @ManyToMany
+    @Column(name = "order_id")
+    @Nullable
+    private Integer orderRoute;
 
     public City getCity() {
         return city;
@@ -72,7 +74,7 @@ public class Driver {
     }
 
     @Basic
-    @Column(name = "hours_worked")
+    @Column(name = "hoursworked")
     public int getHoursWorked() {
         return hoursWorked;
     }
@@ -91,11 +93,11 @@ public class Driver {
         this.status = status;
     }
 
-    public Set<OrderRoute> getOrderRoute() {
+    public Integer getOrderRoute() {
         return orderRoute;
     }
 
-    public void setOrderRoute(Set<OrderRoute> orderRoute) {
+    public void setOrderRoute(Integer orderRoute) {
         this.orderRoute = orderRoute;
     }
 

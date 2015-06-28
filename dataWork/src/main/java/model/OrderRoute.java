@@ -1,6 +1,6 @@
 package model;
 
-import model.embedded.OrderPK;
+import model.pkey.OrderPK;
 
 import javax.persistence.*;
 
@@ -19,9 +19,10 @@ public class OrderRoute {
     private int isDone;
     private int visitNumber;
     private int status;
+    private int truck;
 
     @Id
-    @Column(name = "order_id")
+    @Column(name = "order")
     public int getOrder() {
         return order;
     }
@@ -88,6 +89,15 @@ public class OrderRoute {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    @Column(name = "truck")
+    public int getTruck() {
+        return truck;
+    }
+
+    public void setTruck(int truck) {
+        this.truck = truck;
     }
 
     @Override

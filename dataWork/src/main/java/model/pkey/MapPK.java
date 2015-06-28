@@ -1,24 +1,15 @@
-package model;
+package model.pkey;
 
-
-import model.pkey.MapPK;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import java.io.Serializable;
 
 /**
- * Created by Rafa on 25.06.2015.
+ * Created by Rafa on 28.06.2015.
  */
-@Entity
-@Table(name = "map")
-@IdClass(MapPK.class)
-public class Map {
-    private int distance;
-
-    @Id
+public class MapPK implements Serializable {
     @Column(name ="cityA")
     private long cityA;
 
-    @Id
     @Column(name = "cityB")
     private long cityB;
 
@@ -38,21 +29,10 @@ public class Map {
         this.cityB = cityB;
     }
 
-    @Basic
-    @Column(name = "distance")
-    public int getDistance() {
-        return distance;
-    }
-
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
-
     @Override
     public String toString() {
-        return "Map{" +
-                "distance=" + distance +
-                ", cityA=" + cityA +
+        return "MapPK{" +
+                "cityA=" + cityA +
                 ", cityB=" + cityB +
                 '}';
     }
@@ -62,18 +42,16 @@ public class Map {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Map map = (Map) o;
+        MapPK mapPK = (MapPK) o;
 
-        if (distance != map.distance) return false;
-        if (cityA != map.cityA) return false;
-        return cityB == map.cityB;
+        if (cityA != mapPK.cityA) return false;
+        return cityB == mapPK.cityB;
 
     }
 
     @Override
     public int hashCode() {
-        int result = distance;
-        result = 31 * result + (int) (cityA ^ (cityA >>> 32));
+        int result = (int) (cityA ^ (cityA >>> 32));
         result = 31 * result + (int) (cityB ^ (cityB >>> 32));
         return result;
     }
