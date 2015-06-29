@@ -18,9 +18,11 @@ class Main {
 
         TruckLogic truckLogic = new TruckLogic(new TruckDAOImpl((Class<Truck>) Class.forName("model.Truck")));
 
-        Set<Truck> trucks =  truckLogic.getAllTrucks();
+        Set<Truck> trucks =  truckLogic.getFitTrucks(6);
         System.out.println(trucks);
+
         System.out.println("Good bye!");
+        System.out.println("password".hashCode());
     }
 
 //        System.out.println("All Cities:");

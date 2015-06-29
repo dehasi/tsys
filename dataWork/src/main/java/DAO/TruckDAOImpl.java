@@ -1,7 +1,10 @@
 package DAO;
 
 import model.Truck;
+import model.statuses.TruckStatus;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.jpa.internal.EntityManagerImpl;
 import utils.HibernateUtil;
 
@@ -18,17 +21,37 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
     public TruckDAOImpl(Class<Truck> clazz) {
         super(clazz);
     }
-    public Set<Truck> getTrucksForOrger() {
-        Set<Truck> trucks = new HashSet<>();
-        //intersetion
+
+    public Set<Truck> getTrucksForOrder(int weight) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Criteria crit = session.createCriteria(Truck.class)
+                    .add(Restrictions.ge("capacity", (long)weight))
+                    .add(Restrictions.eq("status", TruckStatus.OK));
+
+            crit.setMaxResults(50);
+            List trucks = crit.list();
+            return new HashSet<>(trucks);
+
+        } catch (Exception e) {
+            System.out.println("Error in addition");
+            System.out.println(e.getMessage());
+        }
         return null;
     }
 
     //   	фура находится в исправном состоянии;
     public Set<Truck> getOKTrucks() {
-//        CriteriaBuilder cb = em.getCriteriaBuilder();
-HibernateUtil.getSessionFactory().getCurrentSession().createCriteria("");
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Criteria crit = session.createCriteria(Truck.class)
+                    .add(Restrictions.eq("status", TruckStatus.OK));
+            crit.setMaxResults(50);
+            List trucks = crit.list();
+            return new HashSet<>(trucks);
 
+        } catch (Exception e) {
+            System.out.println("Error in addition");
+            System.out.println(e.getMessage());
+        }
         return null;
     }
 
@@ -40,6 +63,17 @@ HibernateUtil.getSessionFactory().getCurrentSession().createCriteria("");
     //   	фура подходит по вместимости
     // (с учетом погрузки/выгрузки грузов в городах по маршруту следования);
     public Set<Truck> getFitTrucks(int weight) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Criteria crit = session.createCriteria(Truck.class)
+                    .add(Restrictions.ge("capacity", (long) weight));
+            crit.setMaxResults(50);
+            List trucks = crit.list();
+            return new HashSet<>(trucks);
+
+        } catch (Exception e) {
+            System.out.println("Error in addition");
+            System.out.println(e.getMessage());
+        }
         return null;
     }
 

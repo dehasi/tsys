@@ -22,12 +22,13 @@ INSERT INTO map VALUES (1, 3, 1835)
 INSERT INTO map VALUES (2, 3, 1667)
 
 --
-INSERT INTO truck VALUES ('AB12345', 8, 1, 0, 1)
-INSERT INTO truck VALUES ('AB54321', 8, 1, 0, 2)
-INSERT INTO truck VALUES ('AB65478', 8, 1, 0, 3)
+INSERT INTO truck VALUES ('AB12345', 4, 1, 0, 1)
+INSERT INTO truck VALUES ('AB54321', 6, 1, 0, 2)
+INSERT INTO truck VALUES ('AB65478', 8, 1, 1, 3)
 
 -- --
 INSERT INTO driver VALUES (1, 120, 'Galeyev',  'Ravil',    NULL ,  0, 1)
 INSERT INTO driver VALUES (2, 128, 'Putin',    'Vladimir', NULL,   0, 1)
 INSERT INTO driver VALUES (3, 121, 'Bunin',    'Ivan',     NULL,   0, 3)
 
+-- password= 1216985755

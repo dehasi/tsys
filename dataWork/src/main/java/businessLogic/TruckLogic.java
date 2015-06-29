@@ -39,27 +39,24 @@ public class TruckLogic {
     //status = 0 AND
     //id NOT IN (SELECT  DISTINCT truck FROM orderroure) AND
     //capacity >= weight
-    public Set<Truck> getTrucksForOrger(int weight) {
-        Set<Truck> trucks = new HashSet<>();
-        //intersetion
-        return null;
+    public Set<Truck> getTrucksForOrder(int weight) {
+       return truckDAO.getTrucksForOrder(weight);
     }
-//   	фура находится в исправном состоянии;
-    //SELECT * FROM truck WHERE status = 0
+
     public Set<Truck> getOKTrucks() {
-        return null;
+        return truckDAO.getOKTrucks();
     }
 
 //   	фура не выполняет в данный момент никаких заказов;
     //  //SELECT * FROM truck WHERE  id NOT IN (SELECT  DISTINCT truck FROM orderroure DISTINCT)
     public Set<Truck> getFreeTrucks() {
-        return null;
+        return truckDAO.getFreeTrucks();
     }
 
     //   	фура подходит по вместимости
     // (с учетом погрузки/выгрузки грузов в городах по маршруту следования);
     //SELECT * FROM truck WHERE  capacity >= weight
     public Set<Truck> getFitTrucks(int weight) {
-        return null;
+        return truckDAO.getFitTrucks(weight);
     }
 }
