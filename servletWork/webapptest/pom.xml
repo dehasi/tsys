@@ -5,8 +5,10 @@
   <artifactId>webapptest</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>webapptest Maven Webapp</name>
+
+  <name>Webapp</name>
   <url>http://maven.apache.org</url>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>

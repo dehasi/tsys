@@ -12,7 +12,7 @@
         <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
 
 
-        <!--<property name="hibernate.hbm2ddl.auto">create-drop</property>-->
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
 
         <property name="hibernate.hbm2ddl.import_files">import.sql</property>
 
@@ -22,11 +22,6 @@
         <mapping class="model.Map"/>
         <mapping class="model.OrderRoute"/>
         <mapping class="model.Truck"/>
-        <!--<mapping class="generated.Baggage"/>-->
-        <!--<mapping class="generated.City"/>-->
-        <!--<mapping class="generated.Driver"/>-->
-        <!--<mapping class="generated.Map"/>-->
-        <!--<mapping class="generated.Orderroute"/>-->
-        <!--<mapping class="generated.Truck"/>-->
+
     </session-factory>
 </hibernate-configuration>
