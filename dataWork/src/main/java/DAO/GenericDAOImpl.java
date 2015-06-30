@@ -53,7 +53,7 @@ public class GenericDAOImpl<T> implements GeneticDAO<T>{
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             t =  session.get(clazz, id);
         } catch (Exception e) {
-            System.out.println("Error getCargoById");
+            System.out.println("Error getById");
             System.out.println(e.getMessage());
         }
         return t;

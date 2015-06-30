@@ -11,6 +11,6 @@ public interface GeneticDAO <T> {
     void update(T t) throws SQLException;
     void delete(T t) throws SQLException;
     Collection getAll() throws SQLException;
-    public T getById(Integer id) throws SQLException;
-    public void printAll() throws SQLException ;
+    T getById(Integer id) throws SQLException;
+    void printAll() throws SQLException ;
 }

@@ -19,7 +19,7 @@ public class OrderRoute {
     private int isDone;
     private int visitNumber;
     private int status;
-    private int truck;
+    private String truck;
 
     @Id
     @Column(name = "order")
@@ -92,11 +92,11 @@ public class OrderRoute {
     }
 
     @Column(name = "truck")
-    public int getTruck() {
+    public String getTruck() {
         return truck;
     }
 
-    public void setTruck(int truck) {
+    public void setTruck(String truck) {
         this.truck = truck;
     }
 
@@ -113,9 +113,8 @@ public class OrderRoute {
         if (type != orderRoute1.type) return false;
         if (isDone != orderRoute1.isDone) return false;
         if (visitNumber != orderRoute1.visitNumber) return false;
-        if (status != orderRoute1.status) return false;
+        return status == orderRoute1.status;
 
-        return true;
     }
 
     @Override

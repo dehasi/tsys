@@ -4,6 +4,7 @@ TRUNCATE TABLE baggage
 TRUNCATE TABLE truck
 TRUNCATE TABLE driver
 TRUNCATE TABLE orderroute
+TRUNCATE TABLE 'user'
 
 INSERT INTO baggage VALUES (1, 'tea',    '0', '1200')
 INSERT INTO baggage VALUES (2, 'beer',   '0', '990' )
@@ -32,3 +33,15 @@ INSERT INTO driver VALUES (2, 128, 'Putin',    'Vladimir', NULL,   0, 1)
 INSERT INTO driver VALUES (3, 121, 'Bunin',    'Ivan',     NULL,   0, 3)
 
 -- password= 1216985755
+-- secret= -906277200
+INSERT INTO user VALUES (1, 'login', 1216985755,  0)
+INSERT INTO user VALUES (2, 'username', -906277200,  1)
+
+
+-- --
+-- order city bag; isDone status; truck type visitNumber
+-- isDone выполнен ли конкретный поинт
+-- status выполнен ли заказ (или что там у него)
+INSERT INTO orderroute VALUES (1,1,1,  0,42,  'AB12345', 0, 1) -- погрузить чай в мск
+INSERT INTO orderroute VALUES (1,2,1,  0,42,  'AB12345', 1, 2) -- выгрузитьв питере
+

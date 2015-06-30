@@ -51,9 +51,8 @@ public class OrderPK implements Serializable {
 
         if (order != orderPK.order) return false;
         if (city != orderPK.city) return false;
-        if (baggage != orderPK.baggage) return false;
+        return baggage == orderPK.baggage;
 
-        return true;
     }
 
     @Override

@@ -33,7 +33,6 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
             return new HashSet<>(trucks);
 
         } catch (Exception e) {
-            System.out.println("Error in addition");
             System.out.println(e.getMessage());
         }
         return null;
@@ -49,7 +48,6 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
             return new HashSet<>(trucks);
 
         } catch (Exception e) {
-            System.out.println("Error in addition");
             System.out.println(e.getMessage());
         }
         return null;
@@ -71,7 +69,6 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
             return new HashSet<>(trucks);
 
         } catch (Exception e) {
-            System.out.println("Error in addition");
             System.out.println(e.getMessage());
         }
         return null;

@@ -13,7 +13,7 @@ import java.util.Set;
 //o	просмотр списка, добавление, редактирование и удаление фур
 public class TruckLogic {
 
-    protected TruckDAOImpl truckDAO = null;
+    private TruckDAOImpl truckDAO = null;
 
     public TruckLogic(TruckDAOImpl truckDAO) {
         this.truckDAO = truckDAO;
@@ -59,4 +59,6 @@ public class TruckLogic {
     public Set<Truck> getFitTrucks(int weight) {
         return truckDAO.getFitTrucks(weight);
     }
+
+
 }

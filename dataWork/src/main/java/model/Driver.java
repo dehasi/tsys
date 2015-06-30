@@ -112,9 +112,8 @@ public class Driver {
         if (hoursWorked != driver.hoursWorked) return false;
         if (status != driver.status) return false;
         if (name != null ? !name.equals(driver.name) : driver.name != null) return false;
-        if (lastName != null ? !lastName.equals(driver.lastName) : driver.lastName != null) return false;
+        return !(lastName != null ? !lastName.equals(driver.lastName) : driver.lastName != null);
 
-        return true;
     }
 
     @Override

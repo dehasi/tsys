@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import utils.HibernateUtil;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 /**
@@ -13,24 +14,32 @@ import java.util.List;
  */
 public class UserDAOImpl extends  GenericDAOImpl<User>{
 
-    UserDAOImpl(Class<User> clazz) {
+    public UserDAOImpl(Class<User> clazz) {
         super(clazz);
     }
 
-    public Long getUserPasswordHash(String userName) {
+    public Long getUserPasswordHash(String login) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(User.class)
-                    .add(Restrictions.eq("name", userName));
+                    .add(Restrictions.eq("login", login));
             crit.setMaxResults(50);
-            List<User> users = crit.list();
-            if (users == null) return null;
-
-
-//            List trucks = crit.list();
-
+            User user = (User) crit.uniqueResult();
+            if (user == null) return 0L;
+            return user.getPasswordHash();
 
         } catch (Exception e) {
-            System.out.println("Error in addition");
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public User getByLogin(String login) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Criteria crit = session.createCriteria(User.class)
+                    .add(Restrictions.eq("login", login));
+            crit.setMaxResults(50);
+            return (User) crit.uniqueResult();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return null;
