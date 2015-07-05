@@ -11,6 +11,7 @@ public class BusinessFactory {
     private static DriverLogic driverLogic = null;
     private static OrderLogic orderLogic = null;
     private static TruckLogic truckLogic = null;
+    private static CityLogic cityLogic = null;
 
     private static BusinessFactory instance = null;
 
@@ -48,5 +49,12 @@ public class BusinessFactory {
             truckLogic =  new TruckLogic(new TruckDAOImpl((Class<Truck>) Class.forName("model.Truck")));
         }
         return truckLogic;
+    }
+
+    public CityLogic getCityLogic() throws ClassNotFoundException {
+        if(cityLogic == null) {
+            cityLogic = new CityLogic(new CityDAOImpl((Class<City>) Class.forName("model.City")));
+        }
+        return cityLogic;
     }
 }

@@ -31,6 +31,9 @@ INSERT INTO truck VALUES ('AB65478', 8, 1, 1, 3)
 INSERT INTO driver VALUES (1, 120, 'Galeyev',  'Ravil',    1 ,  0, 1)
 INSERT INTO driver VALUES (2, 128, 'Putin',    'Vladimir', 1,   0, 1)
 INSERT INTO driver VALUES (3, 121, 'Bunin',    'Ivan',     NULL,   0, 3)
+INSERT INTO driver VALUES (4, 122, 'Kinchev',    'Kostya',     NULL,   0, 2)
+INSERT INTO driver VALUES (5, 123, 'Tcoy',    'Victor',     NULL,   0, 4)
+INSERT INTO driver VALUES (6, 124, 'G',    'B',     NULL,   0, 2)
 
 -- password= 1216985755
 -- secret= -906277200

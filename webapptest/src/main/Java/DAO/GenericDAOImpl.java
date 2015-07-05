@@ -1,5 +1,6 @@
 package DAO;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import utils.HibernateUtil;
 
@@ -51,7 +52,9 @@ public class GenericDAOImpl<T> implements GeneticDAO<T>{
     public T getById(Integer id) throws SQLException {
         T t = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            t =  session.get(clazz, id);
+//            t =  session.get(clazz, id);
+            t =  session.load(clazz, id);
+            Hibernate.initialize(t);
         } catch (Exception e) {
             System.out.println("Error getById");
             System.out.println(e.getMessage());

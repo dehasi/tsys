@@ -13,6 +13,7 @@
 </head>
 <body>
     <h1>driver info</h1>
+    <a href="#"> logout</a>
     <%--	личный номер водителя--%>
     <table>
         <tr>
@@ -23,50 +24,60 @@
         </tr>
 
     </table>
+    
+    <c:choose>
+        <c:when test="${route != null }">
+            <%--	личные номера ко-водителей--%>
+            <h3>partners:</h3>
+            <table>
+                <tr>
+                    <th>name<th>
+                    <th>id<th>
+                </tr>
 
-    <%--	личные номера ко-водителей--%>
-    <h3>partners:</h3>
-    <table>
-        <tr>
-            <th>name<th>
-            <th>id<th>
-        </tr>
+                <c:forEach var = "friend" items="${friends}">
+                    <tr>
+                        <td>${friend.name}</td>
 
-        <c:forEach var = "friend" items="${friends}">
-            <tr>
-                <td>${friend.name}</td>
+                        <td>${friend.id}</td>
+                    </tr>
 
-                <td>${friend.id}</td>
-            </tr>
+                </c:forEach>
+            </table>
+            <br/>
 
-        </c:forEach>
-    </table>
-    <br/>
+            <%--	номер заказа--%>
+            <h4>order: ${orderId}</h4>
+            <%--	рег. номер фуры--%>
+            <h4>truck: ${truckId}</h4>
+            <%--	список маршрутных точек--%>
+            <h3>Route</h3>
+            <table>
+                <tr>
+                    <th>#</th>
+                    <th>city</th>
+                    <th>baggage</th>
+                    <th>action</th>
+                    <th>isDone</th>
+                </tr>
+                <c:forEach var = "p" items="${route}">
+                    <tr>
+                        <td>${p.number}</td>
+                        <td>${p.city}</td>
+                        <td>${p.baggageId} (${p.baggage.name})</td>
+                        <td>${p.baggageStatus}</td>
+                        <td>${p.isDone}</td>
+                    </tr>
+                </c:forEach>
+            </table>
 
-    <%--	номер заказа--%>
-    <h4>order: ${orgerId}</h4>
-    <%--	рег. номер фуры--%>
-    <h4>truck: ${truckId}</h4>
-    <%--	список маршрутных точек--%>
-    <h3>Route</h3>
-    <table>
-        <tr>
-            <th>#</th>
-            <th>city</th>
-            <th>baggage</th>
-            <th>action</th>
-            <th>isDone</th>
-        </tr>
-        <c:forEach var = "p" items="${route}">
-            <tr>
-                <td>${p.number}</td>
-                <td>${p.city}</td>
-                <td>${p.baggageId} (${p.baggage.name})</td>
-                <td>${p.baggageStatus}</td>
-                <td>${p.isDone}</td>
-            </tr>
-        </c:forEach>
-    </table>
+        </c:when>
+        
+        <c:otherwise>
+            driver in rest
+        </c:otherwise>
+    </c:choose>
+
 
 </body>
 </html>

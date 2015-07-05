@@ -52,6 +52,16 @@
         <url-pattern>/private/manager/truck</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ManagerDriver</servlet-name>
+        <servlet-class>webservices.servlets.ManagerDriverWork</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManagerDriver</servlet-name>
+        <url-pattern>/private/manager/driver</url-pattern>
+    </servlet-mapping>
+
+
 
     <filter>
         <filter-name>SimpFilt</filter-name>

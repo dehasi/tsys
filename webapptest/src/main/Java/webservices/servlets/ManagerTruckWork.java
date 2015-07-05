@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -55,19 +53,16 @@ public class ManagerTruckWork extends HttpServlet {
                 }
             }
 
-            List<Truck> list = new ArrayList<Truck>(trucks);
-            req.setAttribute("trucks", list);
+            req.setAttribute("trucks", trucks);
             RequestDispatcher rd = req.getRequestDispatcher("truck.jsp");
             rd.forward(req, resp);
 
         } catch (ClassNotFoundException e) {
-            RequestDispatcher rd = req.getRequestDispatcher("error.jsp");
+            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
             rd.forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Override

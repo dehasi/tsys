@@ -12,7 +12,6 @@
     <title>truck managering </title>
 </head>
 <%@include  file="header.jsp" %>
-<%-- all free inOrder defective --%>
 <table>
   <tr>
     <td> <a href="truck?show=all">all</a> </td>

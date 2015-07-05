@@ -14,15 +14,25 @@ import java.util.Set;
 @Table(name = "driver")
 @NamedQueries({
         @NamedQuery(
-                name = "Driver.getDriverFriends",
-                query = "SELECT d FROM Driver d WHERE d.orderRoute = " +
+            name = "Driver.getDriverFriends",
+            query = "SELECT d FROM Driver d WHERE d.orderRoute = " +
                         "(SELECT dd.orderRoute FROM Driver dd WHERE dd.id = :did)"),
+
         @NamedQuery(
-                name = "Driver.getD",
-                query = "SELECT d FROM Driver d" )
+            name = "Driver.getD",
+            query = "SELECT d FROM Driver d" ),
+
+        @NamedQuery(
+            name = "Driver.getFree",
+            query = "SELECT d FROM Driver d WHERE d.orderRoute = NULL" ),
+
+        @NamedQuery(
+            name = "Driver.getInOrder",
+            query = "SELECT d FROM Driver d WHERE d.orderRoute <> NULL" ),
 })
-public class Driver {
+public class Driver implements Comparable<Driver>{
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -41,8 +51,6 @@ public class Driver {
     @JoinColumn(name = "city")
     private City city;
 
-
-//    @ManyToMany
     @Column(name = "order_id")
     @Nullable
     private Integer orderRoute;
@@ -146,5 +154,10 @@ public class Driver {
                 ", city=" + city +
                 ", orderRoute=" + orderRoute +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Driver o) {
+        return this.id-o.id;
     }
 }

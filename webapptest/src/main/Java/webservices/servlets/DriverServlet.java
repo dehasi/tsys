@@ -35,29 +35,35 @@ public class DriverServlet extends HttpServlet {
             orderLogic = BusinessFactory.getInstance().getOrderLogic();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            resp.sendRedirect("error.jsp");
+            resp.sendRedirect("/error.jsp");
         }
 
         Driver driver = driverLogic.getById(id);
         if(driver == null) {
-            resp.sendRedirect("error.jsp");
+            resp.sendRedirect("/error.jsp");
         }
 
-        List<Driver> friends = new ArrayList<>();
-        friends.addAll(driverLogic.getFriends(id));
+        Integer orderId = driver.getOrderRoute();
 
-        friends.remove(driver);
+        if(orderId != null) {
+            List<Driver> friends = new ArrayList<>();
+            friends.addAll(driverLogic.getFriends(id));
 
-        List<DriverPageView> route =  orderLogic.getDriverPageView(id);
+            friends.remove(driver);
+
+            List<DriverPageView> route = orderLogic.getDriverPageView(id);
+
+            req.setAttribute("friends", friends);
+            req.setAttribute("route", route);
+
+            String truckId = orderLogic.getTruckId(orderId);
+            req.setAttribute("orderId", orderId);
+            req.setAttribute("truckId", truckId);
+        } else {
+            req.setAttribute("route", null);
+        }
+
         req.setAttribute("driver", driver);
-        req.setAttribute("friends", friends);
-        req.setAttribute("route", route);
-
-        int orgerId = driver.getOrderRoute();
-        String truckId  = orderLogic.getTruckId(orgerId);
-        req.setAttribute("orgerId", orgerId);
-        req.setAttribute("truckId", truckId);
-
         RequestDispatcher rd = req.getRequestDispatcher("driver.jsp");
         rd.forward(req, resp);
     }

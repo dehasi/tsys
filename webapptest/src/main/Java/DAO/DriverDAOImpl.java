@@ -64,10 +64,6 @@ public class DriverDAOImpl extends GenericDAOImpl<Driver> {
         return null;
     }
 
-    public Set<Driver> getFreeDrivers() {
-        return getDriversByOrderId(null);
-    }
-
     public Set<Driver> getDriversForOrder(City city, int hoursWorked) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(Driver.class)
@@ -88,11 +84,31 @@ public class DriverDAOImpl extends GenericDAOImpl<Driver> {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Query query = session.getNamedQuery("Driver.getDriverFriends")
                     .setString("did", String.valueOf(id));
-            return new HashSet<Driver>(query.list());
+            return new HashSet<>(query.list());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return null;
     }
 
+    public Set<Driver> getInOrderDrivers() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query query = session.getNamedQuery("Driver.getInOrder");
+            return new HashSet<>(query.list());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public Set<Driver> getFreeDrivers() {
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query query = session.getNamedQuery("Driver.getFree");
+            return new HashSet<>(query.list());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 }

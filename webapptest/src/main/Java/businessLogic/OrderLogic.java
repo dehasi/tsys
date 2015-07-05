@@ -30,8 +30,10 @@ public class OrderLogic {
     }
 
     public Set<OrderRoute> getRoute(int orderId) {
+
         return orderRouteDAO.getRouteByOrderId(orderId);
     }
+
     public List<DriverPageView> getDriverPageView (int orderId) {
 
         Set<OrderRoute> routes =  getRoute(orderId);

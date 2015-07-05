@@ -10,16 +10,12 @@
 <html>
 <head>
     <title>managering</title>
-
-
-
 </head>
 <body>
 <h1>This page was created for mamangers work </h1>
 <%@include  file="header.jsp" %>
 
     <div>
-
 
     </div>
 </body>

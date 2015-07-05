@@ -5,7 +5,7 @@
   Time: 16:44
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 <head>
     <title></title>
@@ -13,12 +13,12 @@
 </head>
 <body>
 <div>
-  <a id = "truckLink" href="/private/manager/truck?show=all">Trucks</a>
-  <a id = "driverLink" href="#">Divers</a>
+  <a id = "truckLink" href="/private/manager/truck?action=show&show=all">Trucks</a>
+  <a id = "driverLink" href="/private/manager/driver?action=show&show=all">Divers</a>
   <a id = "orderLink" href="#">Orders</a>
   <a id = "createLink" href="#">Create order</a>
+  <a id = "logout" href="#">Logout</a>
 </div>
-val = ${key}
 
 <%--<script>--%>
   <%--function showTrucks() {--%>
