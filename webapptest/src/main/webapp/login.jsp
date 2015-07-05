@@ -32,21 +32,12 @@
         <h1>Login to Web App</h1>
 
         <form name="myForm"  method="post" action="login" onsubmit = "return validateForm()" >
-            <p><input type="text" name="login" value="1" placeholder="username:"></p>
-            <p><input type="password" name="password" value="password" placeholder="password"></p>
-            <!--<p class="remember_me">-->
-                <!--<label>-->
-                    <!--<input type="checkbox" name="remember_me" id="remember_me">-->
-                    <!--Remember me on this computer-->
-                <!--</label>-->
-            <!--</p>-->
+            <p><input type="text" name="login" value="manager" placeholder="username:"></p>
+            <p><input type="password" name="password" value="secret" placeholder="password"></p>
             <p class="submit"><input type="submit" name="commit" value="Login"></p>
         </form>
     </div>
 
-    <!--<div class="login-help">-->
-        <!--<p>Forgot your password? <a href="index.html">Click here to reset it</a>.</p>-->
-    <!--</div>-->
 </section>
 
 </body>

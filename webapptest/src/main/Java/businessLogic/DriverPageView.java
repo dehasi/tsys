@@ -11,16 +11,18 @@ public class DriverPageView  implements Comparable<DriverPageView>{
     private int baggageId;
     private int baggageStatus;
     private Baggage baggage;
+    private int isDone;
 
     private int number;
 
-    public DriverPageView(int orderId, String city, int baggageId, int baggageStatus, Baggage baggage, int number) {
+    public DriverPageView(int orderId, String city, int baggageId, int baggageStatus, Baggage baggage, int number, int isDone) {
         this.orderId = orderId;
         this.city = city;
         this.baggageId = baggageId;
         this.baggageStatus = baggageStatus;
         this.baggage = baggage;
         this.number = number;
+        this.isDone = isDone;
     }
 
     public int getNumber() {
@@ -75,5 +77,13 @@ public class DriverPageView  implements Comparable<DriverPageView>{
 
     public int compareTo(DriverPageView d) {
         return(number - d.number);
+    }
+
+    public int getIsDone() {
+        return isDone;
+    }
+
+    public void setIsDone(int isDone) {
+        this.isDone = isDone;
     }
 }

@@ -38,11 +38,26 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
         return null;
     }
 
-    //   	фура находится в исправном состоянии;
-    public Set<Truck> getOKTrucks() {
+//    //   	фура находится в исправном состоянии;
+//    public Set<Truck> getOKTrucks() {
+//        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+//            Criteria crit = session.createCriteria(Truck.class)
+//                    .add(Restrictions.eq("status", TruckStatus.OK));
+//            crit.setMaxResults(50);
+//            List trucks = crit.list();
+//            return new HashSet<>(trucks);
+//
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return null;
+//    }
+
+
+    public Set<Truck> getTrucksByStatus(TruckStatus status) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(Truck.class)
-                    .add(Restrictions.eq("status", TruckStatus.OK));
+                    .add(Restrictions.eq("status", status));
             crit.setMaxResults(50);
             List trucks = crit.list();
             return new HashSet<>(trucks);

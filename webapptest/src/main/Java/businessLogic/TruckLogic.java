@@ -2,6 +2,7 @@ package businessLogic;
 
 import DAO.TruckDAOImpl;
 import model.Truck;
+import model.statuses.TruckStatus;
 
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -44,7 +45,7 @@ public class TruckLogic {
     }
 
     public Set<Truck> getOKTrucks() {
-        return truckDAO.getOKTrucks();
+        return truckDAO.getTrucksByStatus(TruckStatus.OK);
     }
 
 //   	фура не выполн€ет в данный момент никаких заказов;
@@ -60,5 +61,12 @@ public class TruckLogic {
         return truckDAO.getFitTrucks(weight);
     }
 
+    public Set<Truck> getDefectiveTrucks() {
+        return truckDAO.getTrucksByStatus(TruckStatus.DEFECTIVE);
+    }
 
+
+    public Set<Truck> getInOrderTrucks() {
+        return null;
+    }
 }

@@ -44,19 +44,4 @@ class Main {
 
     }
 
-//        System.out.println("All Cities:");
-//        Factory.getInstance().getCityDAO().printAll();
-//
-//        System.out.println("City by id:");
-//        System.out.println(Factory.getInstance().getCityDAO().getById(42));
-//
-//        System.out.println("All baggages:");
-//        Factory.getInstance().getBaggageDAO().printAll();
-//
-//        System.out.println("All trucks");
-//        Factory.getInstance().getTruckDAO().printAll();
-//
-//        System.out.println("All drivers");
-//        Factory.getInstance().getDriverDAO().printAll();
-
 }

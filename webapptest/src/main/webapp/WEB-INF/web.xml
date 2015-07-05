@@ -43,6 +43,15 @@
     </servlet-mapping>
 
 
+    <servlet>
+        <servlet-name>ManagerTruck</servlet-name>
+        <servlet-class>webservices.servlets.ManagerTruckWork</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManagerTruck</servlet-name>
+        <url-pattern>/private/manager/truck</url-pattern>
+    </servlet-mapping>
+
 
     <filter>
         <filter-name>SimpFilt</filter-name>

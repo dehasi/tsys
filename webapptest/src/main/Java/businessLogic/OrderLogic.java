@@ -3,14 +3,9 @@ package businessLogic;
 import DAO.BaggageDAOImpl;
 import DAO.CityDAOImpl;
 import DAO.OrderRouteDAOImpl;
-import DAO.TruckDAOImpl;
 import model.Baggage;
 import model.City;
 import model.OrderRoute;
-import model.Truck;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import utils.HibernateUtil;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -51,8 +46,8 @@ public class OrderLogic {
                         route.getBaggage(),
                         route.getType(),
                         baggage,
-                        route.getVisitNumber()
-                );
+                        route.getVisitNumber(),
+                        route.getIsDone());
                 views.add(view);
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -1,6 +1,7 @@
 package webservices.servlets;
 
 import DAO.UserDAOImpl;
+import businessLogic.BusinessFactory;
 import businessLogic.UserLogic;
 import model.User;
 import model.statuses.UserStatus;
@@ -23,17 +24,17 @@ public class LoginServlet extends HelloServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserLogic userLogic = null;
         try {
-            userLogic = new UserLogic(new UserDAOImpl((Class<User>) Class.forName("model.User")));
-        } catch (ClassNotFoundException e) {
+            userLogic = BusinessFactory.getInstance().getUserLogic();
+        } catch (Exception e) {
             e.printStackTrace();
-            resp.sendRedirect("error.jsp");
+
+            RequestDispatcher rd = req.getRequestDispatcher("error.jsp");
+            rd.forward(req, resp);
         }
 
         PrintWriter out = resp.getWriter();
         resp.setContentType("text/html");
 
-        out.println("attribute = " + req.getParameter("login"));
-        out.println("attribute = " + req.getParameter("password"));
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         if(userLogic.isValidUser(login, password)) {
@@ -42,20 +43,15 @@ public class LoginServlet extends HelloServlet {
                     HttpSession session = req.getSession();
                     session.setAttribute("status", DRIVER);
                     session.setAttribute("id", Integer.parseInt(login));
-//                    RequestDispatcher rd = req.getRequestDispatcher("private/driver");
-//                    rd.forward(req, resp);
-
                     resp.sendRedirect("private/driver");
                     break;
                 }
                 case MANAGER:{
                     resp.sendRedirect("private/manager");
-//                    RequestDispatcher rd = req.getRequestDispatcher("private/manager");
-//                    rd.forward(req, resp);
                     break;
                 }
                 default: {
-                    break;
+                    resp.sendRedirect("login.jsp");
                 }
             }
         }else {

@@ -3,6 +3,7 @@ package webservices.servlets;
 import DAO.BaggageDAOImpl;
 import DAO.DriverDAOImpl;
 import DAO.OrderRouteDAOImpl;
+import businessLogic.BusinessFactory;
 import businessLogic.DriverLogic;
 import businessLogic.DriverPageView;
 import businessLogic.OrderLogic;
@@ -30,16 +31,13 @@ public class DriverServlet extends HttpServlet {
         DriverLogic driverLogic = null;
         OrderLogic orderLogic = null;
         try {
-            driverLogic =
-                    new DriverLogic(new DriverDAOImpl((Class<Driver>) Class.forName("model.Driver")));
-            orderLogic =
-                    new OrderLogic(new BaggageDAOImpl((Class<Baggage>) Class.forName("model.Baggage")),
-                            new OrderRouteDAOImpl((Class<OrderRoute>) Class.forName("model.OrderRoute")));
+            driverLogic = BusinessFactory.getInstance().getDriverLogic();
+            orderLogic = BusinessFactory.getInstance().getOrderLogic();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             resp.sendRedirect("error.jsp");
         }
-        //resp.set
+
         Driver driver = driverLogic.getById(id);
         if(driver == null) {
             resp.sendRedirect("error.jsp");
@@ -50,7 +48,6 @@ public class DriverServlet extends HttpServlet {
 
         friends.remove(driver);
 
-//        Truck truck =
         List<DriverPageView> route =  orderLogic.getDriverPageView(id);
         req.setAttribute("driver", driver);
         req.setAttribute("friends", friends);
