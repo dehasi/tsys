@@ -52,7 +52,6 @@ public class GenericDAOImpl<T> implements GeneticDAO<T>{
     public T getById(Integer id) throws SQLException {
         T t = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-//            t =  session.get(clazz, id);
             t =  session.load(clazz, id);
             Hibernate.initialize(t);
         } catch (Exception e) {

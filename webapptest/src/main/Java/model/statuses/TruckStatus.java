@@ -8,4 +8,15 @@ public enum TruckStatus {
 
     TruckStatus(long l) {
     }
+
+    public static TruckStatus fromInt(int x) {
+        switch(x) {
+            case 0:
+                return TruckStatus.OK;
+            case 1:
+                return TruckStatus.DEFECTIVE;
+            default:
+                return null;
+        }
+    }
 }

@@ -27,6 +27,9 @@ public class Truck {
     @JoinColumn(name="city")
     private City city;
 
+    @Transient
+    private Integer orderId;
+
     public Truck() {
     }
 
@@ -71,6 +74,13 @@ public class Truck {
     }
 
 
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
 
     public Truck(String id, long dutySize, long capacity, TruckStatus status, City city) {
         this.id = id;

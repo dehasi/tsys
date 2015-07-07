@@ -3,6 +3,7 @@ package DAO;
 import model.Truck;
 import model.statuses.TruckStatus;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.jpa.internal.EntityManagerImpl;
@@ -38,21 +39,17 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
         return null;
     }
 
-//    //   	фура находится в исправном состоянии;
-//    public Set<Truck> getOKTrucks() {
-//        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-//            Criteria crit = session.createCriteria(Truck.class)
-//                    .add(Restrictions.eq("status", TruckStatus.OK));
-//            crit.setMaxResults(50);
-//            List trucks = crit.list();
-//            return new HashSet<>(trucks);
-//
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return null;
-//    }
-
+    public Truck getTruckById(String id) {
+        Truck t = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            t =  session.load(Truck.class, id);
+            Hibernate.initialize(t);
+        } catch (Exception e) {
+            System.out.println("Error getById");
+            System.out.println(e.getMessage());
+        }
+        return t;
+    }
 
     public Set<Truck> getTrucksByStatus(TruckStatus status) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){

@@ -31,13 +31,9 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
         return null;
     }
 
-    public Set<OrderRoute> getAllNotDoneOrders() {
-        return null;
-    }
 
     public Set<OrderRoute> getRouteByOrderId(int orderId) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
-
             Query query = session.getNamedQuery("OrderRoute.getRoute")
                     .setString("id", String.valueOf(orderId));
             return new HashSet<>(query.list());
@@ -61,4 +57,17 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
         return null;
     }
 
+    public OrderRoute getOrderByTruckId(String truckId) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Criteria crit = session.createCriteria(OrderRoute.class)
+                    .add(Restrictions.eq("truck", truckId));
+            crit.setMaxResults(50);
+
+            List trucks = crit.list();
+            return (OrderRoute) new HashSet<>(trucks).iterator().next();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 }

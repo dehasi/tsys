@@ -15,8 +15,8 @@
 <div>
   <a id = "truckLink" href="/private/manager/truck?action=show&show=all">Trucks</a>
   <a id = "driverLink" href="/private/manager/driver?action=show&show=all">Divers</a>
-  <a id = "orderLink" href="#">Orders</a>
-  <a id = "createLink" href="#">Create order</a>
+  <a id = "orderLink" href="/private/manager/order?action=show&show=all">Orders</a>
+  <a id = "createLink" href="/private/manager/order?action=create">Create order</a>
   <a id = "logout" href="#">Logout</a>
 </div>
 

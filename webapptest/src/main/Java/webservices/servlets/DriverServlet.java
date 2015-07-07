@@ -56,7 +56,7 @@ public class DriverServlet extends HttpServlet {
             req.setAttribute("friends", friends);
             req.setAttribute("route", route);
 
-            String truckId = orderLogic.getTruckId(orderId);
+            String truckId = orderLogic.getTruckIdByOrder(orderId);
             req.setAttribute("orderId", orderId);
             req.setAttribute("truckId", truckId);
         } else {

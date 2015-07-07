@@ -59,8 +59,15 @@ public class OrderLogic {
         return views;
     }
 
-    public String getTruckId(int orderId) {
+    public String getTruckIdByOrder(int orderId) {
         return orderRouteDAO.getTruckId(orderId);
+    }
+    public Integer getOrderIdByTruck(String truckId) {
+        OrderRoute route =  orderRouteDAO.getOrderByTruckId(truckId);
+        if(route != null) {
+            return route.getOrder();
+        }
+        return null;
     }
 
 }
