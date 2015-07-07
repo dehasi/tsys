@@ -12,16 +12,20 @@ import javax.persistence.*;
 @IdClass(OrderPK.class)
 @NamedQueries({
         @NamedQuery(
-                name = "OrderRoute.getRoute",
-                query = "SELECT r FROM OrderRoute r WHERE r.order = :id"
+            name = "OrderRoute.getRoute",
+            query = "SELECT r FROM OrderRoute r WHERE r.order = :id"
         ),
 
         @NamedQuery(
-        name = "OrderRoute.getTruck",
-        query = "SELECT r.truck FROM OrderRoute r WHERE r.order = :id"
+            name = "OrderRoute.getTruck",
+            query = "SELECT r.truck FROM OrderRoute r WHERE r.order = :id"
+        ),
+        @NamedQuery(
+            name = "OrderRoute.getAllId",
+            query = "SELECT DISTINCT r.order FROM OrderRoute r "
         )
 })
-public class OrderRoute {
+public class OrderRoute implements Comparable<OrderRoute> {
     private int order;
     private int city;
     private int baggage;
@@ -151,5 +155,14 @@ public class OrderRoute {
                 ", visitNumber=" + visitNumber +
                 ", status=" + status +
                 '}';
+    }
+
+    @Override
+    public int compareTo(OrderRoute o) {
+        if (order == o.order) {
+            return visitNumber - o.visitNumber;
+        }else {
+            return order - o.order;
+        }
     }
 }

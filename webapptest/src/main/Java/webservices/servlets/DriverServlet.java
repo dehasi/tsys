@@ -1,16 +1,10 @@
 package webservices.servlets;
 
-import DAO.BaggageDAOImpl;
-import DAO.DriverDAOImpl;
-import DAO.OrderRouteDAOImpl;
 import businessLogic.BusinessFactory;
 import businessLogic.DriverLogic;
-import businessLogic.DriverPageView;
+import businessLogic.OrderView;
 import businessLogic.OrderLogic;
-import model.Baggage;
 import model.Driver;
-import model.OrderRoute;
-import model.Truck;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class DriverServlet extends HttpServlet {
     @Override
@@ -51,7 +44,7 @@ public class DriverServlet extends HttpServlet {
 
             friends.remove(driver);
 
-            List<DriverPageView> route = orderLogic.getDriverPageView(id);
+            List<OrderView> route = orderLogic.getOrderView(id);
 
             req.setAttribute("friends", friends);
             req.setAttribute("route", route);

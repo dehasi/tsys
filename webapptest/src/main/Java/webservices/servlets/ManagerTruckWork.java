@@ -149,17 +149,27 @@ public class ManagerTruckWork extends HttpServlet {
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+
+            req.setAttribute("error", e);
             RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
             rd.forward(req, resp);
 
         } catch (SQLException e) {
             e.printStackTrace();
+
+            req.setAttribute("error", e);
             RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
             rd.forward(req, resp);
         } catch (ServletException e) {
             e.printStackTrace();
+            req.setAttribute("error", e);
+            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
+            rd.forward(req, resp);
         } catch (IOException e) {
             e.printStackTrace();
+            req.setAttribute("error", e);
+            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
+            rd.forward(req, resp);
         }
     }
 
@@ -206,14 +216,25 @@ public class ManagerTruckWork extends HttpServlet {
             rd.forward(req, resp);
 
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            req.setAttribute("error", e);
             RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
             rd.forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
+            req.setAttribute("error", e);
+            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
+            rd.forward(req, resp);
         } catch (ServletException e) {
             e.printStackTrace();
+            req.setAttribute("error", e);
+            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
+            rd.forward(req, resp);
         } catch (IOException e) {
             e.printStackTrace();
+            req.setAttribute("error", e);
+            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
+            rd.forward(req, resp);
         }
     }
 
@@ -254,8 +275,14 @@ public class ManagerTruckWork extends HttpServlet {
 
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
+                    req.setAttribute("error", e);
+                    RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
+                    rd.forward(req, resp);
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    req.setAttribute("error", e);
+                    RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
+                    rd.forward(req, resp);
                 }
                 break;
             }
@@ -292,13 +319,20 @@ public class ManagerTruckWork extends HttpServlet {
                     resp.sendRedirect("/private/manager/truck?action=show&show=all");
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
+                    req.setAttribute("error", e);
                     RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
                     rd.forward(req, resp);
 
                 } catch (NullPointerException e) {
                     e.printStackTrace();
+                    req.setAttribute("error", e);
+                    RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
+                    rd.forward(req, resp);
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    req.setAttribute("error", e);
+                    RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
+                    rd.forward(req, resp);
                 }
             }
         }

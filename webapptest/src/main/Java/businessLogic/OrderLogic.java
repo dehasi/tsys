@@ -34,22 +34,22 @@ public class OrderLogic {
         return orderRouteDAO.getRouteByOrderId(orderId);
     }
 
-    public List<DriverPageView> getDriverPageView (int orderId) {
+    public List<OrderView> getOrderView(int orderId) {
 
         Set<OrderRoute> routes =  getRoute(orderId);
-        List<DriverPageView> views  = new ArrayList<>();
+        List<OrderView> views  = new ArrayList<>();
         for(OrderRoute route :routes) {
             try {
             Baggage baggage = baggageDAO.getById(route.getBaggage());
             City city = cityDAO.getById(route.getCity());
 
-                DriverPageView view = new DriverPageView(route.getOrder(),
+                OrderView view = new OrderView(route.getOrder(),
                         city.getName(),
                         route.getBaggage(),
                         route.getType(),
                         baggage,
                         route.getVisitNumber(),
-                        route.getIsDone());
+                        route.getIsDone(), route.getTruck());
                 views.add(view);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -70,4 +70,30 @@ public class OrderLogic {
         return null;
     }
 
+    public Set<OrderRoute> getAllRoutes() {
+        try {
+            return new HashSet<>(orderRouteDAO.getAll());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Set<OrderRouteView> getAllRouteViews() {
+        try {
+            Set<Integer> ids = orderRouteDAO.getAllOrderIds();
+            Set<OrderRouteView> views = new HashSet<>();
+
+            for (Integer id : ids) {
+                List<OrderView> list = getOrderView(id);
+                Collections.sort(list);
+                OrderRouteView view = new OrderRouteView(id,getTruckIdByOrder(id),list);
+                views.add(view);
+            }
+            return views;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

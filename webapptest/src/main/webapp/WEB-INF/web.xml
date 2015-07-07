@@ -61,7 +61,24 @@
         <url-pattern>/private/manager/driver</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ManagerOrder</servlet-name>
+        <servlet-class>webservices.servlets.ManagerOrderWork</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManagerOrder</servlet-name>
+        <url-pattern>/private/manager/order</url-pattern>
+    </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>ManagerCreateOrder</servlet-name>
+        <servlet-class>webservices.servlets.ManagerCreateOrder</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManagerCreateOrder</servlet-name>
+        <url-pattern>/private/manager/createorder</url-pattern>
+    </servlet-mapping>
 
     <filter>
         <filter-name>SimpFilt</filter-name>

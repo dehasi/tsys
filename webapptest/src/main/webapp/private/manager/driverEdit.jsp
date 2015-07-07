@@ -9,35 +9,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-  <title>Edit driver</title>
-  <script type="text/javascript" src = "/lib/jquery-1.11.3.js"></script>
-  <script  type="text/javascript">
-    function validateForm() {
-      var name = document.forms["editDriver"]["name"].value;
-      var lastname = document.forms["editDriver"]["lastname"].value;
-
-      var e = document.getElementById("city");
-      var cityId = e.options[e.selectedIndex].value;
-
-      if (name == null || name == "") {
-        alert("login field must be filled out");
-        return false;
-      }
-
-      if (lastname == null || lastname  == "") {
-        alert("password  field must be filled out");
-        return false;
-      }
-      if (cityId == null || cityId  == "0") {
-        alert("Select city");
-        return false;
-      }
-    }
-  </script>
+    <title>Edit driver</title>
+    <script type="text/javascript" src = "/js/jquery-1.11.3.js"></script>
+    <script type="text/javascript" src = "/js/validateDriverForm.js"></script>
 </head>
 <body>
 
-<form  method="POST" action="" onsubmit = "return validateForm()"  id="editDriver">
+<form  method="POST" action="" onsubmit = "return validateForm('editDriver')"  id="editDriver">
   First name:<br>
   <input type="text" name="name" value="${driver.name}">
   <br>
@@ -59,7 +37,6 @@
   </select>
   <p class="submit"><input type="submit" name="do" value="Save"></p>
 </form>
-
 
 </body>
 </html>

@@ -70,4 +70,14 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
         }
         return null;
     }
+
+    public Set<Integer> getAllOrderIds() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query query = session.getNamedQuery("OrderRoute.getAllId");
+            return new HashSet<>(query.list());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 }
