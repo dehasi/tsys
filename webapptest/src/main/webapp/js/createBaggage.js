@@ -197,7 +197,7 @@ function createReportForm(trucks, drivers) {
 
 function validateBaggageCount (){
     var count = document.forms["create"]["bgcnt"].value;
-    alert(count)
+    //alert(count)
     return true
 }
 
@@ -213,16 +213,23 @@ function getDrivers() {
     {
         checked.push($(this).val());
     });
-    return checked;
+    return JSON.stringify(checked);
 }
 function createOrder() {
-    alert("createOrder");
+    //alert("createOrder");
     var jsdata =  GetCellValues();
-    alert(jsdata);
+    //alert(jsdata);
     var truckId = getTruckId();
-    alert(truckId);
+    //alert(truckId);
     var drivers = getDrivers();
-    alert(drivers);
+    //alert(drivers);
+    $.ajax({
+        url: '/private/manager/createorder',
+        type: 'POST',
+        data : {do:"createOrder", jsdata:jsdata, truckId:truckId, drivers:drivers},
+        success: function(response) {
+            //...
+        }
+    });
 
-    $.post( "/private/manager/createorder", {do:"createOrder", jsdata:jsdata} );
 }

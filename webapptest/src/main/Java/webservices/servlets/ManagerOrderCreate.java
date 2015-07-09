@@ -62,8 +62,22 @@ public class ManagerOrderCreate extends HttpServlet {
 
             case  "createOrder" : {
 
-                resp.sendRedirect("/private/manager/order?action=show&show=all");
+               // resp.sendRedirect("/private/manager/order?action=show&show=all");
+                System.out.println(action);
+                System.err.println(action);
 
+                System.out.println(req.getParameter("jsdata"));
+                System.err.println(req.getParameter("jsdata"));
+
+
+                System.out.println(req.getParameter("truckId"));
+                System.err.println(req.getParameter("truckId"));
+
+                System.out.println(req.getParameter("drivers"));
+                System.err.println(req.getParameter("drivers"));
+
+
+                resp.sendRedirect("/private/manager/order?action=show&show=all");
                 break;
             }
             default: break;
@@ -132,12 +146,29 @@ public class ManagerOrderCreate extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
+        String action = req.getParameter("do");
+        System.out.println(action);
+        switch (action) {
+            case  "getStuff" : {
+//                resp.sendRedirect("/private/manager/order?action=show&show=all");
+//                sendStuff(req, resp);
+//
+                break;
+            }
+
+            case  "createOrder" : {
+
+//                resp.sendRedirect("/private/manager/order?action=show&show=all");
+//
+                break;
+            }
+            default: break;
+        }
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+
     }
 
     private void writeAnswer(HttpServletRequest req, HttpServletResponse res, String answer) throws IOException {
