@@ -5,7 +5,7 @@
 
 function GetCellValues() {
     var x = document.getElementById("cartGrid").rows.length;
-    //alert("len = " + x);
+
     var bags = []
     for (var i = 1; i < x; i++) {
         var bag = {}
@@ -37,11 +37,163 @@ function getDriverAndTruck() {
         type: "POST",
         data: {do:"getStuff", jsdata:jsdata},
         success: function(data) {
-            alert("success: " + data);
+            //alert("success: " + data);
+            var resp = JSON.parse(data);
+            //alert("trucks: " + resp["trucks"]);
+            //alert("drivers: " + resp["drivers"]);
+            createReportForm(resp["trucks"], resp["drivers"]);
         }
     });
 }
 
+function createReportForm(trucks, drivers) {
+    var root = document.getElementById("reportArea");
+    $("#reportArea").empty();
+
+    var frm = document.createElement("DIV");
+    var h4 = document.createElement("H4")    ;
+    h4.innerHTML = "select truck";
+    frm.appendChild(h4);
+
+    var truckTable = document.createElement("TABLE");
+    var truckHeader = document.createElement("TR");
+    var th;
+    th = document.createElement("TH");
+    th.innerHTML = "#";
+    truckHeader.appendChild(th);
+    //truckHeader.appendChild(document.createElement("TH").innerHTML = "Id");
+    th = document.createElement("TH");
+    th.innerHTML = "Id";
+    truckHeader.appendChild(th);
+
+    th = document.createElement("TH");
+    th.innerHTML = "dutySize";
+    truckHeader.appendChild(th);
+
+    th = document.createElement("TH");
+    th.innerHTML = "Capacity";
+    truckHeader.appendChild(th);
+
+    truckTable.appendChild(truckHeader);
+
+    for(var t in trucks) {
+
+        var res = JSON.stringify(trucks[t]);
+
+        var truckId = JSON.stringify(trucks[t]["id"]);
+        var dutySize = JSON.stringify(trucks[t]["dutySize"]);
+        var capacity = JSON.stringify(trucks[t]["capacity"]);
+
+        var radio = document.createElement("INPUT");
+        radio.setAttribute("type", "radio");
+        radio.setAttribute("id",truckId );
+        radio.setAttribute("name", "truckRadioGroup");
+        radio.setAttribute("value", truckId);
+
+
+        var truckRow = document.createElement("TR");
+        var td;
+        td = document.createElement("TD");
+        td.appendChild(radio)
+        truckRow.appendChild(td);
+
+        td = document.createElement("TD");
+        td.innerHTML = truckId;
+        truckRow.appendChild(td);
+
+        td = document.createElement("TD");
+        td.innerHTML = dutySize;
+        truckRow.appendChild(td);
+
+        td = document.createElement("TD");
+        td.innerHTML = capacity;
+        truckRow.appendChild(td);
+        truckTable.appendChild(truckRow);
+
+    }
+    frm.appendChild(truckTable);
+
+    h4 = document.createElement("H4");
+    h4.innerHTML = "select drivers";
+    frm.appendChild(h4);
+///////////////////////////////////////////////////
+    var driverTable = document.createElement("TABLE");
+    var driverHeader = document.createElement("TR");
+
+    th = document.createElement("TH");
+    th.innerHTML = "#";
+    driverHeader.appendChild(th);
+
+    th = document.createElement("TH");
+    th.innerHTML = "Id";
+    driverHeader.appendChild(th);
+
+
+    th = document.createElement("TH");
+    th.innerHTML = "name";
+    driverHeader.appendChild(th);
+
+
+    th = document.createElement("TH");
+    th.innerHTML = "last name";
+    driverHeader.appendChild(th);
+
+    th = document.createElement("TH");
+    th.innerHTML = "hours worked";
+    driverHeader.appendChild(th);
+
+    driverTable.appendChild(driverHeader);
+
+    for(var d in drivers) {
+        var res = JSON.stringify(drivers[d]);
+
+        var driverId = JSON.stringify(drivers[d]["id"]);
+        var name = JSON.stringify(drivers[d]["name"]);
+        var lastName = JSON.stringify(drivers[d]["lastName"]);
+        var hoursWorked = JSON.stringify(drivers[d]["hoursWorked"]);
+
+        var checkBox = document.createElement("INPUT");
+        checkBox.setAttribute("type", "checkbox");
+        checkBox.setAttribute("id",driverId );
+        checkBox.setAttribute("name", "driverCheckBox");
+        checkBox.setAttribute("value", driverId);
+
+        var driverRow = document.createElement("TR");
+        var td;
+        td = document.createElement("TD");
+        td.appendChild(checkBox)
+        driverRow.appendChild(td);
+
+        td = document.createElement("TD");
+        td.innerHTML = driverId;
+        driverRow.appendChild(td);
+
+        td = document.createElement("TD");
+        td.innerHTML = name;
+        driverRow.appendChild(td);
+
+        td = document.createElement("TD");
+        td.innerHTML = lastName;
+        driverRow.appendChild(td);
+
+        td = document.createElement("TD");
+        td.innerHTML = hoursWorked;
+        driverRow.appendChild(td);
+
+        driverTable.appendChild(driverRow);
+    }
+
+    frm.appendChild(driverTable);
+
+    var button = document.createElement("INPUT");
+    button.setAttribute("type", "submit");
+    button.setAttribute("id", "sendOrder");
+    button.setAttribute("value", "create order");
+    button.setAttribute("onclick", "createOrder()");
+
+    frm.appendChild(button);
+    root.appendChild(frm);
+}
 
 function validateBaggageCount (){
     var count = document.forms["create"]["bgcnt"].value;
@@ -49,124 +201,28 @@ function validateBaggageCount (){
     return true
 }
 
+function getTruckId() {
+    var manageradiorel = $("input:radio[name ='truckRadioGroup']:checked").val();
+    //alert(manageradiorel);
+    return manageradiorel;
+}
 
-
-
-function getCities() {
-    var cities = null;
-    $.ajax({
-        url: "localhost:8080/private/manager/createorder",
-        data:{ do: "getCities" },
-        dataType: "json"
-    }).done(function (data) {
-        cities = data;
+function getDrivers() {
+    var checked = []
+    $("input:checkbox[name='driverCheckBox']:checked").each(function ()
+    {
+        checked.push($(this).val());
     });
-
-    return cities;
+    return checked;
 }
+function createOrder() {
+    alert("createOrder");
+    var jsdata =  GetCellValues();
+    alert(jsdata);
+    var truckId = getTruckId();
+    alert(truckId);
+    var drivers = getDrivers();
+    alert(drivers);
 
-
-function addRow() {
-
-    var myName = document.getElementById("name");
-    var age = document.getElementById("age");
-    var table = document.getElementById("myTableData");
-
-    var rowCount = table.rows.length;
-    var row = table.insertRow(rowCount);
-
-    row.insertCell(0).innerHTML= '<input type="button" value = "Delete" onClick="Javacsript:deleteRow(this)">';
-    row.insertCell(1).innerHTML= myName.value;
-    row.insertCell(2).innerHTML= age.value;
-
-}
-
-function deleteRow(obj) {
-
-    var index = obj.parentNode.parentNode.rowIndex;
-    var table = document.getElementById("myTableData");
-    table.deleteRow(index);
-
-}
-
-function addTable() {
-
-    var cities = getCities();
-    alert(cities);
-    var x = document.forms["Bcount"]["count"].value;
-    var myTableDiv = document.getElementById("myDynamicTable");
-
-    var table = document.createElement('TABLE');
-    table.border='1';
-
-    var tableBody = document.createElement('TBODY');
-    table.appendChild(tableBody);
-
-    var tr = document.createElement('TR');
-    tableBody.appendChild(tr);
-    var th = document.createElement('TH');
-    th.appendChild(document.createTextNode("Name"))
-    tr.appendChild(th);
-
-    th = document.createElement('TH');
-    th.appendChild(document.createTextNode("weight"))
-    tr.appendChild(th);
-
-    th = document.createElement('TH');
-    th.appendChild(document.createTextNode("load"))
-    tr.appendChild(th);
-
-    th = document.createElement('TH');
-    th.appendChild(document.createTextNode("unload"))
-    tr.appendChild(th);
-
-
-
-    for (var i=0; i<x; i++) {
-        var tr = document.createElement('TR');
-        tableBody.appendChild(tr);
-
-
-        var td = document.createElement('TD');
-        td.width='25';
-        var name = document.createElement("INPUT");
-        name.setAttribute("type", "text");
-        name.setAttribute("placeholder","baggage name:")
-        td.appendChild(name);
-        tr.appendChild(td);
-
-
-        td = document.createElement('TD');
-        td.width='25';
-        var weight = document.createElement("INPUT");
-        weight.setAttribute("type", "text");
-        weight.setAttribute("placeholder","baggage weight:")
-        td.appendChild(weight);
-        tr.appendChild(td);
-
-        td = document.createElement('TD');
-        td.width='25';
-        var load = document.createElement("INPUT");
-        load.setAttribute("type", "text");
-        load.setAttribute("value", "${myArray}");
-        td.appendChild(load);
-        tr.appendChild(td);
-
-
-        td = document.createElement('TD');
-        td.width='75';
-        var unload = document.createElement("INPUT");
-        unload.setAttribute("type", "text");
-        td.appendChild(unload);
-        tr.appendChild(td);
-
-    }
-    myTableDiv.appendChild(table);
-
-}
-
-function load() {
-
-    console.log("Page load finished");
-
+    $.post( "/private/manager/createorder", {do:"createOrder", jsdata:jsdata} );
 }

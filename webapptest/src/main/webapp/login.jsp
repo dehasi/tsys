@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Login Form</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/jquery-1.11.3.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="css/signin.css" rel="stylesheet">
 
     <script>
         function validateForm() {
@@ -26,19 +30,30 @@
 <body>
 
 
+        <div class="container">
+            <div class="col-xs-3">
+        <form name="myForm"  method="post" action="login" onsubmit = "return validateForm()" class="form-signin" >
+            <h2 class="form-signin-heading" >Login to Web App</h2>
 
-<section class="container">
-    <div class="login">
-        <h1>Login to Web App</h1>
-
-        <form name="myForm"  method="post" action="login" onsubmit = "return validateForm()" >
-            <p><input type="text" name="login" value="manager" placeholder="username:"></p>
-            <p><input type="password" name="password" value="secret" placeholder="password"></p>
-            <p class="submit"><input type="submit" name="commit" value="Login"></p>
+            <%--<div class="col-xs-3">--%>
+            <input type="text" name="login" value="manager" placeholder="username:" class="form-control col-xs-3" size="5">
+            <%--</div>--%>
+            <%--<div class="col-xs-3">--%>
+            <input type="password" name="password" value="secret" placeholder="password" class="form-control col-xs-3">
+            <%--</div>--%>
+            <%--<div class="col-xs-4">--%>
+            <input class="btn btn-primary btn-block " type="submit" name="commit" value="Login">
+            </div>
         </form>
+
+
+
+
     </div>
 
-</section>
+
+
+
 
 </body>
 </html>

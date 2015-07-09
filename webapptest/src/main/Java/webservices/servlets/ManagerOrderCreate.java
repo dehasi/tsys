@@ -54,8 +54,15 @@ public class ManagerOrderCreate extends HttpServlet {
 
         switch (action) {
             case  "getStuff" : {
-                
+//                resp.sendRedirect("/private/manager/order?action=show&show=all");
                 sendStuff(req, resp);
+
+                break;
+            }
+
+            case  "createOrder" : {
+
+                resp.sendRedirect("/private/manager/order?action=show&show=all");
 
                 break;
             }
@@ -100,7 +107,12 @@ public class ManagerOrderCreate extends HttpServlet {
             Gson gson = new Gson();
             String truckjs =  gson.toJson(trucks);
             String driversjs = gson.toJson(drivers);
-            writeAnswer(req, resp, truckjs + driversjs);
+
+            String answer = "{" +
+                    "\"trucks\":" + truckjs + "," +
+                    "\"drivers\":" + driversjs +
+                    "}";
+            writeAnswer(req, resp, answer);
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -130,7 +142,7 @@ public class ManagerOrderCreate extends HttpServlet {
 
     private void writeAnswer(HttpServletRequest req, HttpServletResponse res, String answer) throws IOException {
         PrintWriter out = res.getWriter();
-        res.setContentType("text/json");
+        res.setContentType("text/plain");
         out.write(answer);
         out.close();
     }

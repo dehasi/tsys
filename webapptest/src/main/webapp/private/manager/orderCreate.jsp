@@ -58,9 +58,15 @@
     </table>
 
 
-    find drivers and truck:
-    <input type="submit" id="findStuff" value="find"  onclick="getDriverAndTruck()">
 
+    <div id="findArea">
+        find drivers and truck:
+        <input type="submit" id="findStuff" value="find"  onclick="getDriverAndTruck()">
+    </div>
+
+    <div id="reportArea">
+
+    </div>
 
 </div>
 </body>
