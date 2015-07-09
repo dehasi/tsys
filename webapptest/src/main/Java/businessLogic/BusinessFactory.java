@@ -12,6 +12,7 @@ public class BusinessFactory {
     private static OrderLogic orderLogic = null;
     private static TruckLogic truckLogic = null;
     private static CityLogic cityLogic = null;
+    private static MapLogic mapLogic = null;
 
     private static BusinessFactory instance = null;
 
@@ -24,7 +25,7 @@ public class BusinessFactory {
 
     public UserLogic getUserLogic() throws ClassNotFoundException {
         if (userLogic == null) {
-            userLogic =  new UserLogic(new UserDAOImpl((Class<User>) Class.forName("model.User")));
+            userLogic =  new UserLogic(new UserDAOImpl(User.class));
         }
         return userLogic;
     }
@@ -56,5 +57,12 @@ public class BusinessFactory {
             cityLogic = new CityLogic(new CityDAOImpl((Class<City>) Class.forName("model.City")));
         }
         return cityLogic;
+    }
+
+    public MapLogic getMapLogic() {
+        if(mapLogic == null) {
+            mapLogic = new MapLogic(new MapDAOImpl(Map.class));
+        }
+        return mapLogic;
     }
 }

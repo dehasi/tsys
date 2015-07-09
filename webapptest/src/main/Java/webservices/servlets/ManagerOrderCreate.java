@@ -1,10 +1,9 @@
 package webservices.servlets;
 
-import businessLogic.BusinessFactory;
-import businessLogic.CityLogic;
-import businessLogic.TruckLogic;
+import businessLogic.*;
 import com.google.gson.*;
 import model.City;
+import model.Driver;
 import model.Truck;
 
 import javax.servlet.RequestDispatcher;
@@ -65,7 +64,7 @@ public class ManagerOrderCreate extends HttpServlet {
 
     }
 
-    private void sendStuff(HttpServletRequest req, HttpServletResponse resp) {
+    private void sendStuff(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String jsonString = req.getParameter("jsdata");
         JsonElement root = new JsonParser().parse(jsonString);
         JsonArray elements = root.getAsJsonArray();
@@ -74,10 +73,10 @@ public class ManagerOrderCreate extends HttpServlet {
 
         for(JsonElement je : elements) {
             JsonObject jo = je.getAsJsonObject();
-            String name = jo.get("name").toString();
-            String weight = jo.get("weight").toString();
-            String loadId = jo.get("loadId").toString();
-            String unloadId = jo.get("unloadId").toString();
+            String name = jo.get("name").toString().replace("\"", "");
+            String weight = jo.get("weight").toString().replace("\"", "");
+            String loadId = jo.get("loadId").toString().replace("\"", "");
+            String unloadId = jo.get("unloadId").toString().replace("\"", "");
 
             maxWeight = Integer.max(maxWeight, Integer.parseInt(weight));
             road.add(Integer.parseInt(loadId));
@@ -87,14 +86,34 @@ public class ManagerOrderCreate extends HttpServlet {
 
         try {
             TruckLogic truckLogic = BusinessFactory.getInstance().getTruckLogic();
+            DriverLogic driverLogic = BusinessFactory.getInstance().getDriverLogic();
             CityLogic cityLogic = BusinessFactory.getInstance().getCityLogic();
+            MapLogic mapLogic = BusinessFactory.getInstance().getMapLogic();
             City city = cityLogic.getCityById(statCityId);
 
             Set<Truck> trucks = truckLogic.getFitTrucks(maxWeight, city);
+            int[] array = road.stream().mapToInt(i->i).toArray();
+            int roadLenght = mapLogic.getRoadLength(array);
+
+            Set<Driver> drivers = driverLogic.getFitDrivers(roadLenght, city);
+
+            Gson gson = new Gson();
+            String truckjs =  gson.toJson(trucks);
+            String driversjs = gson.toJson(drivers);
+            writeAnswer(req, resp, truckjs + driversjs);
+
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
+            req.setAttribute("error", e);
+            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
+            rd.forward(req, resp);
+        } catch (IOException e) {
+            e.printStackTrace();
+            req.setAttribute("error", e);
+            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
+            rd.forward(req, resp);
         }
 
     }
@@ -109,6 +128,12 @@ public class ManagerOrderCreate extends HttpServlet {
         super.doDelete(req, resp);
     }
 
+    private void writeAnswer(HttpServletRequest req, HttpServletResponse res, String answer) throws IOException {
+        PrintWriter out = res.getWriter();
+        res.setContentType("text/json");
+        out.write(answer);
+        out.close();
+    }
 
     public void handleRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
 

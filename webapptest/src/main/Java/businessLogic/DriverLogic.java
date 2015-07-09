@@ -14,6 +14,7 @@ import java.util.Set;
  * Created by Rafa on 30.06.2015.
  */
 public class DriverLogic {
+    private static int MEDUIM_SPEED = 90;
     private DriverDAOImpl driverDAO = null;
 
     public DriverLogic(DriverDAOImpl driverDAO) {
@@ -52,6 +53,7 @@ public class DriverLogic {
     }
 
     public Set<Driver> getFreeDrivers() {
+
         return new HashSet<Driver>(driverDAO.getFreeDrivers());
     }
 
@@ -61,7 +63,6 @@ public class DriverLogic {
         }catch (NullPointerException e) {
             return null;
         }
-
     }
 
     public void addNewDriver(Driver driver) throws SQLException {
@@ -76,6 +77,12 @@ public class DriverLogic {
     }
 
     public Set<Driver> getDriversForOrder(int hours, City city) {
+
         return  driverDAO.getDriversForOrder(city, hours);
+    }
+
+    public Set<Driver> getFitDrivers(int roadLenght, City city) {
+        int hours = roadLenght/MEDUIM_SPEED;
+        return getDriversForOrder(hours, city);
     }
 }

@@ -111,12 +111,5 @@ public class OrderLogic {
         return baggage;
     }
 
-    Integer getRoadLength(Integer[] road) {
-        int length = 0;
-        for(int i =1 ; i <  road.length; i++) {
-            Integer dist = mapDAO.getDistance(i-1, i);
-            length += dist;
-        }
-        return length;
-    }
+
 }

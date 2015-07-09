@@ -67,8 +67,8 @@ public class DriverDAOImpl extends GenericDAOImpl<Driver> {
     public Set<Driver> getDriversForOrder(City city, int hoursWorked) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(Driver.class)
-                    .add(Restrictions.eq("order_id", null))
-                    .add(Restrictions.eq("city", city.getId()))
+                    .add(Restrictions.isNull("orderRoute"))
+                    .add(Restrictions.eq("city", city))
                     .add(Restrictions.le("hoursWorked", MAX_WORK_HOURS - hoursWorked));
             crit.setMaxResults(50);
             List<Driver> drivers = crit.list();

@@ -23,21 +23,10 @@ public class MapDAOImpl extends GenericDAOImpl<Map> {
     public Integer getDistance(int a, int b) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(Map.class)
-                    .add(Restrictions.eq("cityA", a))
-                    .add(Restrictions.eq("cityB", b));
+                    .add(Restrictions.eq("cityA", (long) a))
+                    .add(Restrictions.eq("cityB", (long)b));
             crit.setMaxResults(50);
             List<Map> l1 = crit.list();
-
-            if (l1 == null) {
-                 crit = session.createCriteria(Map.class)
-                        .add(Restrictions.eq("cityA", b))
-                        .add(Restrictions.eq("cityB", a));
-                crit.setMaxResults(50);
-                l1 = crit.list();
-            }
-            if (l1 == null){
-                return null;
-            }
             Map m = l1.get(0);
             return m.getDistance();
         } catch (Exception e) {

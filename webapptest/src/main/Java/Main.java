@@ -1,4 +1,5 @@
 import DAO.*;
+import businessLogic.DriverLogic;
 import businessLogic.TruckLogic;
 import businessLogic.UserLogic;
 import model.*;
@@ -16,12 +17,18 @@ class Main {
 
         System.out.println("Hello world");
         HibernateUtil.getSessionFactory();
-       TruckLogic truckLogic = new TruckLogic(new TruckDAOImpl(Truck.class));
+        TruckLogic truckLogic = new TruckLogic(new TruckDAOImpl(Truck.class));
+        DriverLogic driverLogic = new DriverLogic(new DriverDAOImpl(Driver.class));
         City city = new City();
         city.setId(1);
         city.setName("Moscow");
         Set<Truck> trucks = truckLogic.getFitTrucks(2,city);
-        System.out.println(trucks);
+
+
+        Set<Driver> drivers = driverLogic.getFitDrivers(700, city);
+//        Set<Driver> drivers = driverLogic.getAllDrivers();
+        System.out.println(drivers);
+//        System.out.println(trucks);
         System.out.println("Good bye!");
 
     }
