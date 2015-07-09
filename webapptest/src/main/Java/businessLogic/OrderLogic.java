@@ -2,10 +2,12 @@ package businessLogic;
 
 import DAO.BaggageDAOImpl;
 import DAO.CityDAOImpl;
+import DAO.MapDAOImpl;
 import DAO.OrderRouteDAOImpl;
 import model.Baggage;
 import model.City;
 import model.OrderRoute;
+import model.statuses.BaggageStatus;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -19,12 +21,15 @@ public class OrderLogic {
     BaggageDAOImpl baggageDAO = null;
     OrderRouteDAOImpl orderRouteDAO = null;
     CityDAOImpl cityDAO = null;
+    MapDAOImpl mapDAO = null;
+
     public OrderLogic(BaggageDAOImpl baggageDAO, OrderRouteDAOImpl orderRouteDAO) {
         this.baggageDAO = baggageDAO;
         this.orderRouteDAO = orderRouteDAO;
         try {
             this.cityDAO = new CityDAOImpl((Class<City>) Class.forName("model.City"));
-            } catch (ClassNotFoundException e) {
+            this.mapDAO = new MapDAOImpl((Class<model.Map>) Class.forName("model.Map"));
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -60,8 +65,10 @@ public class OrderLogic {
     }
 
     public String getTruckIdByOrder(int orderId) {
+
         return orderRouteDAO.getTruckId(orderId);
     }
+
     public Integer getOrderIdByTruck(String truckId) {
         OrderRoute route =  orderRouteDAO.getOrderByTruckId(truckId);
         if(route != null) {
@@ -95,5 +102,21 @@ public class OrderLogic {
             e.printStackTrace();
         }
         return null;
+    }
+    Baggage createBaggage(String name, int weight) {
+        Baggage baggage = new Baggage();
+        baggage.setName(name);
+        baggage.setWeight(weight);
+        baggage.setStatus(BaggageStatus.PRODUCED);
+        return baggage;
+    }
+
+    Integer getRoadLength(Integer[] road) {
+        int length = 0;
+        for(int i =1 ; i <  road.length; i++) {
+            Integer dist = mapDAO.getDistance(i-1, i);
+            length += dist;
+        }
+        return length;
     }
 }

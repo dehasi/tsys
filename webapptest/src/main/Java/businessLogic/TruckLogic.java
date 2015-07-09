@@ -1,6 +1,7 @@
 package businessLogic;
 
 import DAO.TruckDAOImpl;
+import model.City;
 import model.Truck;
 import model.statuses.TruckStatus;
 
@@ -66,12 +67,13 @@ public class TruckLogic {
     //   	фура подходит по вместимости
     // (с учетом погрузки/выгрузки грузов в городах по маршруту следования);
     //SELECT * FROM truck WHERE  capacity >= weight
-    public Set<Truck> getFitTrucks(int weight) {
+    public Set<Truck> getFitTrucks(int weight, City city) {
 
-        return addOrderForTrucks(truckDAO.getFitTrucks(weight));
+        return addOrderForTrucks(truckDAO.getFitTrucks(weight, city));
     }
 
     public Set<Truck> getDefectiveTrucks() {
+
         return truckDAO.getTrucksByStatus(TruckStatus.DEFECTIVE);
     }
 

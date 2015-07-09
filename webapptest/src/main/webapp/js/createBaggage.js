@@ -2,6 +2,56 @@
  * Created by Rafa on 07.07.2015.
  */
 
+
+function GetCellValues() {
+    var x = document.getElementById("cartGrid").rows.length;
+    //alert("len = " + x);
+    var bags = []
+    for (var i = 1; i < x; i++) {
+        var bag = {}
+        var name = document.getElementById('name' + i).value;
+        //alert(name);
+        var weight = document.getElementById('weight' + i).value;
+        //alert(weight);
+        var loadId = document.getElementById('load' + i).value;
+        //alert(loadId);
+        var unloadId = document.getElementById('unload' + i).value;
+        //alert(unloadId)
+        bag['name'] =  name;
+        bag['weight'] =  weight;
+        bag['loadId'] =  loadId;
+        bag['unloadId'] =  unloadId;
+
+        bags.push(bag)
+    }
+    var  js =  JSON.stringify(bags);
+    //alert(js);
+    return js;
+}
+
+function getDriverAndTruck() {
+    alert("getDriverAndTruck !!!!")
+    var jsdata =  GetCellValues();
+    $.ajax({
+        url: "/private/manager/createorder",
+        type: "POST",
+        data: {do:"getStuff", jsdata:jsdata},
+        success: function(data) {
+            alert("success: " + data);
+        }
+    });
+}
+
+
+function validateBaggageCount (){
+    var count = document.forms["create"]["bgcnt"].value;
+    alert(count)
+    return true
+}
+
+
+
+
 function getCities() {
     var cities = null;
     $.ajax({

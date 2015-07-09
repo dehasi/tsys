@@ -3,7 +3,6 @@ package webservices.servlets;
 import DAO.TruckDAOImpl;
 import businessLogic.TruckLogic;
 import model.Truck;
-import utils.HibernateUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +29,7 @@ public class HelloServlet extends HttpServlet{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        Set<Truck> trucks =  truckLogic.getFitTrucks(6);
+        Set<Truck> trucks =  truckLogic.getFitTrucks(6, null);
         out.println(trucks);
 
     }

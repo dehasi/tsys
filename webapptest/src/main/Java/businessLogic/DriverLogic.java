@@ -1,6 +1,7 @@
 package businessLogic;
 
 import DAO.DriverDAOImpl;
+import model.City;
 import model.Driver;
 import model.statuses.DriverStatus;
 
@@ -72,5 +73,9 @@ public class DriverLogic {
     }
     public void updateDriver(Driver driver) throws SQLException {
         driverDAO.update(driver);
+    }
+
+    public Set<Driver> getDriversForOrder(int hours, City city) {
+        return  driverDAO.getDriversForOrder(city, hours);
     }
 }

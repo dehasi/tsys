@@ -73,7 +73,7 @@
 
     <servlet>
         <servlet-name>ManagerCreateOrder</servlet-name>
-        <servlet-class>webservices.servlets.ManagerCreateOrder</servlet-class>
+        <servlet-class>webservices.servlets.ManagerOrderCreate</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ManagerCreateOrder</servlet-name>

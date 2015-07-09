@@ -11,6 +11,7 @@
 <head>
     <title>Order managering</title>
   <script type="text/javascript" src = "/js/jquery-1.11.3.js"></script>
+  <script type="text/javascript" src = "/js/createBaggage.js"></script>
   <%--<script type="text/javascript" src = "/js/validateTruckForm.js"></script>--%>
 </head>
 <body>
@@ -23,6 +24,13 @@
     </tr>
   </table>
 <br>
+
+<form id = "create" name="createOrder" method="get" action="/private/manager/createorder"   onsubmit = "return validateBaggageCount()" >
+  create order with:
+  <input type = "text" id = "bgcnt" size="5" value="1" name = "count">  baggages
+  <input type="submit" id="createButton" value="create" >
+</form>
+
 
 <br>
   <c:choose>

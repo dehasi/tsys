@@ -27,6 +27,10 @@ import java.util.Set;
             query = "SELECT d FROM Driver d WHERE d.orderRoute = NULL" ),
 
         @NamedQuery(
+                name = "Driver.getForOrder",
+                query = "SELECT d FROM Driver d WHERE d.orderRoute = NULL AND d.hoursWorked <= :hw" ),
+
+        @NamedQuery(
             name = "Driver.getInOrder",
             query = "SELECT d FROM Driver d WHERE d.orderRoute <> NULL" ),
 })

@@ -2,8 +2,6 @@ import DAO.*;
 import businessLogic.TruckLogic;
 import businessLogic.UserLogic;
 import model.*;
-import model.statuses.BaggageStatus;
-import model.statuses.TruckStatus;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import utils.HibernateUtil;
@@ -17,29 +15,13 @@ class Main {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
         System.out.println("Hello world");
-
-        TruckLogic truckLogic = new TruckLogic(new TruckDAOImpl((Class<Truck>) Class.forName("model.Truck")));
-        Set<Truck> trucks =  truckLogic.getFitTrucks(6);
+        HibernateUtil.getSessionFactory();
+       TruckLogic truckLogic = new TruckLogic(new TruckDAOImpl(Truck.class));
+        City city = new City();
+        city.setId(1);
+        city.setName("Moscow");
+        Set<Truck> trucks = truckLogic.getFitTrucks(2,city);
         System.out.println(trucks);
-
-        UserLogic userLogic = new UserLogic(new UserDAOImpl((Class<User>) Class.forName("model.User")));
-        userLogic.isValidUser("", "");
-        userLogic.isValidUser("login", "password");
-        userLogic.isValidUser("login", "password2");
-
-        System.out.println("\n\n\n-------------\n\n\n");
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.getNamedQuery("Driver.getDriverFriends")
-                .setString("did", String.valueOf(1));
-
-        System.out.println(query.list());
-
-         query = session.getNamedQuery("OrderRoute.getRoute")
-                .setString("id", String.valueOf(1));
-
-        System.out.println(query.list());
-
         System.out.println("Good bye!");
 
     }

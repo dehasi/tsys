@@ -111,4 +111,18 @@ public class DriverDAOImpl extends GenericDAOImpl<Driver> {
         }
         return null;
     }
+
+//    private Set<Driver> getDriversForOrder(int hours, City city) {
+//        hours = MAX_WORK_HOURS - hours;
+//        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+//            Query query = session.getNamedQuery("Driver.getForOrder")
+//                    .setInteger("hw", hours);
+//            Set<Driver> drivers =  new HashSet<>(query.list());
+//
+//            return  null;
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return null;
+//    }
 }

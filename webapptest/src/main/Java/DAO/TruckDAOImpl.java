@@ -1,5 +1,6 @@
 package DAO;
 
+import model.City;
 import model.Truck;
 import model.statuses.TruckStatus;
 import org.hibernate.Criteria;
@@ -72,10 +73,12 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
 
     //   	фура подходит по вместимости
     // (с учетом погрузки/выгрузки грузов в городах по маршруту следования);
-    public Set<Truck> getFitTrucks(int weight) {
+    public Set<Truck> getFitTrucks(int weight, City city) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(Truck.class)
-                    .add(Restrictions.ge("capacity", (long) weight));
+                    .add(Restrictions.ge("capacity", (long) weight))
+                    .add(Restrictions.eq("city", city));
+
             crit.setMaxResults(50);
             List trucks = crit.list();
             return new HashSet<>(trucks);

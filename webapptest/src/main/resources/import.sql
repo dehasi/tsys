@@ -1,10 +1,10 @@
-TRUNCATE TABLE map
-TRUNCATE TABLE city
-TRUNCATE TABLE baggage
-TRUNCATE TABLE truck
-TRUNCATE TABLE driver
-TRUNCATE TABLE orderroute
-TRUNCATE TABLE 'user'
+-- TRUNCATE TABLE map
+-- TRUNCATE TABLE city
+-- TRUNCATE TABLE baggage
+-- TRUNCATE TABLE truck
+-- TRUNCATE TABLE driver
+-- TRUNCATE TABLE orderroute
+-- TRUNCATE TABLE 'user'
 
 INSERT INTO baggage VALUES (1, 'tea',    '0', '1200')
 INSERT INTO baggage VALUES (2, 'beer',   '0', '990' )

@@ -286,29 +286,5 @@ public class ManagerDriverWork extends HttpServlet {
         super.doDelete(req, resp);
     }
 
-    public void handleRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
-        PrintWriter out = res.getWriter();
-        res.setContentType("text/plain");
-
-        Enumeration<String> parameterNames = req.getParameterNames();
-
-        while (parameterNames.hasMoreElements()) {
-
-            String paramName = parameterNames.nextElement();
-            out.write(paramName);
-            out.write("\n");
-
-            String[] paramValues = req.getParameterValues(paramName);
-            for (int i = 0; i < paramValues.length; i++) {
-                String paramValue = paramValues[i];
-                out.write("\t" + paramValue);
-                out.write("\n");
-            }
-
-        }
-
-        out.close();
-
-    }
 }
