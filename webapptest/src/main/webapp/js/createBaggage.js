@@ -56,7 +56,13 @@ function createReportForm(trucks, drivers) {
     frm.appendChild(h4);
 
     var truckTable = document.createElement("TABLE");
-    var truckHeader = document.createElement("TR");
+    truckTable.setAttribute( 'class', 'table' );
+    //truckTable.setAttribute( 'class', 'table-bordered' );
+    var lastRow = 0;
+    var truckHeader = truckTable.insertRow(lastRow);
+        //document.createElement("TR");
+ //   truckHeader.setAttribute( 'class', 'table' );
+    truckHeader.setAttribute( 'class', 'active' );
     var th;
     th = document.createElement("TH");
     th.innerHTML = "#";
@@ -92,6 +98,7 @@ function createReportForm(trucks, drivers) {
 
 
         var truckRow = document.createElement("TR");
+        truckRow.setAttribute( 'class', 'active' );
         var td;
         td = document.createElement("TD");
         td.appendChild(radio)
@@ -118,6 +125,7 @@ function createReportForm(trucks, drivers) {
     frm.appendChild(h4);
 ///////////////////////////////////////////////////
     var driverTable = document.createElement("TABLE");
+    driverTable.setAttribute( 'class', 'table' );
     var driverHeader = document.createElement("TR");
 
     th = document.createElement("TH");
@@ -190,6 +198,7 @@ function createReportForm(trucks, drivers) {
     button.setAttribute("id", "sendOrder");
     button.setAttribute("value", "create order");
     button.setAttribute("onclick", "createOrder()");
+    button.setAttribute("class", "btn-primary");
 
     frm.appendChild(button);
     root.appendChild(frm);

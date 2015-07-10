@@ -10,13 +10,15 @@
 <html>
 <head>
     <title>managering</title>
+    <%@include  file="/bootstyle.jsp" %>
 </head>
 <body>
-<h1>This page was created for mamangers work </h1>
-<%@include  file="header.jsp" %>
 
-    <div>
-
+    <div class="container">
+        <h3>Manager work page </h3>
+        <%@include  file="header.jsp" %>
+        <h4>Some info for managers </h4>
+        <h4>new as example </h4>
     </div>
 </body>
 </html>

@@ -7,10 +7,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 
-<div>
-  <a id = "truckLink" href="/private/manager/truck?action=show&show=all">Trucks</a>
-  <a id = "driverLink" href="/private/manager/driver?action=show&show=all">Divers</a>
-  <a id = "orderLink" href="/private/manager/order?action=show&show=all">Orders</a>
-  <a id = "logout" href="#">Logout</a>
+<div class="container">
+  <table  class="table">
+    <tr lass="active">
+      <td><a id = "truckLink" href="/private/manager/truck?action=show&show=all">Trucks</a></td>
+      <td><a id = "driverLink" href="/private/manager/driver?action=show&show=all">Divers</a></td>
+      <td><a id = "orderLink" href="/private/manager/order?action=show&show=all">Orders</a></td>
+      <td><a id = "logout" href="#">Logout</a></td>
+    </tr>
+  </table>
 </div>
 

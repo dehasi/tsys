@@ -11,12 +11,17 @@
 <head>
     <title>Creating order</title>
     <script type="text/javascript" src = "/js/jquery-1.11.3.js"></script>
+
+    <%@include  file="/bootstyle.jsp" %>
+
     <script type="text/javascript" src = "/js/createBaggage.js"></script>
 </head>
 <body>
+<div class="container">
+
 <%@include file="header.jsp"%>
 
-    <table id="cartGrid">
+    <table id="cartGrid" class="table table-bordered">
         <tr>
             <th>name</th>
             <th>weight</th>
@@ -34,7 +39,7 @@
                 </td>
                 <%----%>
                 <td>
-                    <select name="city" id="load${i}">
+                    <select name="city" id="load${i}" class="form-control">
                         <option selected="selected" value="0"> Select city: </option>
                         <c:forEach var="city" items="${cities}">
                             <option value="${city.id}">
@@ -45,7 +50,7 @@
                 </td>
                 <%----%>
                 <td>
-                    <select name="city" id="unload${i}">
+                    <select name="city" id="unload${i}" class="form-control">
                     <option selected="selected" value="0"> Select city: </option>
                     <c:forEach var="city" items="${cities}">
                         <option value="${city.id}">
@@ -61,10 +66,10 @@
 
     <div id="findArea">
         find drivers and truck:
-        <input type="submit" id="findStuff" value="find"  onclick="getDriverAndTruck()">
+        <input type="submit" id="findStuff" value="find"  onclick="getDriverAndTruck()" class="btn btn-success">
     </div>
 
-    <div id="reportArea">
+    <div id="reportArea"  class="table-responsive">
 
     </div>
 

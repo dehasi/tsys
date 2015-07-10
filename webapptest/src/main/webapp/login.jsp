@@ -42,7 +42,7 @@
             <input type="password" name="password" value="secret" placeholder="password" class="form-control col-xs-3">
             <%--</div>--%>
             <%--<div class="col-xs-4">--%>
-            <input class="btn btn-primary btn-block " type="submit" name="commit" value="Login">
+            <input class="btn btn-primary btn-block" type="submit" name="commit" value="Login">
             </div>
         </form>
 

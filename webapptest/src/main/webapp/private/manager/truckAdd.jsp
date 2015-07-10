@@ -12,33 +12,35 @@
     <title>Add new truck</title>
     <script type="text/javascript" src = "/js/jquery-1.11.3.js"></script>
     <script type="text/javascript" src = "/js/validateTruckForm.js"></script>
+    <%@include  file="/bootstyle.jsp" %>
 </head>
 <body>
+
+<div class="container" >
 <%@include file="header.jsp"%>
 
-<h1>add truck</h1>
+<h3>add truck</h3>
 
-<form  method="POST" action="" onsubmit = "return validateForm('addTruck')"  id="addTruck">
-    Id:<br>
-    <input type="text" name="tid">
+<form  method="POST" action="" onsubmit = "return validateForm('addTruck')"  id="addTruck" class="form col-xs-3">
+    <label>Id</label>    <input type="text" name="tid" class="form-control">
     <br>
-    Duty time:<br>
-    <input type="text" name="duty">
+    <label>Duty time:</label>
+    <input type="text" name="duty" class="form-control">
     <br>
-    Capacity:<br>
-    <input type="text" name="capacity">
+    <label>Capacity:</label>
+    <input type="text" name="capacity" class="form-control">
     <br>
     Status:<br>
 
-    <input type="radio" name="status" value="0"  id ="OK" checked>
+    <input type="radio" name="status" value="0"  id ="OK" checked class="radio-inline">
     <label for="OK">OK</label>
     <br>
-    <input type="radio" name="status" value="1"  id ="DEFECTIVE">
+    <input type="radio" name="status" value="1"  id ="DEFECTIVE" checked class="radio-inline">
     <label for="DEFECTIVE">DEFECTIVE</label>
     <br>
 
-    City:<br>
-    <select name="city" id="city">
+    <label>City:</label>
+    <select name="city" id="city" class="form-control">
         <option selected="selected" value="0"> Select city: </option>
         <c:forEach var="city" items="${cities}">
             <option value="${city.id}">
@@ -46,8 +48,10 @@
             </option>
         </c:forEach>
     </select>
-    <p class="submit"><input type="submit" name="do" value="Add"></p>
+    <p>
+    <input type="submit" name="do" value="Add" class="btn btn-primary btn-block" >
+    </p>
 </form>
-
+</div>
 </body>
 </html>

@@ -12,18 +12,15 @@
     <title>truck managering </title>
 
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <script src="/js/jquery-1.11.3.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="/css/style.css">
+  <%@include  file="/bootstyle.jsp" %>
 
 
 </head>
 <%@include  file="header.jsp" %>
-<table>
-  <tr>
+
+<div class="container">
+<table class="table">
+  <tr class="active" >
     <td> <a href="truck?action=show&show=all">all</a> </td>
     <td> <a href="truck?action=show&show=free">free</a> </td>
     <td> <a href="truck?action=show&show=inorder">inOrder</a> </td>
@@ -33,14 +30,14 @@
   </tr>
 </table>
 
-show param = ${show}
+<%--show param = ${show}--%>
 <br>
 <c:choose>
   <c:when test="${trucks != null }">
 
-<div class="container">
-    <table  class="table table-hover" >
-      <tr>
+
+    <table  class="table table-hover  table-bordered" >
+      <tr class="info">
         <th>id</th>
         <th>duty size</th>
         <th>capacity</th>
@@ -78,12 +75,13 @@ show param = ${show}
         </tr>
       </c:forEach>
     </table>
-  </div>
+
   </c:when>
 
   <c:otherwise>
    No trucks yet. add.
   </c:otherwise>
 </c:choose>
+</div>
 </body>
 </html>

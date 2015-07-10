@@ -12,41 +12,40 @@
   <title>Edit truck</title>
   <script type="text/javascript" src = "/js/jquery-1.11.3.js"></script>
   <script type="text/javascript" src = "/js/validateTruckForm.js"></script>
+  <%@include  file="/bootstyle.jsp" %>
 </head>
 <body>
+
+<div class="container">
 <%@include file="header.jsp"%>
 
-<td>${truck.status}</td>
-
-<br>
-truck = ${truck }
-<br>
-<form  method="POST" action="" onsubmit = "return validateForm('editTruck')"  id="editTruck">
+  <h3>edit truck</h3>
+<form  method="POST" action="" onsubmit = "return validateForm('editTruck')"  id="editTruck" class="form col-xs-3">
   <input type="hidden" name="hiddenid" value="${truck.id}">
-  Id:<br>
-  <input type="text" name="tid" value="${truck.id}">
+  <label>Id</label>
+  <input type="text" name="tid" value="${truck.id}" class="form-control">
   <br>
-  Duty time:<br>
-  <input type="text" name="duty" value="${truck.dutySize}">
+  <label>Duty time:</label>
+  <input type="text" name="duty" value="${truck.dutySize}" class="form-control" >
   <br>
-  Capacity:<br>
-  <input type="text" name="capacity" value="${truck.capacity}">
+  <label>Capacity:</label>
+  <input type="text" name="capacity" value="${truck.capacity}" class="form-control">
   <br>
   Status:<br>
 
-  <input type="radio" name="status" value="0"  id ="OK"
+  <input type="radio" name="status" value="0"  id ="OK" class="radio-inline"
         <c:if test="${truck.status == 'OK'}"> checked</c:if>
    >
   <label for="OK">OK</label>
   <br>
-  <input type="radio" name="status" value="1"  id ="DEFECTIVE"
+  <input type="radio" name="status" value="1"  id ="DEFECTIVE" class="radio-inline"
   <c:if test="${truck.status != 'OK'}"> checked</c:if>
           >
   <label for="DEFECTIVE">DEFECTIVE</label>
   <br>
 
-  City:<br>
-  <select name="city" id="city">
+  <label>City:</label>
+  <select name="city" id="city" class="form-control">
     <option selected="selected" value="0"> Select city: </option>
     <c:forEach var="city" items="${cities}">
       <option value="${city.id}"
@@ -58,7 +57,10 @@ truck = ${truck }
       </option>
     </c:forEach>
   </select>
-  <p class="submit"><input type="submit" name="do" value="Save"></p>
+  <p class="submit"><input type="submit" name="do" value="Save"   class="btn btn-primary btn-block btn-info"></p>
 </form>
+
+
+</div>
 </body>
 </html>

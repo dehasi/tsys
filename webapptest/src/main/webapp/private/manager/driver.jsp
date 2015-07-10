@@ -10,23 +10,24 @@
 <html>
 <head>
     <title>Drivers managering</title>
+  <%@include  file="/bootstyle.jsp" %>
 </head>
 <body>
   <%@ include file="header.jsp"%>
-
-  <p>
-  <tr>
+<div class="container">
+ <table class="table">
+  <tr class="active">
     <td> <a href="driver?action=show&show=all">all</a> </td>
     <td> <a href="driver?action=show&show=free">free</a> </td>
     <td> <a href="driver?action=show&show=inorder">inOrder</a> </td>
     <td> <a href="driver?action=add">Add driver</a> </td>
   </tr>
-
+ </table>
   <br>
   <c:choose>
     <c:when test="${ drivers != null}">
-      <table>
-        <tr>
+      <table class="table  table-bordered"  >
+        <tr class="info">
           <th>id</th>
           <th>name</th>
           <th>last name</th>
@@ -36,7 +37,7 @@
           <th colspan=2>action</th>
         </tr>
         <c:forEach var = "driver" items = "${drivers}" >
-          <tr>
+          <tr class="active">
             <td>${driver.id}</td>
             <td>${driver.name}</td>
             <td>${driver.lastName}</td>
@@ -54,5 +55,7 @@
       No drivers yet. add.
     </c:otherwise>
   </c:choose>
+
+</div>
 </body>
 </html>

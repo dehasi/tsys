@@ -12,12 +12,14 @@
     <title>Order managering</title>
   <script type="text/javascript" src = "/js/jquery-1.11.3.js"></script>
   <script type="text/javascript" src = "/js/createBaggage.js"></script>
+  <%@include  file="/bootstyle.jsp" %>
   <%--<script type="text/javascript" src = "/js/validateTruckForm.js"></script>--%>
 </head>
 <body>
+<div class="container">
 <%@include  file="header.jsp" %>
-  <table>
-    <tr>
+  <table class="table">
+    <tr class="info">
       <td> <a href="order?action=show&show=all">all</a> </td>
       <td> <a href="order?action=show&show=done">done</a> </td>
       <td> <a href="order?action=show&show=notdone">notdone</a> </td>
@@ -27,8 +29,8 @@
 
 <form id = "create" name="createOrder" method="get" action="/private/manager/createorder"   onsubmit = "return validateBaggageCount()" >
   create order with:
-  <input type = "text" id = "bgcnt" size="5" value="1" name = "count">  baggages
-  <input type="submit" id="createButton" value="create" >
+  <input type = "text" id = "bgcnt" size="5" value="1" name = "count" class="form-horizontal">  baggages
+  <input type="submit" id="createButton" value="create" class="btn btn-success">
 </form>
 
 
@@ -37,8 +39,8 @@
     <c:when test="${orders != null}" >
 
       <c:forEach var="order" items="${orders}">
-        OrderId = ${order.orderId} TruckId = ${order.turckId}
-        <table>
+        <label> OrderId = ${order.orderId} TruckId = ${order.turckId}</label>
+        <table class="table  table-bordered">
           <tr>
             <th>#</th>
             <th>city</th>
@@ -65,5 +67,7 @@
     </c:otherwise>
 
   </c:choose>
+
+</div>
 </body>
 </html>
