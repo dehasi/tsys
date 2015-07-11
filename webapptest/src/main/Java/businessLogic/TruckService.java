@@ -1,9 +1,11 @@
 package businessLogic;
 
 import DAO.TruckDAOImpl;
+import javafx.scene.shape.TriangleMesh;
 import model.City;
 import model.Truck;
 import model.statuses.TruckStatus;
+import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -15,7 +17,7 @@ import java.util.Set;
  *
  */
 public class TruckService {
-
+    private static Logger logger = Logger.getLogger(TruckService.class);
     private TruckDAOImpl truckDAO = null;
 
     /**
@@ -91,8 +93,14 @@ public class TruckService {
      * @return set of trucks ready for do order
      */
     public Set<Truck> getFitTrucks(int weight, City city) {
-
-        return addOrderForTrucks(truckDAO.getFitTrucks(weight, city));
+        Set<Truck> trucks = addOrderForTrucks(truckDAO.getFitTrucks(weight, city));
+        Set<Truck> forOrder = new HashSet<>();
+        for(Truck t : trucks) {
+            if (t.getOrderId() == null) {
+                forOrder.add(t);
+            }
+        }
+        return forOrder;
     }
 
     public Set<Truck> getDefectiveTrucks() {
@@ -124,7 +132,7 @@ public class TruckService {
      * @param truck truck
      * @return truck with aplied order
      */
-    private Truck addOrderForTruck(Truck truck){
+    private Truck addOrderForTruck(Truck truck) {
         if (truck == null) {
             return truck;
         }
@@ -139,7 +147,7 @@ public class TruckService {
      * @param trucks list of trucks
      * @return set of trucks with applied order id
      */
-    private Set<Truck>  addOrderForTrucks(Set<Truck> trucks){
+    private Set<Truck>  addOrderForTrucks(Set<Truck> trucks) {
         if (trucks == null) {
             return trucks;
         }

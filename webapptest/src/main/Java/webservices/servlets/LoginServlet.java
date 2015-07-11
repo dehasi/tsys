@@ -34,13 +34,16 @@ public class LoginServlet extends HttpServlet {
                 case DRIVER: {
                     logger.info("driver logged");
                     HttpSession session = req.getSession();
-                    session.setAttribute("status", DRIVER);
-                    session.setAttribute("id", Integer.parseInt(login));
+                    session.setAttribute("status", "DRIVER");
+                    session.setAttribute("id", login);
                     resp.sendRedirect("private/driver");
                     break;
                 }
                 case MANAGER:{
                     logger.info("manager logged");
+                    HttpSession session = req.getSession();
+                    session.setAttribute("status", "MANAGER");
+                    session.setAttribute("id", login);
                     resp.sendRedirect("private/manager");
                     break;
                 }

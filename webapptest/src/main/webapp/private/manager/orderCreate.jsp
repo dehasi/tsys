@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Creating order</title>
+    <script type="text/javascript" src = "/js/validateUtils.js"></script>
     <script type="text/javascript" src = "/js/createBaggage1.js"></script>
     <script type="text/javascript" src = "/js/jquery-1.11.3.js"></script>
 

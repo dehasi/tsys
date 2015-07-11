@@ -5,6 +5,7 @@ import com.google.gson.*;
 import model.City;
 import model.Driver;
 import model.Truck;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,6 +24,7 @@ import java.util.Set;
  * Created by Rafa on 07.07.2015.
  */
 public class ManagerOrderCreate extends HttpServlet {
+    private static Logger logger = Logger.getLogger(ManagerOrderCreate.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -83,10 +85,6 @@ public class ManagerOrderCreate extends HttpServlet {
                     ServletHelper.handleError(req,resp,e);
                 }
 
-
-                System.out.println(req.getParameter("truckId"));
-                System.out.println(req.getParameter("drivers"));
-                System.out.println(req.getParameter("jsdata"));
                 resp.sendRedirect("/private/manager/order?action=show&show=all");
                 break;
             }
@@ -153,27 +151,5 @@ public class ManagerOrderCreate extends HttpServlet {
         out.close();
     }
 
-    public void handleRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
-        PrintWriter out = res.getWriter();
-        res.setContentType("text/plain");
-
-        Enumeration<String> parameterNames = req.getParameterNames();
-
-        while (parameterNames.hasMoreElements()) {
-
-            String paramName = parameterNames.nextElement();
-            out.write(paramName);
-            out.write("\n");
-
-            String[] paramValues = req.getParameterValues(paramName);
-            for (int i = 0; i < paramValues.length; i++) {
-                String paramValue = paramValues[i];
-                out.write("\t" + paramValue);
-                out.write("\n");
-            }
-
-        }
-        out.close();
-    }
 }

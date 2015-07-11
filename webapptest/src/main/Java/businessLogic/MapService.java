@@ -20,6 +20,9 @@ public class MapService {
     }
 
     public int getDistance (int cityA, int cityB) {
+        if (cityA == cityB) {
+            return 0;
+        }
         Integer dist = mapDAO.getDistance(cityA, cityB);
 
         if (dist == null) {

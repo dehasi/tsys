@@ -1,6 +1,8 @@
 package model;
 
+//import com.sun.istack.internal.Nullable;
 import com.sun.istack.internal.Nullable;
+//import org.hibernate.nu
 import model.statuses.DriverStatus;
 
 import javax.persistence.*;
@@ -55,8 +57,7 @@ public class Driver implements Comparable<Driver>{
     @JoinColumn(name = "city")
     private City city;
 
-    @Column(name = "order_id")
-    @Nullable
+    @Column(name = "order_id", nullable = true)
     private Integer orderRoute;
 
     public City getCity() {

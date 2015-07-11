@@ -77,6 +77,7 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(Truck.class)
                     .add(Restrictions.ge("capacity", (long) weight))
+                    .add(Restrictions.eq("status", TruckStatus.OK))
                     .add(Restrictions.eq("city", city));
 
             crit.setMaxResults(50);

@@ -8,6 +8,7 @@ import model.Truck;
 import model.statuses.BaggageStatus;
 import model.statuses.DriverStatus;
 import model.statuses.OrderStatus;
+import org.apache.log4j.Logger;
 
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -21,6 +22,8 @@ import static java.util.Collections.*;
  * different views
  */
 public class OrderService {
+
+    private static Logger logger = Logger.getLogger(OrderService.class);
     BaggageDAOImpl baggageDAO = null;
     OrderRouteDAOImpl orderRouteDAO = null;
     CityDAOImpl cityDAO = null;
@@ -156,6 +159,7 @@ public class OrderService {
         List<OrderRoute> routes = new ArrayList<>();
 
         int baxIndex = 0;
+        int visitNumber = 0;
         for (Ticket t : tickets) {
             OrderRoute oLoad = new OrderRoute();
             OrderRoute oUnLoad = new OrderRoute();
@@ -166,7 +170,7 @@ public class OrderService {
             oLoad.setIsDone(0);
             oLoad.setStatus(0);
             oLoad.setType(0); // load
-            oLoad.setVisitNumber(baxIndex+1);
+            oLoad.setVisitNumber(++visitNumber);
             oLoad.setTruck(truckId);
 
             oUnLoad.setOrder(orderId);
@@ -175,11 +179,12 @@ public class OrderService {
             oUnLoad.setIsDone(0);
             oUnLoad.setStatus(0);
             oUnLoad.setType(1); // unload
-            oUnLoad.setVisitNumber(baxIndex + 2);
+            oUnLoad.setVisitNumber(++visitNumber);
             oUnLoad.setTruck(truckId);
 
             routes.add(oLoad);
             routes.add(oUnLoad);
+            ++baxIndex;
         }
 
         for (OrderRoute r : routes) {
@@ -192,7 +197,7 @@ public class OrderService {
             driver.setStatus(DriverStatus.WORK);
             driverDAO.update(driver);
         }
-
+        logger.info("Order created");
     }
 
     private List<Baggage> createBaggageFromTickets(List<Ticket> tickets) {
@@ -208,5 +213,61 @@ public class OrderService {
             baggages.add(b);
         }
         return baggages;
+    }
+
+    public void changeBaggageStatus (int baggageId, BaggageStatus status) throws SQLException {
+        Baggage baggage = baggageDAO.getById(baggageId);
+        baggage.setStatus(status);
+        baggageDAO.update(baggage);
+        Set<OrderRoute> routes = orderRouteDAO.getRoutesByBaggageId(baggageId);
+//PRODUCED(0), SHIPPED(1), DONE(2);
+        switch (status) {
+            case DONE:{
+                int orderId = -1;
+                for (OrderRoute or : routes) {
+                    if (or.getType() == 1) {
+                        or.setIsDone(1);
+                        orderRouteDAO.update(or);
+                        orderId = or.getOrder();
+                        break;
+                    }
+                }
+
+                if (orderId != -1) {
+                    Set<OrderRoute> routeSet = getRoute(orderId);
+                    if(isOrderDone(routeSet)) {
+                        for (OrderRoute r : routeSet) {
+                            r.setStatus(1);
+                            orderRouteDAO.update(r);
+                        }
+                    }
+                }
+
+                break;
+            }
+            case PRODUCED: {
+                for (OrderRoute or : routes) {
+                    if (or.getType() == 0) {
+                        or.setIsDone(1);
+                        orderRouteDAO.update(or);
+                        break;
+                    }
+                }
+                break;
+            }
+            case SHIPPED: {
+
+                break;
+            }
+        }
+    }
+
+    private boolean isOrderDone(Set<OrderRoute> routes) {
+        for(OrderRoute r : routes) {
+            if (r.getIsDone() == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }

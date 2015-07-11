@@ -102,4 +102,20 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
         }
         return -1;
     }
+
+    public Set<OrderRoute> getRoutesByBaggageId(int baggageId) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Criteria crit = session.createCriteria(OrderRoute.class)
+                    .add(Restrictions.eq("baggage", baggageId));
+            crit.setMaxResults(50);
+
+            List routes = crit.list();
+            return new HashSet<>(routes);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+
 }

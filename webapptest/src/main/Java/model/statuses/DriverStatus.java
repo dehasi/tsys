@@ -9,4 +9,18 @@ public enum DriverStatus {
     DriverStatus(long l) {
 
     }
+
+    public  static  DriverStatus fromString(String status) {
+
+        if (status.compareToIgnoreCase("rest") == 0) {
+            return REST;
+        } else if (status.compareToIgnoreCase("work") == 0) {
+            return WORK;
+        } else if (status.compareToIgnoreCase("driving") == 0) {
+            return DRIVING;
+        } else {
+            return REST;
+        }
+
+    }
 }

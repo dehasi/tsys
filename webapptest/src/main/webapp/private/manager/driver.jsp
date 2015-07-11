@@ -51,8 +51,8 @@
 
             <c:choose>
               <c:when test="${driver.orderRoute == null }">
-                <td> <a href="driver?action=edit&id=${driver.orderRoute}">Edit</a> </td>
-                <td> <a href="driver?action=delete&id=${driver.orderRoute}">Delete</a> </td>
+                <td> <a href="driver?action=edit&id=${driver.id}">Edit</a> </td>
+                <td> <a href="driver?action=delete&id=${driver.id}">Delete</a> </td>
               </c:when>
               <c:otherwise>
                 <td>Edit </td>

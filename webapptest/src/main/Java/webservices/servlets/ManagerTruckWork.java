@@ -6,6 +6,7 @@ import businessLogic.TruckService;
 import model.City;
 import model.Truck;
 import model.statuses.TruckStatus;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,7 +20,7 @@ import java.util.Set;
  * Created by Rafa on 04.07.2015.
  */
 public class ManagerTruckWork extends HttpServlet {
-
+    private static Logger logger = Logger.getLogger(ManagerTruckWork.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -103,7 +104,7 @@ public class ManagerTruckWork extends HttpServlet {
         try {
             TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
 
-            Set<Truck> trucks = null;
+            Set<Truck> trucks;
 
             switch (show){
                 case "all" : {
@@ -150,7 +151,6 @@ public class ManagerTruckWork extends HttpServlet {
 
         switch (action) {
             case "Add": {
-//                handleRequest(req, resp);
                 try {
                     TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
                     CityService cityService = BusinessFactory.getInstance().getCityLogic();

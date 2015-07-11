@@ -3,6 +3,7 @@ package webservices.servlets;
 import businessLogic.BusinessFactory;
 import businessLogic.OrderService;
 import businessLogic.OrderRouteView;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,17 +17,17 @@ import java.util.Set;
  * Created by Rafa on 05.07.2015.
  */
 public class ManagerOrderWork extends HttpServlet {
+    private static Logger logger = Logger.getLogger(ManagerOrderWork.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String action = req.getParameter("action");
+        if(action == null) {
+            action = "show";
+        }
         switch (action) {
             case "show" :{
                 show( req,  resp);
-                break;
-            }
-            case "add" :{
-                add(req, resp);
                 break;
             }
             default:{
@@ -35,17 +36,16 @@ public class ManagerOrderWork extends HttpServlet {
         }
     }
 
-    private void add(HttpServletRequest req, HttpServletResponse resp) {
-
-    }
-
     private void show(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String show = req.getParameter("show");
+        if(show == null) {
+            show = "all";
+        }
         req.setAttribute("show", show);
         try {
             req.setAttribute("show", show);
             OrderService orderService = BusinessFactory.getInstance().getOrderLogic();
-            Set<OrderRouteView> orders = null;
+            Set<OrderRouteView> orders;
 
             switch (show){
                 case "all" : {

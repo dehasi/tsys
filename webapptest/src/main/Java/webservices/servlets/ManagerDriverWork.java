@@ -6,6 +6,7 @@ import businessLogic.DriverService;
 import model.City;
 import model.Driver;
 import model.statuses.DriverStatus;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,6 +20,7 @@ import java.util.*;
  * Created by Rafa on 05.07.2015.
  */
 public class ManagerDriverWork extends HttpServlet {
+    private static Logger logger = Logger.getLogger(ManagerDriverWork.class);
 
     private void show(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         String show = req.getParameter("show");
@@ -141,7 +143,7 @@ public class ManagerDriverWork extends HttpServlet {
 
         String action = req.getParameter("do");
         if (action == null) {
-
+            logger.error("null in action paramenter");
         }
 
         switch (action) {

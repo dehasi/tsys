@@ -15,7 +15,7 @@
 <body>
 <div class="container">
     <h3>driver info</h3>
-    <a id = "logout" href="/login.jsp">Logout</a>
+    <td><a id = "logout" href="/logout">Logout</a></td>
     <%--	личный номер водителя--%>
 
     <h4>Driver id = ${driver.id}</h4>

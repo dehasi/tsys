@@ -4,6 +4,7 @@ import DAO.DriverDAOImpl;
 import model.City;
 import model.Driver;
 import model.statuses.DriverStatus;
+import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -16,6 +17,8 @@ import java.util.Set;
  * and some addition functions
  */
 public class DriverService {
+
+    private static Logger logger = Logger.getLogger(DriverService.class);
     private static int MEDUIM_SPEED = 90;
     private DriverDAOImpl driverDAO = null;
 
@@ -32,7 +35,6 @@ public class DriverService {
         Driver driver = driverDAO.getById(driverId);
         driver.setStatus(status);
         driverDAO.update(driver);
-
     }
 
     public DriverStatus getStatus(int driverId) {

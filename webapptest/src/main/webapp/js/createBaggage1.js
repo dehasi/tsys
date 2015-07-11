@@ -6,9 +6,9 @@
 function GetCellValues() {
     var x = document.getElementById("cartGrid").rows.length;
 
-    var bags = []
+    var bags = [];
     for (var i = 1; i < x; i++) {
-        var bag = {}
+        var bag = {};
         var name = document.getElementById('name' + i).value;
         //alert(name);
         var weight = document.getElementById('weight' + i).value;
@@ -80,6 +80,7 @@ function createReportForm(trucks, drivers, driverTime ) {
 
     truckTable.appendChild(truckHeader);
 
+    var truckCount = 0;
     for(var t in trucks) {
 
         var res = JSON.stringify(trucks[t]);
@@ -114,7 +115,7 @@ function createReportForm(trucks, drivers, driverTime ) {
         td.innerHTML = capacity;
         truckRow.appendChild(td);
         truckTable.appendChild(truckRow);
-
+        truckCount++;
     }
     frm.appendChild(truckTable);
 
@@ -150,6 +151,7 @@ function createReportForm(trucks, drivers, driverTime ) {
 
     driverTable.appendChild(driverHeader);
 
+    var driverCount = 0;
     for(var d in drivers) {
         var res = JSON.stringify(drivers[d]);
 
@@ -187,8 +189,8 @@ function createReportForm(trucks, drivers, driverTime ) {
         driverRow.appendChild(td);
 
         driverTable.appendChild(driverRow);
+        driverCount++;
     }
-
     frm.appendChild(driverTable);
 
     var button = document.createElement("INPUT");
@@ -198,19 +200,24 @@ function createReportForm(trucks, drivers, driverTime ) {
     button.setAttribute("onclick", "createOrder()");
     button.setAttribute("class", "btn-primary");
 
-    frm.appendChild(button);
+    if(driverCount == 0 || truckCount == 0) {
+        var errorLabel = document.createElement("H3")
+        errorLabel.innerHTML = "there are no stuff for order. change please";
+        frm.appendChild(errorLabel);
+    }else{
+        frm.appendChild(button);
+    }
+
     root.appendChild(frm);
 }
 
 function validateBaggageCount (){
     var count = document.forms["create"]["bgcnt"].value;
-    //alert(count)
     return true
 }
 
 function getTruckId() {
     var manageradiorel = $("input:radio[name ='truckRadioGroup']:checked").val();
-    //alert(manageradiorel);
     return manageradiorel;
 }
 
@@ -222,6 +229,8 @@ function getDrivers() {
     });
     return JSON.stringify(checked);
 }
+
+
 function createOrder() {
     //alert("createOrder");
     var jsdata =  GetCellValues();
@@ -235,9 +244,10 @@ function createOrder() {
         type: 'POST',
         data : {do:"createOrder", jsdata:jsdata, truckId:truckId, drivers:drivers},
         success: function(response) {
-            //...
             alert("order created")
+            sendRedirect("/private/manager/order?action=show&show=all","GET")
         }
     });
 
 }
+

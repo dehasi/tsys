@@ -26,7 +26,8 @@ INSERT INTO map VALUES (2, 3, 1667)
 INSERT INTO truck VALUES ('AB12345', 4, 1, 0, 1)
 INSERT INTO truck VALUES ('AC12345', 4, 1, 0, 1)
 INSERT INTO truck VALUES ('AB54321', 6, 1, 0, 2)
-INSERT INTO truck VALUES ('AB65478', 8, 1, 1, 3)
+INSERT INTO truck VALUES ('AB65478', 8, 1, 0, 3)
+INSERT INTO truck VALUES ('AB65477', 8, 1, 1, 3)
 
 -- --
 INSERT INTO driver VALUES (1, 120, 'Galeyev',  'Ravil',    1 ,  2, 1)
@@ -56,5 +57,5 @@ INSERT INTO orderroute VALUES (2,2,2,  1,42,  'AB65478', 0, 1) -- погрузить чай 
 INSERT INTO orderroute VALUES (2,3,2,  0,42,  'AB65478', 1, 2) -- выгрузитьв берлине
 
 
-INSERT INTO orderroute VALUES (3,1,3,  1,42,  'AB54321', 0, 1) -- погрузить чай в питере
-INSERT INTO orderroute VALUES (3,2,3,  1,42,  'AB54321', 1, 2) -- выгрузитьв берлине
+INSERT INTO orderroute VALUES (3,1,3,  1,42,  'AB54321', 0, 1) -- погрузить водку в мск
+INSERT INTO orderroute VALUES (3,2,3,  1,42,  'AB54321', 1, 2) -- выгрузитьв в спб

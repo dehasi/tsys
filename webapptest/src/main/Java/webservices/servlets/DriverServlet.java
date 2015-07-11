@@ -5,6 +5,7 @@ import businessLogic.DriverService;
 import businessLogic.OrderView;
 import businessLogic.OrderService;
 import model.Driver;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DriverServlet extends HttpServlet {
+    private static Logger logger = Logger.getLogger(DriverServlet.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession httpSession = req.getSession();
