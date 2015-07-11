@@ -80,4 +80,26 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
         }
         return null;
     }
+
+    public int getOrderStatus(int orderId) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query query = session.getNamedQuery("OrderRoute.getOrderStatus")
+                    .setString("order", String.valueOf(orderId));
+            List stat = query.list();
+            return (int) stat.get(0);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+
+    public int getMaxId() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query query = session.getNamedQuery("OrderRoute.maxId");
+            return  (int)query.list().get(0);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return -1;
+    }
 }

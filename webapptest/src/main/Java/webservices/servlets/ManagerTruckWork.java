@@ -1,8 +1,8 @@
 package webservices.servlets;
 
 import businessLogic.BusinessFactory;
-import businessLogic.CityLogic;
-import businessLogic.TruckLogic;
+import businessLogic.CityService;
+import businessLogic.TruckService;
 import model.City;
 import model.Truck;
 import model.statuses.TruckStatus;
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Set;
 
 /**
@@ -24,7 +23,6 @@ public class ManagerTruckWork extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 
         String action = req.getParameter("action");
         switch (action) {
@@ -48,128 +46,50 @@ public class ManagerTruckWork extends HttpServlet {
                 show(req, resp);
             }
         }
-
-
-
-
     }
 
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            TruckLogic truckLogic = BusinessFactory.getInstance().getTruckLogic();
+            TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
             String id = req.getParameter("id");
-            Truck truck = truckLogic.getTruckById(id);
-            truckLogic.deleteTruck(truck);
+            Truck truck = truckService.getTruckById(id);
+            truckService.deleteTruck(truck);
             resp.sendRedirect("/private/manager/truck?action=show&show=all");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
+        } catch (Exception e) {
+            ServletHelper.handleError(req, resp, e);
         }
     }
 
     private void edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            TruckLogic truckLogic = BusinessFactory.getInstance().getTruckLogic();
-            CityLogic cityLogic = BusinessFactory.getInstance().getCityLogic();
-            Set<City> cities = cityLogic.getAllCities();
+            TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
+            CityService cityService = BusinessFactory.getInstance().getCityLogic();
+            Set<City> cities = cityService.getAllCities();
             req.setAttribute("cities",cities);
 
             String id = req.getParameter("id");
 
-            Truck truck = truckLogic.getTruckById(id);
+            Truck truck = truckService.getTruckById(id);
             req.setAttribute("truck", truck);
             RequestDispatcher rd = req.getRequestDispatcher("truckEdit.jsp");
             rd.forward(req, resp);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-        } catch (ServletException e) {
-            e.printStackTrace();
-
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-        } catch (IOException e) {
-            e.printStackTrace();
-
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-        }catch (NullPointerException e) {
-            e.printStackTrace();
-
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
+        } catch (Exception e) {
+            ServletHelper.handleError(req, resp, e);
         }
 
     }
 
     private void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            CityLogic cityLogic = BusinessFactory.getInstance().getCityLogic();
-            Set<City> cities = cityLogic.getAllCities();
+            CityService cityService = BusinessFactory.getInstance().getCityLogic();
+            Set<City> cities = cityService.getAllCities();
             req.setAttribute("cities",cities);
             RequestDispatcher rd = req.getRequestDispatcher("truckAdd.jsp");
             rd.forward(req, resp);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-        } catch (ServletException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-        } catch (IOException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
+        }  catch (Exception e) {
+            ServletHelper.handleError(req, resp, e);
         }
     }
 
@@ -181,33 +101,33 @@ public class ManagerTruckWork extends HttpServlet {
         req.setAttribute("show", show);
 
         try {
-            TruckLogic truckLogic = BusinessFactory.getInstance().getTruckLogic();
+            TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
 
             Set<Truck> trucks = null;
 
             switch (show){
                 case "all" : {
-                    trucks = truckLogic.getAllTrucks();
+                    trucks = truckService.getAllTrucks();
                     break;
                 }
                 case "ok" : {
-                    trucks = truckLogic.getOKTrucks();
+                    trucks = truckService.getOKTrucks();
                     break;
                 }
                 case "defective" : {
-                    trucks = truckLogic.getDefectiveTrucks();
+                    trucks = truckService.getDefectiveTrucks();
                     break;
                 }
                 case "free" : {
-                    trucks = truckLogic.getFreeTrucks();
+                    trucks = truckService.getFreeTrucks();
                     break;
                 }
                 case "inorder" : {
-                    trucks = truckLogic.getInOrderTrucks();
+                    trucks = truckService.getInOrderTrucks();
                     break;
                 }
                 default: {
-                    trucks = truckLogic.getAllTrucks();
+                    trucks = truckService.getAllTrucks();
                 }
             }
 
@@ -215,26 +135,8 @@ public class ManagerTruckWork extends HttpServlet {
             RequestDispatcher rd = req.getRequestDispatcher("truck.jsp");
             rd.forward(req, resp);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-        } catch (ServletException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-        } catch (IOException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
+        }  catch (Exception e) {
+            ServletHelper.handleError(req, resp, e);
         }
     }
 
@@ -250,8 +152,8 @@ public class ManagerTruckWork extends HttpServlet {
             case "Add": {
 //                handleRequest(req, resp);
                 try {
-                    TruckLogic truckLogic = BusinessFactory.getInstance().getTruckLogic();
-                    CityLogic cityLogic = BusinessFactory.getInstance().getCityLogic();
+                    TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
+                    CityService cityService = BusinessFactory.getInstance().getCityLogic();
                     Truck truck = new Truck();
 
                     String id = req.getParameter("tid");
@@ -261,7 +163,7 @@ public class ManagerTruckWork extends HttpServlet {
 
                     String cityP = req.getParameter("city");
                     int cityId = Integer.parseInt(cityP);
-                    City city = cityLogic.getCityById(cityId);
+                    City city = cityService.getCityById(cityId);
 
                     truck.setCity(city);
                     truck.setCapacity(capacity);
@@ -270,32 +172,24 @@ public class ManagerTruckWork extends HttpServlet {
                     truck.setId(id);
 
 
-                    truckLogic.addTruck(truck);
+                    truckService.addTruck(truck);
                     resp.sendRedirect("/private/manager/truck?action=show&show=all");
 
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                    req.setAttribute("error", e);
-                    RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-                    rd.forward(req, resp);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    req.setAttribute("error", e);
-                    RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-                    rd.forward(req, resp);
+                }  catch (Exception e) {
+                    ServletHelper.handleError(req, resp, e);
                 }
                 break;
             }
             case "Save" :{
                 try {
-                    TruckLogic truckLogic = BusinessFactory.getInstance().getTruckLogic();
-                    CityLogic cityLogic = BusinessFactory.getInstance().getCityLogic();
+                    TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
+                    CityService cityService = BusinessFactory.getInstance().getCityLogic();
                     String id = req.getParameter("tid");
                     String hiddenId = req.getParameter("hiddenid");
                     if(!id.equals(hiddenId)) {
-                        truckLogic.deleteTruck(truckLogic.getTruckById(hiddenId));
+                        truckService.deleteTruck(truckService.getTruckById(hiddenId));
                     }else {
-                        truckLogic.deleteTruck(truckLogic.getTruckById(id));
+                        truckService.deleteTruck(truckService.getTruckById(id));
                     }
 
                     Truck truck = new Truck();
@@ -306,7 +200,7 @@ public class ManagerTruckWork extends HttpServlet {
 
                     String cityP = req.getParameter("city");
                     int cityId = Integer.parseInt(cityP);
-                    City city = cityLogic.getCityById(cityId);
+                    City city = cityService.getCityById(cityId);
 
                     truck.setCity(city);
                     truck.setCapacity(capacity);
@@ -314,38 +208,14 @@ public class ManagerTruckWork extends HttpServlet {
                     truck.setStatus(TruckStatus.fromInt(status));
                     truck.setId(id);
 
-                    truckLogic.addTruck(truck);
+                    truckService.addTruck(truck);
 
                     resp.sendRedirect("/private/manager/truck?action=show&show=all");
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                    req.setAttribute("error", e);
-                    RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-                    rd.forward(req, resp);
-
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                    req.setAttribute("error", e);
-                    RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-                    rd.forward(req, resp);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    req.setAttribute("error", e);
-                    RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-                    rd.forward(req, resp);
+                }  catch (Exception e) {
+                    ServletHelper.handleError(req, resp, e);
                 }
             }
         }
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
     }
 
 }

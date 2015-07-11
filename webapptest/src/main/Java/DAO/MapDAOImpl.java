@@ -15,8 +15,10 @@ import java.util.List;
  */
 public class MapDAOImpl extends GenericDAOImpl<Map> {
     public MapDAOImpl(Class<Map> clazz) {
+
         super(clazz);
     }
+
 
 
 

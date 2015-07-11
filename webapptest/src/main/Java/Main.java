@@ -1,34 +1,29 @@
 import DAO.*;
+import businessLogic.BusinessFactory;
 import businessLogic.DriverLogic;
-import businessLogic.TruckLogic;
-import businessLogic.UserLogic;
+import businessLogic.Ticket;
+import businessLogic.TruckService;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import model.*;
-import org.hibernate.Query;
-import org.hibernate.Session;
+import org.apache.log4j.Logger;
 import utils.HibernateUtil;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
 class Main {
-
+    private static Logger logger = Logger.getLogger(Main.class);
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
         System.out.println("Hello world");
-        HibernateUtil.getSessionFactory();
-        TruckLogic truckLogic = new TruckLogic(new TruckDAOImpl(Truck.class));
-        DriverLogic driverLogic = new DriverLogic(new DriverDAOImpl(Driver.class));
-        City city = new City();
-        city.setId(1);
-        city.setName("Moscow");
-        Set<Truck> trucks = truckLogic.getFitTrucks(2,city);
 
 
-        Set<Driver> drivers = driverLogic.getFitDrivers(700, city);
-//        Set<Driver> drivers = driverLogic.getAllDrivers();
-        System.out.println(drivers);
-//        System.out.println(trucks);
         System.out.println("Good bye!");
 
     }

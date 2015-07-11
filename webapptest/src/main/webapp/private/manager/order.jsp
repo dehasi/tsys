@@ -11,7 +11,7 @@
 <head>
     <title>Order managering</title>
   <script type="text/javascript" src = "/js/jquery-1.11.3.js"></script>
-  <script type="text/javascript" src = "/js/createBaggage.js"></script>
+  <script type="text/javascript" src = "/js/createBaggage1.js"></script>
   <%@include  file="/bootstyle.jsp" %>
   <%--<script type="text/javascript" src = "/js/validateTruckForm.js"></script>--%>
 </head>
@@ -38,24 +38,29 @@
   <c:choose>
     <c:when test="${orders != null}" >
 
-      <c:forEach var="order" items="${orders}">
+      <c:forEach var="order" items="${orders}" >
         <label> OrderId = ${order.orderId} TruckId = ${order.turckId}</label>
         <table class="table  table-bordered">
-          <tr>
+          <tr class="active">
             <th>#</th>
-            <th>city</th>
             <th>baggage</th>
-            <th>action</th>
+            <th>load city</th>
             <th>isDone</th>
+            <th>unload city</th>
+            <th>isDone</th>
+            <th>order status</th>
           </tr>
 
-          <c:forEach var="route" items="${order.routes}">
+          <c:forEach var="route" items="${order.routes}" step="2" varStatus="vs">
             <tr>
               <td>${route.number}</td>
-              <td>${route.city}</td>
               <td>${route.baggageId} (${route.baggage.name})</td>
-              <td>${route.baggageStatus}</td>
+              <td>${route.city}</td>
               <td>${route.isDone}</td>
+
+              <td>${order.routes[vs.index+1].city}</td>
+              <td>${order.routes[vs.index+1].isDone}</td>
+              <td>${order.status}</td>
             </tr>
           </c:forEach>
         </table>

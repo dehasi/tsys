@@ -3,7 +3,7 @@ package webservices.servlets;
 import businessLogic.BusinessFactory;
 import businessLogic.DriverLogic;
 import businessLogic.OrderView;
-import businessLogic.OrderLogic;
+import businessLogic.OrderService;
 import model.Driver;
 
 import javax.servlet.RequestDispatcher;
@@ -22,14 +22,11 @@ public class DriverServlet extends HttpServlet {
         HttpSession httpSession = req.getSession();
         int id = (int) httpSession.getAttribute("id");
         DriverLogic driverLogic = null;
-        OrderLogic orderLogic = null;
-        try {
-            driverLogic = BusinessFactory.getInstance().getDriverLogic();
-            orderLogic = BusinessFactory.getInstance().getOrderLogic();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            resp.sendRedirect("/error.jsp");
-        }
+        OrderService orderService = null;
+
+        driverLogic = BusinessFactory.getInstance().getDriverLogic();
+        orderService = BusinessFactory.getInstance().getOrderLogic();
+
 
         Driver driver = driverLogic.getById(id);
         if(driver == null) {
@@ -44,12 +41,12 @@ public class DriverServlet extends HttpServlet {
 
             friends.remove(driver);
 
-            List<OrderView> route = orderLogic.getOrderView(id);
+            List<OrderView> route = orderService.getOrderView(id);
 
             req.setAttribute("friends", friends);
             req.setAttribute("route", route);
 
-            String truckId = orderLogic.getTruckIdByOrder(orderId);
+            String truckId = orderService.getTruckIdByOrder(orderId);
             req.setAttribute("orderId", orderId);
             req.setAttribute("truckId", truckId);
         } else {

@@ -1,7 +1,7 @@
 package webservices.servlets;
 
 import DAO.TruckDAOImpl;
-import businessLogic.TruckLogic;
+import businessLogic.TruckService;
 import model.Truck;
 
 import javax.servlet.ServletException;
@@ -23,13 +23,11 @@ public class HelloServlet extends HttpServlet{
 
         out.println("attribute = " + req.getAttribute("key"));
 
-        TruckLogic truckLogic = null;
-        try {
-            truckLogic = new TruckLogic(new TruckDAOImpl((Class<Truck>) Class.forName("model.Truck")));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        Set<Truck> trucks =  truckLogic.getFitTrucks(6, null);
+        TruckService truckService = null;
+
+        truckService = new TruckService(new TruckDAOImpl(Truck.class));
+
+        Set<Truck> trucks =  truckService.getFitTrucks(6, null);
         out.println(trucks);
 
     }

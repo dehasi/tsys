@@ -22,28 +22,28 @@ public class Factory {
 
     public BaggageDAOImpl getBaggageDAO() throws ClassNotFoundException {
         if (baggageDAO == null){
-            baggageDAO = new BaggageDAOImpl((Class<Baggage>) Class.forName("model.Baggage"));
+            baggageDAO = new BaggageDAOImpl(Baggage.class);
         }
         return baggageDAO;
     }
 
     public CityDAOImpl getCityDAO() throws ClassNotFoundException {
         if (cityDAO == null) {
-            cityDAO = new CityDAOImpl((Class<City>) Class.forName("model.City"));
+            cityDAO = new CityDAOImpl(City.class);
         }
         return cityDAO;
     }
 
     public TruckDAOImpl getTruckDAO() throws ClassNotFoundException {
         if (truckDAO == null) {
-            truckDAO = new TruckDAOImpl((Class<Truck>) Class.forName("model.Truck"));
+            truckDAO = new TruckDAOImpl(Truck.class);
         }
         return truckDAO;
     }
 
     public DriverDAOImpl getDriverDAO() throws ClassNotFoundException {
         if (driverDAO == null) {
-            driverDAO = new DriverDAOImpl((Class<Driver>) Class.forName("model.Driver"));
+            driverDAO = new DriverDAOImpl(Driver.class);
         }
         return driverDAO;
     }

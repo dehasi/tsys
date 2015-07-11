@@ -10,11 +10,12 @@
 <html>
 <head>
     <title>Creating order</title>
+    <script type="text/javascript" src = "/js/createBaggage1.js"></script>
     <script type="text/javascript" src = "/js/jquery-1.11.3.js"></script>
 
     <%@include  file="/bootstyle.jsp" %>
 
-    <script type="text/javascript" src = "/js/createBaggage.js"></script>
+    <script type="text/javascript" src = "/js/createBaggage1.js"></script>
 </head>
 <body>
 <div class="container">

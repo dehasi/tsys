@@ -4,15 +4,15 @@ import DAO.*;
 import model.*;
 
 /**
- * Created by Rafa on 03.07.2015.
+ * Class represents factory for creating DAO objects
  */
 public class BusinessFactory {
-    private static UserLogic userLogic = null;
+    private static UserService userService = null;
     private static DriverLogic driverLogic = null;
-    private static OrderLogic orderLogic = null;
-    private static TruckLogic truckLogic = null;
-    private static CityLogic cityLogic = null;
-    private static MapLogic mapLogic = null;
+    private static OrderService orderService = null;
+    private static TruckService truckService = null;
+    private static CityService cityService = null;
+    private static MapService mapService = null;
 
     private static BusinessFactory instance = null;
 
@@ -23,46 +23,50 @@ public class BusinessFactory {
         return instance;
     }
 
-    public UserLogic getUserLogic() throws ClassNotFoundException {
-        if (userLogic == null) {
-            userLogic =  new UserLogic(new UserDAOImpl(User.class));
+    public UserService getUserLogic() {
+        if (userService == null) {
+            userService =  new UserService(new UserDAOImpl(User.class));
         }
-        return userLogic;
+        return userService;
     }
 
-    public DriverLogic getDriverLogic() throws ClassNotFoundException {
+    public DriverLogic getDriverLogic() {
         if (driverLogic == null) {
-            driverLogic =  new DriverLogic(new DriverDAOImpl((Class<Driver>) Class.forName("model.Driver")));
+            driverLogic =  new DriverLogic(new DriverDAOImpl(Driver.class));
         }
         return driverLogic;
     }
 
-    public OrderLogic getOrderLogic() throws ClassNotFoundException {
-        if (orderLogic == null){
-            orderLogic =  new OrderLogic(new BaggageDAOImpl((Class<Baggage>) Class.forName("model.Baggage")),
-                new OrderRouteDAOImpl((Class<OrderRoute>) Class.forName("model.OrderRoute")));
+    public OrderService getOrderLogic() {
+        if (orderService == null){
+            orderService =  new OrderService(new BaggageDAOImpl(Baggage.class),
+                new OrderRouteDAOImpl(OrderRoute.class),
+                    new CityDAOImpl(City.class),
+                    new MapDAOImpl(model.Map.class),
+                    new DriverDAOImpl(model.Driver.class)
+            );
         }
-        return orderLogic;
+        return orderService;
     }
 
-    public  TruckLogic getTruckLogic() throws ClassNotFoundException {
-        if (truckLogic == null){
-            truckLogic =  new TruckLogic(new TruckDAOImpl((Class<Truck>) Class.forName("model.Truck")));
+    public TruckService getTruckLogic() {
+        if (truckService == null){
+            truckService =  new TruckService(new TruckDAOImpl(Truck.class));
         }
-        return truckLogic;
+        return truckService;
     }
 
-    public CityLogic getCityLogic() throws ClassNotFoundException {
-        if(cityLogic == null) {
-            cityLogic = new CityLogic(new CityDAOImpl((Class<City>) Class.forName("model.City")));
+    public CityService getCityLogic() {
+        if(cityService == null) {
+            cityService = new CityService(new CityDAOImpl(City.class));
         }
-        return cityLogic;
+        return cityService;
     }
 
-    public MapLogic getMapLogic() {
-        if(mapLogic == null) {
-            mapLogic = new MapLogic(new MapDAOImpl(Map.class));
+    public MapService getMapLogic() {
+        if(mapService == null) {
+            mapService = new MapService(new MapDAOImpl(Map.class));
         }
-        return mapLogic;
+        return mapService;
     }
 }

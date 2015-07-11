@@ -12,7 +12,7 @@
     <title></title>
 </head>
 <body>
-<h1>Shit happens :(</h1>
+<h1>Sometimes it happens :(</h1>
 
 message: <br> ${error}
 </body>

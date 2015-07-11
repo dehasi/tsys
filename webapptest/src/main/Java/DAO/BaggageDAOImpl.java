@@ -3,6 +3,7 @@ package DAO;
 import model.Baggage;
 import model.statuses.BaggageStatus;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import utils.HibernateUtil;
@@ -30,6 +31,16 @@ public class BaggageDAOImpl extends  GenericDAOImpl<Baggage> {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public int getMaxId() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+            Query query = session.getNamedQuery("Baggage.getMaxId");
+            return  (int)query.list().get(0);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return -1;
     }
 
 }

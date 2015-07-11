@@ -1,10 +1,8 @@
 package webservices.servlets;
 
 import businessLogic.BusinessFactory;
-import businessLogic.OrderLogic;
+import businessLogic.OrderService;
 import businessLogic.OrderRouteView;
-import businessLogic.OrderView;
-import model.OrderRoute;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,9 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,26 +29,10 @@ public class ManagerOrderWork extends HttpServlet {
                 add(req, resp);
                 break;
             }
-            case "edit" :{
-                edit(req, resp);
-                break;
-            }
-            case "delete" :{
-                delete(req, resp);
-                break;
-            }
             default:{
                 show(req, resp);
             }
         }
-    }
-
-    private void delete(HttpServletRequest req, HttpServletResponse resp) {
-
-    }
-
-    private void edit(HttpServletRequest req, HttpServletResponse resp) {
-
     }
 
     private void add(HttpServletRequest req, HttpServletResponse resp) {
@@ -65,17 +44,24 @@ public class ManagerOrderWork extends HttpServlet {
         req.setAttribute("show", show);
         try {
             req.setAttribute("show", show);
-            OrderLogic orderLogic = BusinessFactory.getInstance().getOrderLogic();
+            OrderService orderService = BusinessFactory.getInstance().getOrderLogic();
             Set<OrderRouteView> orders = null;
 
             switch (show){
                 case "all" : {
-                    orders = orderLogic.getAllRouteViews();
+                    orders = orderService.getAllRouteViews();
                     break;
                 }
-
+                case "done" : {
+                    orders = orderService.getRouteViewsByStatus(1);
+                    break;
+                }
+                case "notdone" : {
+                    orders = orderService.getRouteViewsByStatus(0);
+                    break;
+                }
                 default: {
-                    orders = orderLogic.getAllRouteViews();
+                    orders = orderService.getAllRouteViews();
                 }
             }
 
@@ -83,31 +69,9 @@ public class ManagerOrderWork extends HttpServlet {
             RequestDispatcher rd = req.getRequestDispatcher("order.jsp");
             rd.forward(req, resp);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-        } catch (Exception e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
+        }  catch (Exception e) {
+            ServletHelper.handleError(req, resp, e);
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
-    }
 }

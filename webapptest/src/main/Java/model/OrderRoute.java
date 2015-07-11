@@ -23,6 +23,15 @@ import javax.persistence.*;
         @NamedQuery(
             name = "OrderRoute.getAllId",
             query = "SELECT DISTINCT r.order FROM OrderRoute r "
+        ),
+
+        @NamedQuery(
+            name = "OrderRoute.getOrderStatus",
+            query = "SELECT DISTINCT r.status FROM OrderRoute r  WHERE r.order = :id "
+        ),
+        @NamedQuery(
+                name = "OrderRoute.maxId",
+                query = "SELECT MAX (r.order) FROM OrderRoute r  "
         )
 })
 public class OrderRoute implements Comparable<OrderRoute> {

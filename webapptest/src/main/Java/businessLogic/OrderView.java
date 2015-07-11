@@ -3,7 +3,8 @@ package businessLogic;
 import model.Baggage;
 
 /**
- * Created by Rafa on 02.07.2015.
+ * Class contains all info about order
+ * like id, truck, and set of baggages
  */
 public class OrderView implements Comparable<OrderView>{
     private int orderId;

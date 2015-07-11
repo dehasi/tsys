@@ -10,38 +10,31 @@
 <html>
 <head>
     <title>driver</title>
+    <%@include  file="/bootstyle.jsp" %>
 </head>
 <body>
-    <h1>driver info</h1>
+<div class="container">
+    <h3>driver info</h3>
     <a href="#"> logout</a>
     <%--	личный номер водителя--%>
-    <table>
-        <tr>
-            <td>Driver id </td> <td>${driver.id} </td>
-        </tr>
-        <tr>
-            <td>name </td> <td>${driver.name}  </td>
-        </tr>
 
-    </table>
-    
-    <c:choose>
+    <h4>Driver id = ${driver.id}</h4>
+    <h4>name = ${driver.name} ${driver.lastName}</h4>
+
+        <c:choose>
         <c:when test="${route != null }">
             <%--	личные номера ко-водителей--%>
             <h3>partners:</h3>
-            <table>
-                <tr>
-                    <th>name<th>
-                    <th>id<th>
+            <table class="table">
+                <tr class="active">
+                    <th  >id</th>
+                    <th  >name</th>
                 </tr>
-
                 <c:forEach var = "friend" items="${friends}">
-                    <tr>
-                        <td>${friend.name}</td>
-
-                        <td>${friend.id}</td>
+                    <tr >
+                        <td  > ${friend.id} </td>
+                        <td  > ${friend.name}  ${friend.lastName} </td>
                     </tr>
-
                 </c:forEach>
             </table>
             <br/>
@@ -52,8 +45,8 @@
             <h4>truck: ${truckId}</h4>
             <%--	список маршрутных точек--%>
             <h3>Route</h3>
-            <table>
-                <tr>
+            <table class="table table-hover table-bordered table-striped">
+                <tr class="active">
                     <th>#</th>
                     <th>city</th>
                     <th>baggage</th>
@@ -65,8 +58,26 @@
                         <td>${p.number}</td>
                         <td>${p.city}</td>
                         <td>${p.baggageId} (${p.baggage.name})</td>
-                        <td>${p.baggageStatus}</td>
-                        <td>${p.isDone}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${p.baggageStatus == 0}">
+                                    load
+                                </c:when>
+                            <c:otherwise>
+                                unload
+                            </c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${p.isDone == 0}">
+                                    NO
+                                </c:when>
+                                <c:otherwise>
+                                    YES
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>
@@ -78,6 +89,6 @@
         </c:otherwise>
     </c:choose>
 
-
+</div>
 </body>
 </html>

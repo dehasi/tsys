@@ -1,7 +1,7 @@
 package webservices.servlets;
 
 import businessLogic.BusinessFactory;
-import businessLogic.CityLogic;
+import businessLogic.CityService;
 import businessLogic.DriverLogic;
 import model.City;
 import model.Driver;
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -58,46 +57,29 @@ public class ManagerDriverWork extends HttpServlet {
             RequestDispatcher rd = req.getRequestDispatcher("driver.jsp");
             rd.forward(req, resp);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
         } catch (Exception e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
+            ServletHelper.handleError(req, resp, e);
         }
     }
 
     private void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            CityLogic cityLogic = BusinessFactory.getInstance().getCityLogic();
-            Set<City> cities = cityLogic.getAllCities();
-            req.setAttribute("cities",cities);
+            CityService cityService = BusinessFactory.getInstance().getCityLogic();
+            Set<City> cities = cityService.getAllCities();
+            req.setAttribute("cities", cities);
             RequestDispatcher rd = req.getRequestDispatcher("driverAdd.jsp");
             rd.forward(req, resp);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
+        }  catch (Exception e) {
+            ServletHelper.handleError(req, resp, e);
         }
     }
 
     private void edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             DriverLogic driverLogic = BusinessFactory.getInstance().getDriverLogic();
-            CityLogic cityLogic = BusinessFactory.getInstance().getCityLogic();
-            Set<City> cities = cityLogic.getAllCities();
+            CityService cityService = BusinessFactory.getInstance().getCityLogic();
+            Set<City> cities = cityService.getAllCities();
             req.setAttribute("cities",cities);
 
             String id = req.getParameter("id");
@@ -107,32 +89,8 @@ public class ManagerDriverWork extends HttpServlet {
             RequestDispatcher rd = req.getRequestDispatcher("driverEdit.jsp");
             rd.forward(req, resp);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-
-        } catch (ServletException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-        } catch (IOException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-        }catch (NullPointerException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
+        } catch (Exception e) {
+            ServletHelper.handleError(req, resp, e);
         }
     }
 
@@ -146,22 +104,9 @@ public class ManagerDriverWork extends HttpServlet {
 
             driverLogic.deleteDriver(driver);
             resp.sendRedirect("/private/manager/driver?action=show&show=all");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
 
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
+        } catch (Exception e) {
+            ServletHelper.handleError(req, resp, e);
         }
     }
 
@@ -205,13 +150,13 @@ public class ManagerDriverWork extends HttpServlet {
 
                 try {
                     DriverLogic driverLogic = BusinessFactory.getInstance().getDriverLogic();
-                    CityLogic cityLogic = BusinessFactory.getInstance().getCityLogic();
+                    CityService cityService = BusinessFactory.getInstance().getCityLogic();
                     Driver driver = new Driver();
                     String name = req.getParameter("name");
                     String lastName = req.getParameter("lastname");
                     String cityP = req.getParameter("city");
                     int cityId = Integer.parseInt(cityP);
-                    City city = cityLogic.getCityById(cityId);
+                    City city = cityService.getCityById(cityId);
 
                     driver.setName(name);
                     driver.setLastName(lastName);
@@ -223,23 +168,15 @@ public class ManagerDriverWork extends HttpServlet {
                     driverLogic.addNewDriver(driver);
                     resp.sendRedirect("/private/manager/driver?action=show&show=all");
 
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                    req.setAttribute("error", e);
-                    RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-                    rd.forward(req, resp);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    req.setAttribute("error", e);
-                    RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-                    rd.forward(req, resp);
+                } catch (Exception e) {
+                    ServletHelper.handleError(req, resp, e);
                 }
                 break;
             }
             case "Save" :{
                 try {
                     DriverLogic driverLogic = BusinessFactory.getInstance().getDriverLogic();
-                    CityLogic cityLogic = BusinessFactory.getInstance().getCityLogic();
+                    CityService cityService = BusinessFactory.getInstance().getCityLogic();
                     String id = req.getParameter("id");
                     int driverId = Integer.parseInt(id);
                     Driver driver =  driverLogic.getById(driverId);
@@ -248,7 +185,7 @@ public class ManagerDriverWork extends HttpServlet {
                     String lastName = req.getParameter("lastname");
                     String cityP = req.getParameter("city");
                     int cityId = Integer.parseInt(cityP);
-                    City city = cityLogic.getCityById(cityId);
+                    City city = cityService.getCityById(cityId);
 
                     driver.setName(name);
                     driver.setLastName(lastName);
@@ -256,35 +193,11 @@ public class ManagerDriverWork extends HttpServlet {
 
                     driverLogic.updateDriver(driver);
                     resp.sendRedirect("/private/manager/driver?action=show&show=all");
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                    req.setAttribute("error", e);
-                    RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-                    rd.forward(req, resp);
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                    req.setAttribute("error", e);
-                    RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-                    rd.forward(req, resp);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    req.setAttribute("error", e);
-                    RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-                    rd.forward(req, resp);
+                }  catch (Exception e) {
+                    ServletHelper.handleError(req, resp, e);
                 }
             }
         }
     }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
-    }
-
 
 }

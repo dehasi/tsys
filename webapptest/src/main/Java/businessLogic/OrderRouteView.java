@@ -9,11 +9,13 @@ import java.util.List;
  */
 public class OrderRouteView {
     int orderId;
+    int status;
     String turckId;
     List<OrderView> routes;
 
-    public OrderRouteView(int orderIf, String turckId, List<OrderView> routes) {
-        this.orderId = orderIf;
+    public OrderRouteView(int orderId, int status, String turckId, List<OrderView> routes) {
+        this.orderId = orderId;
+        this.status = status;
         this.turckId = turckId;
         this.routes = routes;
     }
@@ -40,6 +42,14 @@ public class OrderRouteView {
 
     public void setRoutes(List<OrderView> routes) {
         this.routes = routes;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override

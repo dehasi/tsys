@@ -1,10 +1,7 @@
 package webservices.servlets;
 
-import DAO.UserDAOImpl;
 import businessLogic.BusinessFactory;
-import businessLogic.UserLogic;
-import model.User;
-import model.statuses.UserStatus;
+import businessLogic.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,31 +12,26 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import static model.statuses.UserStatus.*;
-
+import org.apache.log4j.Logger;
 /**
  * Created by Rafa on 01.07.2015.
  */
 public class LoginServlet extends HelloServlet {
+    private static Logger logger = Logger.getLogger(LoginServlet.class);
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserLogic userLogic = null;
-        try {
-            userLogic = BusinessFactory.getInstance().getUserLogic();
-        } catch (Exception e) {
-            e.printStackTrace();
 
-            RequestDispatcher rd = req.getRequestDispatcher("error.jsp");
-            rd.forward(req, resp);
-        }
-
+        UserService userService  = BusinessFactory.getInstance().getUserLogic();
         PrintWriter out = resp.getWriter();
         resp.setContentType("text/html");
 
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        if(userLogic.isValidUser(login, password)) {
-            switch (userLogic.getUserStatus(login)){
+        logger.info("logging begin");
+        if(userService.isValidUser(login, password)) {
+            switch (userService.getUserStatus(login)){
                 case DRIVER: {
+                    logger.info("driver logged");
                     HttpSession session = req.getSession();
                     session.setAttribute("status", DRIVER);
                     session.setAttribute("id", Integer.parseInt(login));
@@ -47,10 +39,12 @@ public class LoginServlet extends HelloServlet {
                     break;
                 }
                 case MANAGER:{
+                    logger.info("manager logged");
                     resp.sendRedirect("private/manager");
                     break;
                 }
                 default: {
+                    logger.error("wrong login");
                     resp.sendRedirect("login.jsp");
                 }
             }
@@ -59,10 +53,5 @@ public class LoginServlet extends HelloServlet {
         }
 
 
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
     }
 }

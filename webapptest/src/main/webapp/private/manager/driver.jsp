@@ -44,8 +44,17 @@
             <td>${driver.hoursWorked}</td>
             <td>${driver.city.name}</td>
             <td><a href="#"> ${driver.orderRoute}</a> </td>
-            <td> <a href="driver?action=edit&id=${driver.id}">Edit</a> </td>
-            <td>  <a href="driver?action=delete&id=${driver.id}">Delete</a></td>
+
+            <c:choose>
+              <c:when test="${driver.orderRoute == null }">
+                <td> <a href="driver?action=edit&id=${driver.orderRoute}">Edit</a> </td>
+                <td> <a href="driver?action=delete&id=${driver.orderRoute}">Delete</a> </td>
+              </c:when>
+              <c:otherwise>
+                <td>Edit </td>
+                <td>Delete </td>
+              </c:otherwise>
+            </c:choose>
           </tr>
         </c:forEach>
       </table>

@@ -27,8 +27,8 @@ public class ManagerOrderCreate extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             int count = Integer.parseInt( req.getParameter("count"));
-            CityLogic cityLogic = BusinessFactory.getInstance().getCityLogic();
-            Set<City> cities = cityLogic.getAllCities();
+            CityService cityService = BusinessFactory.getInstance().getCityLogic();
+            Set<City> cities = cityService.getAllCities();
 
             req.setAttribute("cities", cities);
             req.setAttribute("count", count);
@@ -36,10 +36,7 @@ public class ManagerOrderCreate extends HttpServlet {
             rd.forward(req, resp);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
+            ServletHelper.handleError(req, resp, e);
         }
     }
 
@@ -54,29 +51,42 @@ public class ManagerOrderCreate extends HttpServlet {
 
         switch (action) {
             case  "getStuff" : {
-//                resp.sendRedirect("/private/manager/order?action=show&show=all");
                 sendStuff(req, resp);
-
                 break;
             }
 
             case  "createOrder" : {
 
-               // resp.sendRedirect("/private/manager/order?action=show&show=all");
-                System.out.println(action);
-                System.err.println(action);
+                Gson gson = new Gson();
+                JsonParser parser = new JsonParser();
+                JsonArray ticketsJS = parser.parse(req.getParameter("jsdata")).getAsJsonArray();
+                List<Ticket> tickets = new ArrayList<>();
+                for (JsonElement je : ticketsJS) {
+                    Ticket t = gson.fromJson(je, Ticket.class);
+                    tickets.add(t);
+                }
 
-                System.out.println(req.getParameter("jsdata"));
-                System.err.println(req.getParameter("jsdata"));
+                String truckId = req.getParameter("truckId").replace("\"", "");
+
+                JsonArray driverJS = parser.parse(req.getParameter("drivers")).getAsJsonArray();
+                List<Integer> drivers = new ArrayList<>();
+
+                for (JsonElement je : driverJS) {
+                    Integer i = gson.fromJson(je, Integer.class);
+                    drivers.add(i);
+                }
+
+                OrderService orderService = BusinessFactory.getInstance().getOrderLogic();
+                try {
+                    orderService.createOrder(tickets, drivers, truckId);
+                } catch (SQLException e) {
+                    ServletHelper.handleError(req,resp,e);
+                }
 
 
                 System.out.println(req.getParameter("truckId"));
-                System.err.println(req.getParameter("truckId"));
-
                 System.out.println(req.getParameter("drivers"));
-                System.err.println(req.getParameter("drivers"));
-
-
+                System.out.println(req.getParameter("jsdata"));
                 resp.sendRedirect("/private/manager/order?action=show&show=all");
                 break;
             }
@@ -106,68 +116,32 @@ public class ManagerOrderCreate extends HttpServlet {
         int statCityId = road.get(0);
 
         try {
-            TruckLogic truckLogic = BusinessFactory.getInstance().getTruckLogic();
+            TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
             DriverLogic driverLogic = BusinessFactory.getInstance().getDriverLogic();
-            CityLogic cityLogic = BusinessFactory.getInstance().getCityLogic();
-            MapLogic mapLogic = BusinessFactory.getInstance().getMapLogic();
-            City city = cityLogic.getCityById(statCityId);
+            CityService cityService = BusinessFactory.getInstance().getCityLogic();
+            MapService mapService = BusinessFactory.getInstance().getMapLogic();
+            City city = cityService.getCityById(statCityId);
 
-            Set<Truck> trucks = truckLogic.getFitTrucks(maxWeight, city);
+            Set<Truck> trucks = truckService.getFitTrucks(maxWeight, city);
             int[] array = road.stream().mapToInt(i->i).toArray();
-            int roadLenght = mapLogic.getRoadLength(array);
+            int roadLenght = mapService.getRoadLength(array);
 
             Set<Driver> drivers = driverLogic.getFitDrivers(roadLenght, city);
 
             Gson gson = new Gson();
             String truckjs =  gson.toJson(trucks);
             String driversjs = gson.toJson(drivers);
-
+            String driverTimejs = gson.toJson(42);
             String answer = "{" +
+                    "\"driverTimejs\":" + driverTimejs + "," +
                     "\"trucks\":" + truckjs + "," +
                     "\"drivers\":" + driversjs +
                     "}";
             writeAnswer(req, resp, answer);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
-        } catch (IOException e) {
-            e.printStackTrace();
-            req.setAttribute("error", e);
-            RequestDispatcher rd = req.getRequestDispatcher("/error.jsp");
-            rd.forward(req, resp);
+        } catch (Exception e) {
+            ServletHelper.handleError(req, resp, e);
         }
-
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("do");
-        System.out.println(action);
-        switch (action) {
-            case  "getStuff" : {
-//                resp.sendRedirect("/private/manager/order?action=show&show=all");
-//                sendStuff(req, resp);
-//
-                break;
-            }
-
-            case  "createOrder" : {
-
-//                resp.sendRedirect("/private/manager/order?action=show&show=all");
-//
-                break;
-            }
-            default: break;
-        }
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     }
 
@@ -199,8 +173,6 @@ public class ManagerOrderCreate extends HttpServlet {
             }
 
         }
-
         out.close();
-
     }
 }

@@ -9,6 +9,13 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="baggage")
+@NamedQueries({
+        @NamedQuery(
+                name = "Baggage.getMaxId",
+                query = "SELECT MAX (b.id) FROM Baggage b"
+        )
+})
+
 public class Baggage {
     private int id;
     private String name;
@@ -16,7 +23,7 @@ public class Baggage {
     private BaggageStatus status;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+//    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     public int getId() {
         return id;
