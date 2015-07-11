@@ -1,6 +1,7 @@
 package businessLogic;
 
 /**
+ * Just POJO class
  * Class represent just created baggage ticket
  * so, ticket has information about name and
  * weight of baggage

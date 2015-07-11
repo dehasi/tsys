@@ -1,22 +1,40 @@
 package businessLogic;
 
 import DAO.UserDAOImpl;
-import model.User;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
-/**
- * Created by Rafa on 30.06.2015.
- */
 public class UserServiceTest {
-    @Test
-    public void testIsValidUser() throws ClassNotFoundException {
-        UserService userService = new UserService(new UserDAOImpl((Class<User>) Class.forName("model.User")));
-        Assert.assertEquals(userService.isValidUser("",""), false);
-        Assert.assertEquals(userService.isValidUser("login","password"), true);
-        Assert.assertEquals(userService.isValidUser("login","password2"), false);
-        Assert.assertEquals(userService.isValidUser("LOGIN","password"), true);
+
+    @Mock
+    private UserDAOImpl mockUserDAO;
+
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+
     }
 
+    @Test
+    public void testIsValidUser() throws ClassNotFoundException {
+        UserService userService = new UserService(mockUserDAO);
+        Mockito.when(mockUserDAO.getByLogin("12")).thenReturn(null);
+        Mockito.when(mockUserDAO.getUserPasswordHash("")).thenReturn(42L);
+        Assert.assertEquals(userService.isValidUser("", ""), false);
+        Assert.assertEquals(userService.isValidUser("12", "12"), false);
+        Mockito.verify(mockUserDAO, Mockito.atLeastOnce()).getUserPasswordHash("12");
+    }
+
+    @Test
+    public void getUserStatusTest() {
+        UserService userService = new UserService(mockUserDAO);
+        Mockito.when(mockUserDAO.getByLogin("")).thenReturn(null);
+        userService.getUserStatus("");
+        Mockito.verify(mockUserDAO, Mockito.atLeastOnce()).getByLogin("");
+    }
 
 }

@@ -117,21 +117,22 @@ public class ManagerOrderCreate extends HttpServlet {
 
         try {
             TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
-            DriverLogic driverLogic = BusinessFactory.getInstance().getDriverLogic();
+            DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
             CityService cityService = BusinessFactory.getInstance().getCityLogic();
             MapService mapService = BusinessFactory.getInstance().getMapLogic();
             City city = cityService.getCityById(statCityId);
 
+
             Set<Truck> trucks = truckService.getFitTrucks(maxWeight, city);
             int[] array = road.stream().mapToInt(i->i).toArray();
-            int roadLenght = mapService.getRoadLength(array);
+            int roadLength = mapService.getRoadLength(array);
 
-            Set<Driver> drivers = driverLogic.getFitDrivers(roadLenght, city);
+            Set<Driver> drivers = driverService.getFitDrivers(roadLength, city);
 
             Gson gson = new Gson();
             String truckjs =  gson.toJson(trucks);
             String driversjs = gson.toJson(drivers);
-            String driverTimejs = gson.toJson(42);
+            String driverTimejs = gson.toJson(driverService.getRoadHours(roadLength));
             String answer = "{" +
                     "\"driverTimejs\":" + driverTimejs + "," +
                     "\"trucks\":" + truckjs + "," +

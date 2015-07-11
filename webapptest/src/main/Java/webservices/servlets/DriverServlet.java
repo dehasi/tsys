@@ -1,7 +1,7 @@
 package webservices.servlets;
 
 import businessLogic.BusinessFactory;
-import businessLogic.DriverLogic;
+import businessLogic.DriverService;
 import businessLogic.OrderView;
 import businessLogic.OrderService;
 import model.Driver;
@@ -21,14 +21,14 @@ public class DriverServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession httpSession = req.getSession();
         int id = (int) httpSession.getAttribute("id");
-        DriverLogic driverLogic = null;
+        DriverService driverService = null;
         OrderService orderService = null;
 
-        driverLogic = BusinessFactory.getInstance().getDriverLogic();
+        driverService = BusinessFactory.getInstance().getDriverLogic();
         orderService = BusinessFactory.getInstance().getOrderLogic();
 
 
-        Driver driver = driverLogic.getById(id);
+        Driver driver = driverService.getById(id);
         if(driver == null) {
             resp.sendRedirect("/error.jsp");
         }
@@ -37,7 +37,7 @@ public class DriverServlet extends HttpServlet {
 
         if(orderId != null) {
             List<Driver> friends = new ArrayList<>();
-            friends.addAll(driverLogic.getFriends(id));
+            friends.addAll(driverService.getFriends(id));
 
             friends.remove(driver);
 

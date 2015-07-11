@@ -58,8 +58,8 @@
   </appender>
 
   <logger name="org.hibernate" additivity="false">
-    <!--<appender-ref ref="CONSOLE-WARN"/>-->
-    <!--<appender-ref ref="CONSOLE-DEBUG"/>-->
+    <appender-ref ref="CONSOLE-WARN"/>
+    <appender-ref ref="CONSOLE-DEBUG"/>
     <appender-ref ref="LOG-FILE-APPENDER"/>
   </logger>
 

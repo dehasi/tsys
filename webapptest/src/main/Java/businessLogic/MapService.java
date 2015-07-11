@@ -4,7 +4,8 @@ import DAO.MapDAOImpl;
 import model.City;
 
 /**
- * Created by Rafa on 09.07.2015.
+ * Class represent business logic for map
+ *
  */
 public class MapService {
     private MapDAOImpl mapDAO;
@@ -14,6 +15,7 @@ public class MapService {
     }
 
     public int getDistance(City cityA, City cityB) {
+
         return getDistance(cityA.getId(), cityB.getId());
     }
 
@@ -26,6 +28,11 @@ public class MapService {
         return dist;
     }
 
+    /**
+     * Function counts length of all road for order
+     * @param road array of city ids in order driver drive
+     * @return sum of distance
+     */
     public Integer getRoadLength(int[] road) {
         int length = 0;
         for(int i =1 ; i <  road.length; i++) {

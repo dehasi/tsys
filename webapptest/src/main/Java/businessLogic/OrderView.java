@@ -3,6 +3,7 @@ package businessLogic;
 import model.Baggage;
 
 /**
+ * Just POJO class
  * Class contains all info about order
  * like id, truck, and set of baggages
  */

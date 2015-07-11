@@ -62,20 +62,15 @@ public class TruckService {
         truckDAO.update(truck);
     }
 
-    //SELECT * FROM truck WHERE
-    //status = 0 AND
-    //id NOT IN (SELECT  DISTINCT truck FROM orderroure) AND
-    //capacity >= weight
-    public Set<Truck> getTrucksForOrder(int weight) {
-       return addOrderForTrucks(truckDAO.getTrucksForOrder(weight));
-    }
-
     public Set<Truck> getOKTrucks() {
         return addOrderForTrucks(truckDAO.getTrucksByStatus(TruckStatus.OK));
     }
 
-//   	фура не выполняет в данный момент никаких заказов;
-    //  //SELECT * FROM truck WHERE  id NOT IN (SELECT  DISTINCT truck FROM orderroure DISTINCT)
+    /**
+     * Find truck that don't do any orders
+     * @return set of trucks
+     * @throws SQLException
+     */
     public Set<Truck> getFreeTrucks() throws SQLException {
         Set<Truck> trucks = getAllTrucks();
         if (trucks == null) {
@@ -89,9 +84,12 @@ public class TruckService {
         return inFreeTrucks;
     }
 
-    //   	фура подходит по вместимости
-    // (с учетом погрузки/выгрузки грузов в городах по маршруту следования);
-    //SELECT * FROM truck WHERE  capacity >= weight
+    /**
+     * Find truck that ready to do order
+     * @param weight weight of baggage
+     * @param city start city in order
+     * @return set of trucks ready for do order
+     */
     public Set<Truck> getFitTrucks(int weight, City city) {
 
         return addOrderForTrucks(truckDAO.getFitTrucks(weight, city));
@@ -117,9 +115,15 @@ public class TruckService {
     }
 
     public Truck getTruckById(String id) {
+
         return addOrderForTruck(truckDAO.getTruckById(id));
     }
 
+    /**
+     * connect truck and its order
+     * @param truck truck
+     * @return truck with aplied order
+     */
     private Truck addOrderForTruck(Truck truck){
         if (truck == null) {
             return truck;
@@ -130,6 +134,11 @@ public class TruckService {
         return truck;
     }
 
+    /**
+     * connetcts truck and its order
+     * @param trucks list of trucks
+     * @return set of trucks with applied order id
+     */
     private Set<Truck>  addOrderForTrucks(Set<Truck> trucks){
         if (trucks == null) {
             return trucks;

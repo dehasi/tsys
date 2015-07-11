@@ -16,7 +16,9 @@ import java.util.*;
 import static java.util.Collections.*;
 
 /**
- * Created by Rafa on 30.06.2015.
+ * Class represents business logic for order work
+ * Creating oeder and return all statuses of order in
+ * different views
  */
 public class OrderService {
     BaggageDAOImpl baggageDAO = null;
@@ -25,6 +27,14 @@ public class OrderService {
     MapDAOImpl mapDAO = null;
     DriverDAOImpl driverDAO = null;
 
+    /**
+     * Constructor. creates instance of class
+     * @param baggageDAO DAO for baggage working
+     * @param orderRouteDAO DAO for order work
+     * @param cityDAO DAO for city work
+     * @param mapDAO DAO for map work
+     * @param driverDAO DAO for driver work
+     */
     public OrderService(BaggageDAOImpl baggageDAO, OrderRouteDAOImpl orderRouteDAO,
                         CityDAOImpl cityDAO, MapDAOImpl mapDAO, DriverDAOImpl driverDAO) {
         this.baggageDAO = baggageDAO;
@@ -107,7 +117,6 @@ public class OrderService {
 
             for (Integer id : ids) {
                 List<OrderView> list = getOrderView(id);
-//                Set<OrderRoute> routes = getRoute(id);
                 int status = countOrderStatus(list);
                 Collections.sort(list);
                 OrderRouteView view = new OrderRouteView(id, status, getTruckIdByOrder(id),list);
@@ -131,21 +140,14 @@ public class OrderService {
     }
 
 
-
-    private OrderRoute find(List<OrderRoute>routes, int baggageId, int load) {
-        for (OrderRoute r: routes) {
-            if (r.getBaggage() == baggageId && r.getType() == load) {
-                return  r;
-            }
-        }
-        return null;
-    }
-
-
+    /**
+     * Creates order and write all information in database
+     * @param tickets list of order tickets from client
+     * @param driverIds array of driver ids that will be do order
+     * @param truckId truck for order
+     * @throws SQLException
+     */
     public void createOrder(List<Ticket> tickets, List<Integer> driverIds, String truckId) throws SQLException {
-        System.err.println(truckId);
-        System.err.println(driverIds);
-        System.err.println(tickets);
         List<Baggage> baggages = createBaggageFromTickets(tickets);
         for(Baggage b : baggages){
             baggageDAO.add(b);
@@ -193,8 +195,8 @@ public class OrderService {
 
     }
 
-    private List<Baggage> createBaggageFromTickets(List<Ticket> tickets){
-        List<Baggage> baggages = new ArrayList<Baggage>();
+    private List<Baggage> createBaggageFromTickets(List<Ticket> tickets) {
+        List<Baggage> baggages = new ArrayList<>();
         int id = baggageDAO.getMaxId();
         for(Ticket t :tickets) {
             Baggage b = new Baggage();

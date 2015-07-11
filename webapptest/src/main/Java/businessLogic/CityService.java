@@ -8,7 +8,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Rafa on 05.07.2015.
+ * Business logic for city work
+ * just only getters and setters
  */
 public class CityService {
     private CityDAOImpl cityDAO = null;

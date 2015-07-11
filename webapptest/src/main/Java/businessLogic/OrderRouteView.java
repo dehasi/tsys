@@ -5,7 +5,7 @@ import model.OrderRoute;
 import java.util.List;
 
 /**
- * Created by Rafa on 07.07.2015.
+ * POJO class for convinietn view order
  */
 public class OrderRouteView {
     int orderId;

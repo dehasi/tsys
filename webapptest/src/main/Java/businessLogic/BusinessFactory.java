@@ -8,7 +8,7 @@ import model.*;
  */
 public class BusinessFactory {
     private static UserService userService = null;
-    private static DriverLogic driverLogic = null;
+    private static DriverService driverService = null;
     private static OrderService orderService = null;
     private static TruckService truckService = null;
     private static CityService cityService = null;
@@ -30,11 +30,11 @@ public class BusinessFactory {
         return userService;
     }
 
-    public DriverLogic getDriverLogic() {
-        if (driverLogic == null) {
-            driverLogic =  new DriverLogic(new DriverDAOImpl(Driver.class));
+    public DriverService getDriverLogic() {
+        if (driverService == null) {
+            driverService =  new DriverService(new DriverDAOImpl(Driver.class));
         }
-        return driverLogic;
+        return driverService;
     }
 
     public OrderService getOrderLogic() {

@@ -22,6 +22,7 @@ public class TruckServiceTest {
     @Mock
     private TruckDAOImpl mockTruckDAO;
     private Set<Truck> trucks;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -30,45 +31,11 @@ public class TruckServiceTest {
     }
 
     @Test
-    public void testGetAllTrucks() throws ClassNotFoundException, SQLException {
-        Mockito.when(mockTruckDAO.getAll()).thenReturn(trucks);
-        TruckService truckService = new TruckService(mockTruckDAO);
-
-        Assert.assertTrue(truckService.getAllTrucks().size() > 0);
-        Mockito.verify(mockTruckDAO, Mockito.atLeastOnce()).getAll();
-        Mockito.verify(mockTruckDAO, Mockito.never()).getFreeTrucks();
-    }
-
-    @Test
-    public void testGetOKTrucks() throws ClassNotFoundException, SQLException {
-        TruckService truckService = new TruckService(mockTruckDAO);
-        Mockito.when(mockTruckDAO.getTrucksByStatus(TruckStatus.OK)).thenReturn(trucks);
-        Assert.assertTrue(truckService.getOKTrucks().size() == 1);
-        Mockito.verify(mockTruckDAO, Mockito.atLeastOnce()).getTrucksByStatus(TruckStatus.OK);
-    }
-
-    @Test
     public void testGetDefectiveTrucks() throws ClassNotFoundException, SQLException {
         TruckService truckService = new TruckService(mockTruckDAO);
         Mockito.when(mockTruckDAO.getTrucksByStatus(TruckStatus.DEFECTIVE)).thenReturn(trucks);
         Assert.assertTrue(truckService.getDefectiveTrucks().size() == 1);
         Mockito.verify(mockTruckDAO, Mockito.atLeastOnce()).getTrucksByStatus(TruckStatus.DEFECTIVE);
-    }
-
-
-    @Test
-    public void testGetFreeTrucks() throws ClassNotFoundException, SQLException {
-        Mockito.when(mockTruckDAO.getAll()).thenReturn(trucks);
-        TruckService truckService = new TruckService(mockTruckDAO);
-        Assert.assertTrue(truckService.getFreeTrucks().size() > 0);
-    }
-
-    @Test
-    public void testGetInOrderTrucks() throws ClassNotFoundException, SQLException {
-        Mockito.when(mockTruckDAO.getAll()).thenReturn(trucks);
-        TruckService truckService = new TruckService(mockTruckDAO);
-        truckService.getInOrderTrucks();
-        Mockito.verify(mockTruckDAO, Mockito.atLeastOnce()).getAll();
     }
 
     @Test
@@ -80,14 +47,6 @@ public class TruckServiceTest {
         Mockito.verify(mockTruckDAO, Mockito.times(1)).getFitTrucks(42, city);
         Mockito.verify(mockTruckDAO, Mockito.never()).getAll();
     }
-
-    @Test
-    public void testGetTrucksForOrder() throws ClassNotFoundException, SQLException {
-        Mockito.when(mockTruckDAO.getTrucksForOrder(4)).thenReturn(trucks);
-        TruckService truckService = new TruckService(mockTruckDAO);
-        Assert.assertTrue(truckService.getTrucksForOrder(4).size() == 1);
-    }
-
 
     @Test
     public void testGetTruckById()  {
@@ -125,7 +84,5 @@ public class TruckServiceTest {
     @After
     public void cleanUp() {
     }
-
-
 
 }

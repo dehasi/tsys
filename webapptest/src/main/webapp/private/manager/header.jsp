@@ -13,7 +13,7 @@
       <td><a id = "truckLink" href="/private/manager/truck?action=show&show=all">Trucks</a></td>
       <td><a id = "driverLink" href="/private/manager/driver?action=show&show=all">Divers</a></td>
       <td><a id = "orderLink" href="/private/manager/order?action=show&show=all">Orders</a></td>
-      <td><a id = "logout" href="#">Logout</a></td>
+      <td><a id = "logout" href="/login.jsp">Logout</a></td>
     </tr>
   </table>
 </div>

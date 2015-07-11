@@ -5,14 +5,7 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
     
-    <servlet>
-        <servlet-name>Simple</servlet-name>
-        <servlet-class>webservices.servlets.HelloServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Simple</servlet-name>
-        <url-pattern>/hello</url-pattern>
-    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>Login</servlet-name>
@@ -80,14 +73,7 @@
         <url-pattern>/private/manager/createorder</url-pattern>
     </servlet-mapping>
 
-    <filter>
-        <filter-name>SimpFilt</filter-name>
-        <filter-class>webservices.filters.SimpleFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>SimpFilt</filter-name>
-        <servlet-name>Simple</servlet-name>
-    </filter-mapping>
+  
 
     <filter>
         <filter-name>Login</filter-name>

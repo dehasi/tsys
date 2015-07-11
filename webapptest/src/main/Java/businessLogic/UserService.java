@@ -7,7 +7,8 @@ import model.statuses.UserStatus;
 import javax.jws.soap.SOAPBinding;
 
 /**
- * Created by Rafa on 29.06.2015.
+ * Class for user business logic
+ * helps user login do
  */
 public class UserService {
     protected UserDAOImpl userDAO = null;
@@ -25,14 +26,11 @@ public class UserService {
         return pass == pass2;
     }
 
-    public boolean isLoginExists(String login){
-        return false;
-    }
-
     public UserStatus getUserStatus(String login) {
         User user = userDAO.getByLogin(login);
         if (user != null) {
-            return user.getStatus();}
+            return user.getStatus();
+        }
         else {
             return null;
         }
