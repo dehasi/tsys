@@ -6,6 +6,7 @@ import model.City;
 import model.OrderRoute;
 import model.Truck;
 import model.statuses.BaggageStatus;
+import model.statuses.DriverStatus;
 import model.statuses.OrderStatus;
 
 import java.sql.Driver;
@@ -186,6 +187,7 @@ public class OrderService {
         for(int ids : driverIds){
             model.Driver driver = driverDAO.getById(ids);
             driver.setOrderRoute(orderId);
+            driver.setStatus(DriverStatus.WORK);
             driverDAO.update(driver);
         }
 

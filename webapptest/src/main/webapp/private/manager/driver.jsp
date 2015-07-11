@@ -33,6 +33,7 @@
           <th>last name</th>
           <th>hours worked</th>
           <th>city</th>
+          <th>status</th>
           <th>order</th>
           <th colspan=2>action</th>
         </tr>
@@ -43,6 +44,9 @@
             <td>${driver.lastName}</td>
             <td>${driver.hoursWorked}</td>
             <td>${driver.city.name}</td>
+            <td>${driver.status} </td>
+
+
             <td><a href="#"> ${driver.orderRoute}</a> </td>
 
             <c:choose>
@@ -56,6 +60,9 @@
               </c:otherwise>
             </c:choose>
           </tr>
+
+
+
         </c:forEach>
       </table>
     </c:when>
