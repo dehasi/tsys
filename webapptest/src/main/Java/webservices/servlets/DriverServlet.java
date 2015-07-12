@@ -43,7 +43,7 @@ public class DriverServlet extends HttpServlet {
 
             friends.remove(driver);
 
-            List<OrderView> route = orderService.getOrderView(id);
+            List<OrderView> route = orderService.getOrderView(orderId);
 
             req.setAttribute("friends", friends);
             req.setAttribute("route", route);

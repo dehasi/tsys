@@ -30,8 +30,8 @@ INSERT INTO truck VALUES ('AB65478', 8, 1, 0, 3)
 INSERT INTO truck VALUES ('AB65477', 8, 1, 1, 3)
 
 -- --
-INSERT INTO driver VALUES (1, 120, 'Galeyev',  'Ravil',    1 ,  2, 1)
-INSERT INTO driver VALUES (2, 128, 'Putin',    'Vladimir', 1,   1, 1)
+INSERT INTO driver VALUES (1, 120, 'Petrov',  'Vasily',    1 ,  2, 1)
+INSERT INTO driver VALUES (2, 128, 'Zabrodin',    'Dmitriy', 1,   1, 1)
 INSERT INTO driver VALUES (3, 121, 'Bunin',    'Ivan',     NULL,   0, 1)
 INSERT INTO driver VALUES (4, 122, 'Kinchev',    'Kostya',     2,   1, 3)
 INSERT INTO driver VALUES (5, 123, 'Tcoy',    'Victor',     NULL,   0, 1)
@@ -42,7 +42,10 @@ INSERT INTO driver VALUES (6, 124, 'G',           'B',     NULL,   0, 1)
 INSERT INTO user VALUES (1, '1', 1216985755,  0)
 INSERT INTO user VALUES (2, '2', 1216985755,  0)
 INSERT INTO user VALUES (3, '3', 1216985755,  0)
-INSERT INTO user VALUES (4, 'manager', -906277200,  1)
+INSERT INTO user VALUES (4, '4', 1216985755,  0)
+INSERT INTO user VALUES (5, '5', 1216985755,  0)
+INSERT INTO user VALUES (6, '6', 1216985755,  0)
+INSERT INTO user VALUES (1000, 'manager', -906277200,  1)
 
 
 -- --
