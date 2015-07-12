@@ -3,10 +3,14 @@ package webservices.servlets;
 import businessLogic.BusinessFactory;
 import businessLogic.CityService;
 import businessLogic.DriverService;
+import businessLogic.UserService;
 import model.City;
 import model.Driver;
+import model.User;
 import model.statuses.DriverStatus;
+import model.statuses.UserStatus;
 import org.apache.log4j.Logger;
+import org.omg.PortableInterceptor.INACTIVE;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -167,6 +171,14 @@ public class ManagerDriverWork extends HttpServlet {
                     driver.setCity(city);
 
                     driverService.addNewDriver(driver);
+                    Integer id = driver.getId();
+                    User user = new User();
+                    user.setId(id);
+                    user.setLogin(id.toString());
+                    user.setPasswordHash("password".hashCode());
+                    user.setStatus(UserStatus.DRIVER);
+                    UserService userService = BusinessFactory.getInstance().getUserLogic();
+                    userService.addUser(user);
                     resp.sendRedirect("/private/manager/driver?action=show&show=all");
 
                 } catch (Exception e) {

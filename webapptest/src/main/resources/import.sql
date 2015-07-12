@@ -6,10 +6,10 @@
 -- TRUNCATE TABLE orderroute
 -- TRUNCATE TABLE 'user'
 
-INSERT INTO baggage VALUES (1, 'tea',    '0', '1200')
-INSERT INTO baggage VALUES (2, 'coffee',   '0', '990' )
-INSERT INTO baggage VALUES (3, 'vodka',  '0', '100' )
-INSERT INTO baggage VALUES (4, 'heroin', '0', '500' )
+INSERT INTO baggage VALUES (1, 'tea',        '0', '1200')
+INSERT INTO baggage VALUES (2, 'coffee',     '0', '990' )
+INSERT INTO baggage VALUES (3, 'cola',       '0', '100' )
+INSERT INTO baggage VALUES (4, 'vegetables', '0', '500' )
 
 --
 INSERT INTO city VALUES (1, 'Moscow')
@@ -47,15 +47,15 @@ INSERT INTO user VALUES (4, 'manager', -906277200,  1)
 
 -- --
 -- order city bag; isDone status; truck type visitNumber
--- isDone выполнен ли конкретный поинт
--- status выполнен ли заказ (или что там у него)
--- type - погрузка/выгрузка
-INSERT INTO orderroute VALUES (1,1,1,  0,42,  'AB12345', 0, 1) -- погрузить чай в мск
-INSERT INTO orderroute VALUES (1,2,1,  0,42,  'AB12345', 1, 2) -- выгрузитьв питере
+-- isDone check is done for concrete point:loan unload
+-- status order status
+-- type - load/unload
+INSERT INTO orderroute VALUES (1,1,1,  0,42,  'AB12345', 0, 1) -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ
+INSERT INTO orderroute VALUES (1,2,1,  0,42,  'AB12345', 1, 2) -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
-INSERT INTO orderroute VALUES (2,2,2,  1,42,  'AB65478', 0, 1) -- погрузить чай в питере
-INSERT INTO orderroute VALUES (2,3,2,  0,42,  'AB65478', 1, 2) -- выгрузитьв берлине
+INSERT INTO orderroute VALUES (2,2,2,  1,42,  'AB65478', 0, 1) -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+INSERT INTO orderroute VALUES (2,3,2,  0,42,  'AB65478', 1, 2) -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 
-INSERT INTO orderroute VALUES (3,1,3,  1,42,  'AB54321', 0, 1) -- погрузить водку в мск
-INSERT INTO orderroute VALUES (3,2,3,  1,42,  'AB54321', 1, 2) -- выгрузитьв в спб
+INSERT INTO orderroute VALUES (3,1,3,  1,42,  'AB54321', 0, 1) -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ
+INSERT INTO orderroute VALUES (3,2,3,  1,42,  'AB54321', 1, 2) -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ

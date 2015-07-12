@@ -1,5 +1,6 @@
 package DAO;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Collection;
 

@@ -35,7 +35,7 @@ public class DriverServiceTest {
     }
 
     @Test
-    public void getRoadHoursTest() {
+    public void calculateRoadHoursTest() {
         DriverService driverService = new DriverService(mockDriverDAO);
         int h  = driverService.getRoadHours(900);
         Assert.assertEquals(h,10);

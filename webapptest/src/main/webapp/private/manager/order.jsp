@@ -13,6 +13,7 @@
   <script type="text/javascript" src = "/js/jquery-1.11.3.js"></script>
   <script type="text/javascript" src = "/js/createBaggage1.js"></script>
   <%@include  file="/bootstyle.jsp" %>
+
   <%--<script type="text/javascript" src = "/js/validateTruckForm.js"></script>--%>
 </head>
 <body>
@@ -37,34 +38,53 @@
 <br>
   <c:choose>
     <c:when test="${orders != null}" >
-
+      <table class="table  table-bordered sortable">
+        <thead>
+      <tr class="active">
+        <th class="sorttable_numeric" >order id</th>
+        <th>truck id</th>
+        <th class="sorttable_numeric" >baggage id</th>
+        <th>baggage name</th>
+        <th>load city</th>
+        <th>unload city</th>
+        <th>order status</th>
+      </tr>
+        </thead>
+        <tbody>
       <c:forEach var="order" items="${orders}" >
-        <label> OrderId = ${order.orderId} TruckId = ${order.turckId}</label>
-        <table class="table  table-bordered">
-          <tr class="active">
-            <th>#</th>
-            <th>baggage</th>
-            <th>load city</th>
-            <th>isDone</th>
-            <th>unload city</th>
-            <th>isDone</th>
-            <th>order status</th>
-          </tr>
 
           <c:forEach var="route" items="${order.routes}" step="2" varStatus="vs">
             <tr>
-              <td>${route.number}</td>
-              <td>${route.baggageId} (${route.baggage.name})</td>
-              <td>${route.city}</td>
-              <td>${route.isDone}</td>
+              <%--<td>${route.number}</td>--%>
+              <td>${order.orderId}</td>
+              <td>${order.turckId}</td>
 
+              <td>${route.baggageId}</td>
+              <td>${route.baggage.name}</td>
+              <td>${route.city}</td>
               <td>${order.routes[vs.index+1].city}</td>
-              <td>${order.routes[vs.index+1].isDone}</td>
-              <td>${order.status}</td>
+
+
+                <td>
+                 <c:choose>
+                   <c:when test="${order.status == 1}">
+                     DONE
+                   </c:when>
+                   <c:when test="${order.status == 1}">
+                     NOT DONE
+                   </c:when>
+                   <c:otherwise>
+                     NOT DONE
+                   </c:otherwise>
+                 </c:choose>
+                </td>
+
             </tr>
           </c:forEach>
-        </table>
+
       </c:forEach>
+        </tbody>
+      </table>
     </c:when>
 
     <c:otherwise>
@@ -72,7 +92,7 @@
     </c:otherwise>
 
   </c:choose>
-
+  <script src="/js/sorttable.js"></script>
 </div>
 </body>
 </html>

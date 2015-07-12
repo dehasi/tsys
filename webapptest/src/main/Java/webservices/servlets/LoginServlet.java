@@ -22,6 +22,9 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        HttpSession session = req.getSession();
+        session.setAttribute("locale", "EN");
+
         UserService userService  = BusinessFactory.getInstance().getUserLogic();
         PrintWriter out = resp.getWriter();
         resp.setContentType("text/html");
@@ -33,17 +36,18 @@ public class LoginServlet extends HttpServlet {
             switch (userService.getUserStatus(login)){
                 case DRIVER: {
                     logger.info("driver logged");
-                    HttpSession session = req.getSession();
+                    session = req.getSession();
                     session.setAttribute("status", "DRIVER");
-                    session.setAttribute("id", login);
+                    session.setAttribute("id", Integer.parseInt(login));
                     resp.sendRedirect("private/driver");
                     break;
                 }
                 case MANAGER:{
                     logger.info("manager logged");
-                    HttpSession session = req.getSession();
+                    session = req.getSession();
                     session.setAttribute("status", "MANAGER");
                     session.setAttribute("id", login);
+
                     resp.sendRedirect("private/manager");
                     break;
                 }

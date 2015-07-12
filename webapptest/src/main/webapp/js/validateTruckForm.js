@@ -7,7 +7,7 @@ function validateForm(formName) {
     alert("tid = " + id);
     var duty = document.forms[formName]["duty"].value;
     var capacity = document.forms[formName]["capacity"].value;
-    var status = ''
+    var status = '';
     if (document.getElementById('OK').checked) {
         status = document.getElementById('OK').value;
     }

@@ -1,13 +1,10 @@
 package model;
 
-//import com.sun.istack.internal.Nullable;
-import com.sun.istack.internal.Nullable;
-//import org.hibernate.nu
+
 import model.statuses.DriverStatus;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Set;
+
 
 /**
  * Created by Rafa on 25.06.2015.

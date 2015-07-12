@@ -91,7 +91,14 @@
         <url-pattern>/private/manager/createorder</url-pattern>
     </servlet-mapping>
 
-
+    <servlet>
+        <servlet-name>Locale</servlet-name>
+        <servlet-class>webservices.servlets.LocaleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Locale</servlet-name>
+        <url-pattern>/locale</url-pattern>
+    </servlet-mapping>
 
     <filter>
         <filter-name>LoginF</filter-name>

@@ -11,16 +11,17 @@ function validateForm(formName) {
     var cityId = e.options[e.selectedIndex].value;
 
     if (name == null || name == "") {
-        alert("login field must be filled out");
+        alert("name field must be filled out");
         return false;
     }
 
     if (lastname == null || lastname  == "") {
-        alert("password  field must be filled out");
+        alert("lastname  field must be filled out");
         return false;
     }
     if (cityId == null || cityId  == "0") {
         alert("Select city");
         return false;
     }
+
 }

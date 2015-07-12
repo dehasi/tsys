@@ -12,10 +12,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 /**
- * Created by Rafa on 12.07.2015.
+ * Servlet for REST working
  */
 public class DriverWSRSServlet extends HttpServlet {
     Logger logger = Logger.getLogger(DriverWSRSServlet.class);
@@ -46,8 +47,10 @@ public class DriverWSRSServlet extends HttpServlet {
     }
 
     private void changeDriverStatus(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
-        String status = (String) req.getAttribute("status");
+        String id = req.getHeader("id");
+        String status = req.getHeader("status");
+
+
         try {
 
             int driverId = Integer.parseInt(id);
@@ -68,8 +71,8 @@ public class DriverWSRSServlet extends HttpServlet {
     }
 
     private void changeOrderStatus(HttpServletRequest req, HttpServletResponse resp) {
-        String id = req.getParameter("id");
-        String status = (String) req.getAttribute("status");
+        String id = req.getHeader("id");
+        String status = req.getHeader("status");
 
         try {
             int baggageId = Integer.parseInt(id);

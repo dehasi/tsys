@@ -1,5 +1,6 @@
 package DAO;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import utils.HibernateUtil;
@@ -14,7 +15,7 @@ import java.util.List;
  * Created by Rafa on 25.06.2015.
  */
 public class GenericDAOImpl<T> implements GeneticDAO<T>{
-
+    Logger logger = Logger.getLogger(GenericDAOImpl.class);
     private final Class<T> clazz;
 
     GenericDAOImpl(Class<T> clazz){
@@ -29,12 +30,14 @@ public class GenericDAOImpl<T> implements GeneticDAO<T>{
     public void add(T t) throws SQLException {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             session.beginTransaction();
-            session.save(t);
+           session.save(t);
             session.getTransaction().commit();
+            return ;
         } catch (Exception e) {
-                System.out.println("Error in addition");
-                System.out.println(e.getMessage());
+            logger.error("Error in addition");
+            logger.error(e);
         }
+        return ;
     }
     @Override
     public void update(T t) throws SQLException {
@@ -43,8 +46,8 @@ public class GenericDAOImpl<T> implements GeneticDAO<T>{
                 session.update(t);
                 session.getTransaction().commit();
             }catch (Exception e) {
-                System.out.println("Error in city updating");
-                System.out.println(e.getMessage());
+                logger.error("Error in updating");
+                logger.error(e);
             }
     }
 
@@ -55,8 +58,8 @@ public class GenericDAOImpl<T> implements GeneticDAO<T>{
             t =  session.load(clazz, id);
             Hibernate.initialize(t);
         } catch (Exception e) {
-            System.out.println("Error getById");
-            System.out.println(e.getMessage());
+            logger.error("Error in getById");
+            logger.error(e);
         }
         return t;
     }
@@ -68,7 +71,8 @@ public class GenericDAOImpl<T> implements GeneticDAO<T>{
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             ts = session.createCriteria(clazz).list();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error("Error in getAll");
+            logger.error(e);
         }
         return ts;
     }
@@ -80,7 +84,8 @@ public class GenericDAOImpl<T> implements GeneticDAO<T>{
             session.delete(t);
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error("Error in deleting");
+            logger.error(e);
         }
     }
 

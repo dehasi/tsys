@@ -5,6 +5,7 @@ import model.User;
 import model.statuses.UserStatus;
 
 import javax.jws.soap.SOAPBinding;
+import java.sql.SQLException;
 
 /**
  * Class for user business logic
@@ -34,5 +35,9 @@ public class UserService {
         else {
             return null;
         }
+    }
+
+    public void addUser(User u) throws SQLException {
+        userDAO.add(u);
     }
 }

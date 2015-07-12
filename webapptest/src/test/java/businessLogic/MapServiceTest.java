@@ -23,7 +23,7 @@ public class MapServiceTest {
     }
 
     @Test
-    public void getRoadLengthTest() {
+    public void calculateRoadLengthTest() {
         MapService mapService = new MapService(mockMapDAOImpl);
         Mockito.when(mockMapDAOImpl.getDistance(1,2)).thenReturn(1);
         Mockito.when(mockMapDAOImpl.getDistance(2,3)).thenReturn(2);

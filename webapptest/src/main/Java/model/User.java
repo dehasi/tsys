@@ -2,23 +2,22 @@ package model;
 
 import model.statuses.UserStatus;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.*;
 
 /**
  * Created by Rafa on 29.06.2015.
  */
 @Entity
+@Table(name = "user")
 public class User {
     @Id
-    long id;
-    @Column
+    @Column(name = "id")
+    int id;
+    @Column(name = "login")
     String login;
-    @Column
+    @Column(name = "passwordHash")
     long passwordHash;
-    @Column
+    @Column(name = "status")
     UserStatus status;
 
     public User() {
@@ -28,7 +27,7 @@ public class User {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
