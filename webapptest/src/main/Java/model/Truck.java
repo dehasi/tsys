@@ -1,11 +1,9 @@
 package model;
 
 import model.statuses.TruckStatus;
-import org.hibernate.annotations.IndexColumn;
 
 import javax.persistence.*;
 
-import static org.hibernate.annotations.CascadeType.*;
 
 /**
  * Created by Rafa on 20.06.2015.

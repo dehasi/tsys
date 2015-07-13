@@ -48,7 +48,7 @@ function validateData(jsdata){
 }
 
 function createReportForm(trucks, drivers, driverTime ) {
-    alert("createReportForm")
+   // alert("createReportForm")
     var root = document.getElementById("reportArea");
     $("#reportArea").empty();
 

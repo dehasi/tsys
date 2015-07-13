@@ -2,9 +2,9 @@
  * Created by Rafa on 07.07.2015.
  */
 function validateForm(formName) {
-    alert("validate form both")
+    //alert("validate form both")
     var id = document.forms[formName]["tid"].value;
-    alert("tid = " + id);
+   // alert("tid = " + id);
     var duty = document.forms[formName]["duty"].value;
     var capacity = document.forms[formName]["capacity"].value;
     var status = '';
