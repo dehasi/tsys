@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -56,9 +57,15 @@ public class ManagerController {
         return orderUtils.doGet(requestParams);
     }
 
-    @RequestMapping(value = "/createorder", method = RequestMethod.POST)
-    public String createOrderPost(@RequestParam Map<String,String> requestParams) throws IOException {
-        return orderUtils.doPost(requestParams);
+    @RequestMapping(value = "/createorder/get", method = RequestMethod.POST)
+    public @ResponseBody
+    String getStuffForOrder(@RequestParam Map<String,String> requestParams) throws IOException {
+        return orderUtils.getStuff(requestParams);
+    }
+
+    @RequestMapping(value = "/createorder/put", method = RequestMethod.POST)
+    public ModelAndView createOrderPost(@RequestParam Map<String,String> requestParams) throws IOException {
+        return orderUtils.createOrder(requestParams);
     }
 
 }

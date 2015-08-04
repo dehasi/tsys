@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 
 /**
- * Created by Rafa on 27.07.2015.
+ *
  */
 @Controller
 //@RequestMapping("*/")

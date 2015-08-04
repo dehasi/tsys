@@ -95,16 +95,11 @@ public class ManagerOrderUtils {
     }
 
 
-    protected String doPost(Map<String,String> requestParams) throws IOException {
+    protected ModelAndView createOrder(Map<String,String> requestParams) throws IOException {
         String action = requestParams.get("do");
         logger.info("Doing post");
         switch (action) {
-            case  "getStuff" : {
-                logger.info("sending stuff");
-                return sendStuff(requestParams);
-            }
-
-            case  "createOrder" : {
+           case  "createOrder" : {
                 logger.info("createOrder begin");
                 Gson gson = new Gson();
                 JsonParser parser = new JsonParser();
@@ -129,18 +124,18 @@ public class ManagerOrderUtils {
                 try {
                     orderService.createOrder(tickets, drivers, truckId);
                 } catch (SQLException e) {
-                    return UtilsController.handleError(e).toString();
+                    return UtilsController.handleError(e);
                 }
                 logger.info("createOrder end");
                 break;
             }
             default: break;
         }
-        return "redirect:/m/order?action=show&show=all";
+        return new ModelAndView("redirect:/m/order?action=show&show=all");
     }
 
-    private @ResponseBody
-    String sendStuff(Map<String,String> requestParams) throws IOException {
+    public @ResponseBody //TODO: вынести в паблик метод, тогда пост метод стает проще
+    String getStuff(Map<String,String> requestParams) throws IOException {
         String jsonString = requestParams.get("jsdata");
         JsonElement root = new JsonParser().parse(jsonString);
         JsonArray elements = root.getAsJsonArray();

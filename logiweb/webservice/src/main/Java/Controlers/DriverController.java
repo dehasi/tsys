@@ -25,14 +25,6 @@ import java.util.List;
 public class DriverController {
     Logger logger = Logger.getLogger(DriverController.class);
 
-//    @RequestMapping("/")
-//    public ModelAndView returnJSP() {
-//        ModelAndView view = new ModelAndView();
-//        Driver driver = new  Driver();
-//        view.addObject("driver", driver);
-//        return new ModelAndView("driver/driver");
-//    }
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
     ModelAndView driverPage(HttpSession session) {
 
