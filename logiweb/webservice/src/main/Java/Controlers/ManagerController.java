@@ -1,5 +1,6 @@
 package Controlers;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/m")
+@Secured("ROLE_ADMIN")
 public class ManagerController {
     private ManagerDriverUtils driverUtils = new ManagerDriverUtils();
     private ManagerTruckUtils truckUtils = new ManagerTruckUtils();

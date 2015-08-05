@@ -8,8 +8,8 @@
         <!--<relativePath>../business/pom.xml</relativePath>-->
     </parent>
     <!--<modules>-->
-        <!--<module>../business</module>-->
-        <!--<module>../model</module>-->
+    <!--<module>../business</module>-->
+    <!--<module>../model</module>-->
     <!--</modules>-->
     <modelVersion>4.0.0</modelVersion>
     <artifactId>webservice</artifactId>
@@ -30,7 +30,6 @@
             <artifactId>business</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -76,6 +75,7 @@
             <artifactId>spring-context</artifactId>
             <version>4.1.7.RELEASE</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
@@ -108,6 +108,7 @@
         </dependency>
 
     </dependencies>
+
     <build>
         <finalName>webservice</finalName>
     </build>

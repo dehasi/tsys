@@ -35,8 +35,8 @@
 
     <script>
         function validateForm() {
-            var login = document.forms["myForm"]["login"].value;
-            var password = document.forms["myForm"]["password"].value;
+            var login = document.forms["myForm"]["j_username"].value;
+            var password = document.forms["myForm"]["j_password"].value;
 
             if (login == null || login == "") {
                 alert("login field must be filled out");
@@ -55,10 +55,11 @@
 
         <div class="container">
             <div class="col-xs-3">
-        <form name="myForm"  method="post" action="login" onsubmit = "return validateForm()" class="form-signin" >
+                <%--action = /login--%>
+        <form name="myForm"  method="post" action="/j_spring_security_check" onsubmit = "return validateForm()" class="form-signin" >
             <h2 class="form-signin-heading" ><fmt:message key="main.title" bundle="${login}"/></h2>
-            <input type="text" name="login" value="manager" placeholder="<fmt:message key="text.username" bundle="${login}"/>" class="form-control col-xs-3" size="5">
-            <input type="password" name="password" value="secret" placeholder="<fmt:message key="text.password" bundle="${login}"/>" class="form-control col-xs-3">
+            <input type="text" name="j_username" value="manager" placeholder="<fmt:message key="text.username" bundle="${login}"/>" class="form-control col-xs-3" size="5">
+            <input type="password" name="j_password" value="secret" placeholder="<fmt:message key="text.password" bundle="${login}"/>" class="form-control col-xs-3">
             <c:set var="ddd"> <fmt:message key="btn.lg"  bundle="${login}"/></c:set>
             <input class="btn btn-primary btn-block" type="submit" name="commit" value="${ddd}" >
             <%--<fmt:message key="button.login" bundle="${login}"/>--%>
@@ -97,3 +98,4 @@
 
 </body>
 </html>
+
