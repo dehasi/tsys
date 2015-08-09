@@ -4,15 +4,20 @@ import model.User;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 import utils.HibernateUtil;
 
 /**
  * Created by Rafa on 29.06.2015.
  */
+@Repository
 public class UserDAOImpl extends  GenericDAOImpl<User>{
 
     public UserDAOImpl(Class<User> clazz) {
         super(clazz);
+    }
+    public UserDAOImpl() {
+        super();
     }
 
     public Long getUserPasswordHash(String login) {

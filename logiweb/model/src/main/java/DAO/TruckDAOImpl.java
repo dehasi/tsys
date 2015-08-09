@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 import utils.HibernateUtil;
 
 import java.util.HashSet;
@@ -16,10 +17,14 @@ import java.util.Set;
 /**
  * Created by Rafa on 20.06.2015.
  */
+@Repository
 public class TruckDAOImpl extends GenericDAOImpl<Truck>{
 
     public TruckDAOImpl(Class<Truck> clazz) {
         super(clazz);
+    }
+    public TruckDAOImpl() {
+        super();
     }
 
     public Set<Truck> getTrucksForOrder(int weight) {

@@ -2,6 +2,9 @@ package businessLogic;
 
 import DAO.CityDAOImpl;
 import model.City;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -11,13 +14,16 @@ import java.util.Set;
  * Business logic for city work
  * just only getters and setters
  */
+@Service
 public class CityService {
-    private CityDAOImpl cityDAO = null;
+    @Autowired
+    private CityDAOImpl cityDAO;
 
     public CityService(CityDAOImpl cityDAO) {
         this.cityDAO = cityDAO;
     }
 
+    @Transactional
     public Set<City> getAllCities() throws SQLException {
         return new HashSet<>( cityDAO.getAll());
     }

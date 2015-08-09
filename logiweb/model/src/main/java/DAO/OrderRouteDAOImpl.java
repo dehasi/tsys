@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 import utils.HibernateUtil;
 
 import java.util.HashSet;
@@ -15,9 +16,13 @@ import java.util.Set;
 /**
  * Created by Rafa on 30.06.2015.
  */
+@Repository
 public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
     public OrderRouteDAOImpl(Class<OrderRoute> clazz) {
         super(clazz);
+    }
+    public OrderRouteDAOImpl() {
+        super();
     }
 
     public Set<OrderRoute> getOrdersByStaus(OrderStatus status) {

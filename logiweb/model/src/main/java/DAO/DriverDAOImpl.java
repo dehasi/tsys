@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 import utils.HibernateUtil;
 
 import java.util.HashSet;
@@ -16,11 +17,15 @@ import java.util.Set;
 /**
  * Created by Rafa on 21.06.2015.
  */
+@Repository
 public class DriverDAOImpl extends GenericDAOImpl<Driver> {
     static final int MAX_WORK_HOURS = 176;
 
     public DriverDAOImpl(Class<Driver> clazz) {
         super(clazz);
+    }
+    public DriverDAOImpl() {
+        super();
     }
 
     public Set<Driver> getDriversByCity(City city){
@@ -113,17 +118,5 @@ public class DriverDAOImpl extends GenericDAOImpl<Driver> {
         return null;
     }
 
-//    private Set<Driver> getDriversForOrder(int hours, City city) {
-//        hours = MAX_WORK_HOURS - hours;
-//        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-//            Query query = session.getNamedQuery("Driver.getForOrder")
-//                    .setInteger("hw", hours);
-//            Set<Driver> drivers =  new HashSet<>(query.list());
-//
-//            return  null;
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return null;
-//    }
+
 }

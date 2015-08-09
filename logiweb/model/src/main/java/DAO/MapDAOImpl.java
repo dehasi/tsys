@@ -4,6 +4,7 @@ import model.Map;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 import utils.HibernateUtil;
 
 import java.util.List;
@@ -11,11 +12,12 @@ import java.util.List;
 /**
  * Created by Rafa on 09.07.2015.
  */
-public class MapDAOImpl extends GenericDAOImpl<Map> {
-    public MapDAOImpl(Class<Map> clazz) {
 
-        super(clazz);
-    }
+@Repository
+public class MapDAOImpl extends GenericDAOImpl<Map> {
+
+    public MapDAOImpl(Class<Map> clazz) { super(clazz); }
+    public MapDAOImpl() { super(); }
 
 
 
