@@ -1,6 +1,7 @@
 package model;
 
 import model.pkey.OrderPK;
+import model.statuses.OrderStatus;
 
 import javax.persistence.*;
 
@@ -35,14 +36,28 @@ import javax.persistence.*;
         )
 })
 public class OrderRoute implements Comparable<OrderRoute> {
+//    private int order;
+//    private int city;
+//    private int baggage;
+//    private int type;
+//    private int isDone;
+//    private int visitNumber;
+//    private int status;
+//    private String truck;
+//
+
+
     private int order;
-    private int city;
-    private int baggage;
+    private City city;
+    private Baggage baggage;
     private int type;
     private int isDone;
     private int visitNumber;
-    private int status;
-    private String truck;
+    private OrderStatus status;
+    private Truck truck;
+
+
+
 
 
     @Id
@@ -56,22 +71,24 @@ public class OrderRoute implements Comparable<OrderRoute> {
     }
 
     @Id
-    @Column(name = "city")
-    public int getCity() {
+    @JoinColumn(name = "city")
+    @OneToMany
+    public City getCity() {
         return city;
     }
 
-    public void setCity(int city) {
+    public void setCity(City city) {
         this.city = city;
     }
 
     @Id
-    @Column(name = "baggage")
-    public int getBaggage() {
+    @JoinColumn(name = "baggage")
+    @OneToMany
+    public Baggage getBaggage() {
         return baggage;
     }
 
-    public void setBaggage(int baggage) {
+    public void setBaggage(Baggage baggage) {
         this.baggage = baggage;
     }
 
@@ -105,52 +122,26 @@ public class OrderRoute implements Comparable<OrderRoute> {
         this.visitNumber = visitNumber;
     }
 
+
+
     @Basic
     @Column(name = "status")
-    public int getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
-    @Column(name = "truck")
-    public String getTruck() {
+    @JoinColumn(name = "truck")
+    @OneToMany
+    public Truck getTruck() {
         return truck;
     }
 
-    public void setTruck(String truck) {
+    public void setTruck(Truck truck) {
         this.truck = truck;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        OrderRoute orderRoute1 = (OrderRoute) o;
-
-        if (order != orderRoute1.order) return false;
-        if (city != orderRoute1.city) return false;
-        if (baggage != orderRoute1.baggage) return false;
-        if (type != orderRoute1.type) return false;
-        if (isDone != orderRoute1.isDone) return false;
-        if (visitNumber != orderRoute1.visitNumber) return false;
-        return status == orderRoute1.status;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = order;
-        result = 31 * result + city;
-        result = 31 * result + baggage;
-        result = 31 * result + type;
-        result = 31 * result + isDone;
-        result = 31 * result + visitNumber;
-        result = 31 * result + status;
-        return result;
     }
 
     @Override

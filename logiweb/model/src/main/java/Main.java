@@ -39,11 +39,11 @@ class Main {
 //        b.setStatus(BaggageStatus.DONE);
 //        cargoDao.update(b);
 
-        Baggage baggage = new Baggage();
-        baggage.setId(42);
-        baggage.setStatus(BaggageStatus.DONE);
-        baggage.setName("PIVO");
-        baggage.setWeight(120);
+//        Baggage baggage = new Baggage();
+//        baggage.setId(42);
+//        baggage.setStatus(BaggageStatus.DONE);
+//        baggage.setName("PIVO");
+//        baggage.setWeight(120);
         cargoDao.delete(b);
         System.out.println((cargoDao).getById(1));
 //        System.out.println((cargoDao).getBaggagesByStatus(BaggageStatus.PRODUCED));

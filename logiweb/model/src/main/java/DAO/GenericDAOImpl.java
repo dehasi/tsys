@@ -112,6 +112,9 @@ public class GenericDAOImpl<T> implements GeneticDAO<T> {
     @Override
 //    @Transactional
     public void delete(T t) throws SQLException {
+//        getEntityManager().remove(t);
+//        getEntityManager().flush();
+
         try {
             getEntityManager().remove(t);
         } catch (Exception e) {
