@@ -3,6 +3,7 @@ package model.embedded;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -11,9 +12,11 @@ import java.io.Serializable;
 @Entity
 @Embeddable
 public class Cities implements Serializable {
+    @Id
     @Column(name ="cityA")
     private long cityA;
 
+    @Id
     @Column(name = "cityB")
     private long cityB;
 

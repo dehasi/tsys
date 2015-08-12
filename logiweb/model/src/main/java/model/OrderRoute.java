@@ -56,10 +56,6 @@ public class OrderRoute implements Comparable<OrderRoute> {
     private OrderStatus status;
     private Truck truck;
 
-
-
-
-
     @Id
     @Column(name = "order")
     public int getOrder() {

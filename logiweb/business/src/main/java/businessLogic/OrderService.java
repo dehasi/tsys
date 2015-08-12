@@ -1,5 +1,6 @@
 package businessLogic;
 
+import DAO.*;
 import model.Baggage;
 import model.City;
 import model.OrderRoute;
@@ -10,7 +11,6 @@ import org.apache.log4j.Logger;
 import java.sql.SQLException;
 import java.util.*;
 
-import DAO.*;
 import static java.util.Collections.sort;
 
 /**
@@ -55,21 +55,18 @@ public class OrderService {
         Set<OrderRoute> routes =  getRoute(orderId);
         List<OrderView> views  = new ArrayList<>();
         for(OrderRoute route :routes) {
-            try {
-            Baggage baggage = baggageDAO.getById(route.getBaggage());
-            City city = cityDAO.getById(route.getCity());
+            Baggage baggage = route.getBaggage();
+            City city = route.getCity();
 
-                OrderView view = new OrderView(route.getOrder(),
-                        city.getName(),
-                        route.getBaggage(),
-                        route.getType(),
-                        baggage,
-                        route.getVisitNumber(),
-                        route.getIsDone(), route.getTruck());
-                views.add(view);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+//                OrderView view = new OrderView(route.getOrder(),
+//                        city.getName(),
+//                        route.getBaggage(),
+//                        route.getType(),
+//                        baggage,
+//                        route.getVisitNumber(),
+//                        route.getIsDone(), route.getTruck());
+//                views.add(view);
+            throw new RuntimeException("Shouldn't work");
         }
         sort(views);
         return views;
@@ -161,7 +158,7 @@ public class OrderService {
             OrderRoute oLoad = new OrderRoute();
             OrderRoute oUnLoad = new OrderRoute();
 
-            oLoad.setOrder(orderId);
+            /*oLoad.setOrder(orderId);
             oLoad.setCity(t.loadId);
             oLoad.setBaggage(baggages.get(baxIndex).getId());
             oLoad.setIsDone(0);
@@ -177,7 +174,7 @@ public class OrderService {
             oUnLoad.setStatus(0);
             oUnLoad.setType(1); // unload
             oUnLoad.setVisitNumber(++visitNumber);
-            oUnLoad.setTruck(truckId);
+            oUnLoad.setTruck(truckId);*/
 
             routes.add(oLoad);
             routes.add(oUnLoad);
@@ -234,7 +231,7 @@ public class OrderService {
                     Set<OrderRoute> routeSet = getRoute(orderId);
                     if(isOrderDone(routeSet)) {
                         for (OrderRoute r : routeSet) {
-                            r.setStatus(1);
+//                            r.setStatus(1);
                             orderRouteDAO.update(r);
                         }
                     }
