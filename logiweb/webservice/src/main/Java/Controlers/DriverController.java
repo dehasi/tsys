@@ -6,6 +6,7 @@ import businessLogic.OrderService;
 import businessLogic.OrderView;
 import model.Driver;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,16 +25,19 @@ import java.util.List;
 @RequestMapping("/driver")
 public class DriverController {
     Logger logger = Logger.getLogger(DriverController.class);
+    @Autowired
+    DriverService driverService;
 
+    @Autowired
+    OrderService orderService;
     @RequestMapping(value = "/", method = RequestMethod.GET)
     ModelAndView driverPage(HttpSession session) {
 
         int id = (int) session.getAttribute("id");
-        DriverService driverService = null;
-        OrderService orderService = null;
 
-        driverService = BusinessFactory.getInstance().getDriverLogic();
-        orderService = BusinessFactory.getInstance().getOrderLogic();
+
+//        driverService = BusinessFactory.getInstance().getDriverLogic();
+//        orderService = BusinessFactory.getInstance().getOrderLogic();
 
 
         Driver driver = driverService.getById(id);
@@ -42,7 +46,8 @@ public class DriverController {
             return new ModelAndView("redirect:error");
         }
 
-        Integer orderId = driver.getOrderRoute();
+//        Integer orderId = driver.getOrderRoute();
+        Integer orderId = driver.getOrderRoute().getOrder();
         ModelAndView view = new ModelAndView("driver/driver");
         if(orderId != null) {
             List<Driver> friends = new ArrayList<>();

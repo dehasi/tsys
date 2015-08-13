@@ -4,6 +4,7 @@ package model;
 import model.statuses.DriverStatus;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -46,16 +47,20 @@ public class Driver implements Comparable<Driver>{
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "hoursWorked")
     private int hoursWorked;
 
+    @Column(name = "status")
     private DriverStatus status;
 
     @ManyToOne
     @JoinColumn(name = "city")
     private City city;
 
-    @Column(name = "order_id", nullable = true)
-    private Integer orderRoute;
+    @JoinColumn(name = "order", nullable = true)
+    @OneToOne
+//    private List<OrderRoute> orderRoute;
+    private OrderRoute orderRoute;
 
     public City getCity() {
         return city;
@@ -112,11 +117,11 @@ public class Driver implements Comparable<Driver>{
         this.status = status;
     }
 
-    public Integer getOrderRoute() {
+    public OrderRoute getOrderRoute() {
         return orderRoute;
     }
 
-    public void setOrderRoute(Integer orderRoute) {
+    public void setOrderRoute(OrderRoute orderRoute) {
         this.orderRoute = orderRoute;
     }
 

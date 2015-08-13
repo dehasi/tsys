@@ -10,6 +10,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import utils.HibernateUtil;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,14 +31,19 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
     }
 
     public Set<Truck> getTrucksForOrder(int weight) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Criteria crit = session.createCriteria(Truck.class)
-                    .add(Restrictions.ge("capacity", (long)weight))
-                    .add(Restrictions.eq("status", TruckStatus.OK));
 
-            crit.setMaxResults(50);
-            List trucks = crit.list();
-            return new HashSet<>(trucks);
+        try {
+            CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<Truck> criteriaQuery = criteriaBuilder.createQuery(Truck.class);
+
+            Root<Truck> truckRoot =criteriaQuery.from(Truck.class);
+
+            List<Truck> bg = getEntityManager().createQuery(criteriaQuery.select(truckRoot).where(criteriaBuilder.equal(
+                    truckRoot.get("status"),TruckStatus.OK
+            ), criteriaBuilder.ge(truckRoot.get("capacity"),(long)weight)
+            )).getResultList();
+
+            return new HashSet<>(bg);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -45,9 +53,8 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
 
     public Truck getTruckById(String id) {
         Truck t = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            t =  session.load(Truck.class, id);
-            Hibernate.initialize(t);
+        try  {
+            return getEntityManager().find(Truck.class, id);
         } catch (Exception e) {
             System.out.println("Error getById");
             System.out.println(e.getMessage());
@@ -56,12 +63,17 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
     }
 
     public Set<Truck> getTrucksByStatus(TruckStatus status) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Criteria crit = session.createCriteria(Truck.class)
-                    .add(Restrictions.eq("status", status));
-            crit.setMaxResults(50);
-            List trucks = crit.list();
-            return new HashSet<>(trucks);
+        try {
+            CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<Truck> criteriaQuery = criteriaBuilder.createQuery(Truck.class);
+
+            Root<Truck> truckRoot =criteriaQuery.from(Truck.class);
+
+            List<Truck> bg = getEntityManager().createQuery(criteriaQuery.select(truckRoot).where(criteriaBuilder.equal(
+                            truckRoot.get("status"), status)
+            )).getResultList();
+
+            return new HashSet<>(bg);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -69,23 +81,22 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
         return null;
     }
 
-    //   	���� �� ��������� � ������ ������ ������� �������;
-    public Set<Truck> getFreeTrucks() {
-        return null;
-    }
 
-    //   	���� �������� �� �����������
-    // (� ������ ��������/�������� ������ � ������� �� �������� ����������);
+
     public Set<Truck> getFitTrucks(int weight, City city) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Criteria crit = session.createCriteria(Truck.class)
-                    .add(Restrictions.ge("capacity", (long) weight))
-                    .add(Restrictions.eq("status", TruckStatus.OK))
-                    .add(Restrictions.eq("city", city));
 
-            crit.setMaxResults(50);
-            List trucks = crit.list();
-            return new HashSet<>(trucks);
+        try {
+            CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<Truck> criteriaQuery = criteriaBuilder.createQuery(Truck.class);
+
+            Root<Truck> truckRoot =criteriaQuery.from(Truck.class);
+
+            List<Truck> bg = getEntityManager().createQuery(criteriaQuery.select(truckRoot).where(criteriaBuilder.equal(
+                            truckRoot.get("status"), TruckStatus.OK),
+                    criteriaBuilder.equal(truckRoot.get("city"), city),
+                    criteriaBuilder.ge(truckRoot.get("capacity"), (long) weight)
+            )).getResultList();
+            return new HashSet<>(bg);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

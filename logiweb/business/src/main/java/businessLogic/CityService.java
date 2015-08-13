@@ -36,4 +36,15 @@ public class CityService {
         City city = cityDAO.getById(id);
         return city;
     }
+
+    public CityService() {
+    }
+
+    public CityDAOImpl getCityDAO() {
+        return cityDAO;
+    }
+
+    public void setCityDAO(CityDAOImpl cityDAO) {
+        this.cityDAO = cityDAO;
+    }
 }

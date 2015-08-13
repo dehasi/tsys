@@ -32,9 +32,9 @@
                <prop key="hibernate.connection.username">root</prop>
                <prop key="hibernate.connection.password">password</prop>
                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-               <prop key="hibernate.hbm2ddl.import_files">import.sql</prop>
-               <prop key = "hibernate.show_sql">true</prop>
+               <prop key="hibernate.show_sql">false</prop>
                <prop key="hibernate.hbm2ddl.auto">update</prop>
+               <prop key="hibernate.hbm2ddl.import_files">import.sql</prop>
            </props>
        </property>
     </bean>
@@ -48,29 +48,41 @@
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
 
-    <context:component-scan base-package="DAO"/>
-    <context:component-scan base-package="model"/>
+    <context:component-scan base-package="DAO" />
+    <context:component-scan base-package="model" />
+    <context:component-scan base-package="Controlers" />
+    <context:component-scan base-package="businessLogic" />
     <context:annotation-config />
     <context:spring-configured />
 
     <tx:annotation-driven transaction-manager="transactionManager" />
 
-
-    <bean id="roleHierarchy"
-                class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
-        <property name="hierarchy">
-            <value>
-                ROLE_ADMIN > ROLE_MANAGER
-                ROLE_MANAGER > ROLE_ANONYMOUS
-            </value>
+    <mvc:annotation-driven/>
+    <bean
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix">
+            <value>/WEB-INF/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
         </property>
     </bean>
+    <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:resources mapping="/js/**" location="/js/"/>
+
+    <!--<bean id="roleHierarchy"-->
+                <!--class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">-->
+        <!--<property name="hierarchy">-->
+            <!--<value>-->
+                <!--ROLE_ADMIN > ROLE_MANAGER-->
+                <!--ROLE_MANAGER > ROLE_ANONYMOUS-->
+            <!--</value>-->
+        <!--</property>-->
+    <!--</bean>-->
 
 
-    <bean id="roleVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">
-        <constructor-arg ref="roleHierarchy" />
-    </bean>
-
-
+    <!--<bean id="roleVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">-->
+        <!--<constructor-arg ref="roleHierarchy" />-->
+    <!--</bean>-->
 
 </beans>

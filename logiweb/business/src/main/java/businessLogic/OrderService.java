@@ -7,6 +7,8 @@ import model.OrderRoute;
 import model.statuses.BaggageStatus;
 import model.statuses.DriverStatus;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -18,14 +20,20 @@ import static java.util.Collections.sort;
  * Creating oeder and return all statuses of order in
  * different views
  */
+@Service
 public class OrderService {
 
     private static Logger logger = Logger.getLogger(OrderService.class);
-    BaggageDAOImpl baggageDAO = null;
-    OrderRouteDAOImpl orderRouteDAO = null;
-    CityDAOImpl cityDAO = null;
-    MapDAOImpl mapDAO = null;
-    DriverDAOImpl driverDAO = null;
+    @Autowired
+    BaggageDAOImpl baggageDAO;
+    @Autowired
+    OrderRouteDAOImpl orderRouteDAO;
+    @Autowired
+    CityDAOImpl cityDAO;
+    @Autowired
+    MapDAOImpl mapDAO;
+    @Autowired
+    DriverDAOImpl driverDAO;
 
     /**
      * Constructor. creates instance of class
@@ -43,6 +51,9 @@ public class OrderService {
         this.mapDAO = mapDAO;
         this.driverDAO = driverDAO;
 
+    }
+
+    public OrderService() {
     }
 
     public Set<OrderRoute> getRoute(int orderId) {
@@ -157,7 +168,7 @@ public class OrderService {
         for (Ticket t : tickets) {
             OrderRoute oLoad = new OrderRoute();
             OrderRoute oUnLoad = new OrderRoute();
-
+            //TODO: fix this shit
             /*oLoad.setOrder(orderId);
             oLoad.setCity(t.loadId);
             oLoad.setBaggage(baggages.get(baxIndex).getId());
@@ -187,7 +198,8 @@ public class OrderService {
 
         for(int ids : driverIds){
             model.Driver driver = driverDAO.getById(ids);
-            driver.setOrderRoute(orderId);
+            //TODO: fix this shit
+//            driver.setOrderRoute(orderId);
             driver.setStatus(DriverStatus.WORK);
             driverDAO.update(driver);
         }
@@ -263,5 +275,46 @@ public class OrderService {
             }
         }
         return true;
+    }
+
+
+    public BaggageDAOImpl getBaggageDAO() {
+        return baggageDAO;
+    }
+
+    public void setBaggageDAO(BaggageDAOImpl baggageDAO) {
+        this.baggageDAO = baggageDAO;
+    }
+
+    public OrderRouteDAOImpl getOrderRouteDAO() {
+        return orderRouteDAO;
+    }
+
+    public void setOrderRouteDAO(OrderRouteDAOImpl orderRouteDAO) {
+        this.orderRouteDAO = orderRouteDAO;
+    }
+
+    public CityDAOImpl getCityDAO() {
+        return cityDAO;
+    }
+
+    public void setCityDAO(CityDAOImpl cityDAO) {
+        this.cityDAO = cityDAO;
+    }
+
+    public MapDAOImpl getMapDAO() {
+        return mapDAO;
+    }
+
+    public void setMapDAO(MapDAOImpl mapDAO) {
+        this.mapDAO = mapDAO;
+    }
+
+    public DriverDAOImpl getDriverDAO() {
+        return driverDAO;
+    }
+
+    public void setDriverDAO(DriverDAOImpl driverDAO) {
+        this.driverDAO = driverDAO;
     }
 }

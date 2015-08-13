@@ -17,9 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by Rafa on 25.06.2015.
- */
+
 @Repository
 public class BaggageDAOImpl extends  GenericDAOImpl<Baggage> {
 

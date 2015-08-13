@@ -3,6 +3,8 @@ package businessLogic;
 import DAO.UserDAOImpl;
 import model.User;
 import model.statuses.UserStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 
@@ -10,8 +12,21 @@ import java.sql.SQLException;
  * Class for user business logic
  * helps user login do
  */
+@Service
 public class UserService {
-    protected UserDAOImpl userDAO = null;
+    @Autowired
+    protected UserDAOImpl userDAO;
+
+    public UserService() {
+    }
+
+    public UserDAOImpl getUserDAO() {
+        return userDAO;
+    }
+
+    public void setUserDAO(UserDAOImpl userDAO) {
+        this.userDAO = userDAO;
+    }
 
     public UserService(UserDAOImpl userDAO) {
         this.userDAO = userDAO;

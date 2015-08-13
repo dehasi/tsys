@@ -4,10 +4,6 @@ import model.statuses.TruckStatus;
 
 import javax.persistence.*;
 
-
-/**
- * Created by Rafa on 20.06.2015.
- */
 @Entity
 @Table(name = "truck")
 public class Truck {

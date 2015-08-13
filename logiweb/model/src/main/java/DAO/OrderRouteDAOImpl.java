@@ -25,6 +25,37 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
         super();
     }
 
+
+    /**
+     public Set<Baggage> getBaggagesByStatus(BaggageStatus status) {
+     try {
+     CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+     CriteriaQuery<Baggage> criteriaQuery = criteriaBuilder.createQuery(Baggage.class);
+
+     Root<Baggage> baggageRoot =criteriaQuery.from(Baggage.class);
+
+     List<Baggage> bg = getEntityManager().createQuery(criteriaQuery.select(baggageRoot).where(criteriaBuilder.equal(
+     baggageRoot.get("status"), status
+     ))).getResultList();
+
+     return new HashSet<>(bg);
+     } catch (Exception e) {
+     System.out.println(e.getMessage());
+     }
+     return null;
+     }
+
+     public int getMaxId() {
+     try {
+     TypedQuery<Integer> query =  getEntityManager().createNamedQuery("Baggage.getMaxId", Integer.class);
+     return  query.getResultList().get(0);
+     }catch (Exception e) {
+     return -1;
+     }
+
+     }
+     */
+
     public Set<OrderRoute> getOrdersByStaus(OrderStatus status) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(OrderRoute.class)

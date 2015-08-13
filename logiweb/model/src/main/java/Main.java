@@ -1,5 +1,6 @@
 import DAO.BaggageDAOImpl;
 import DAO.CityDAOImpl;
+import DAO.DriverDAOImpl;
 import com.google.gson.Gson;
 import model.Baggage;
 import model.Driver;
@@ -49,6 +50,12 @@ class Main {
 //        System.out.println((cargoDao).getBaggagesByStatus(BaggageStatus.PRODUCED));
 //        System.out.println((cargoDao).getAll());
         System.out.println((cargoDao).getAll());
+
+
+        DriverDAOImpl driverDAO = ctx.getBean(DriverDAOImpl.class);
+
+        System.out.println(driverDAO.getAll());
+
         System.out.println("Good bye!");
 
 

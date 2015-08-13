@@ -5,6 +5,8 @@ import model.City;
 import model.Driver;
 import model.statuses.DriverStatus;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -15,11 +17,24 @@ import java.util.Set;
  * full CRUD for driver data base
  * and some addition functions
  */
+@Repository
 public class DriverService {
 
     private static Logger logger = Logger.getLogger(DriverService.class);
     private static int MEDUIM_SPEED = 90;
-    private DriverDAOImpl driverDAO = null;
+    @Autowired
+    private DriverDAOImpl driverDAO;
+
+    public DriverService() {
+    }
+
+    public DriverDAOImpl getDriverDAO() {
+        return driverDAO;
+    }
+
+    public void setDriverDAO(DriverDAOImpl driverDAO) {
+        this.driverDAO = driverDAO;
+    }
 
     public DriverService(DriverDAOImpl driverDAO) {
         this.driverDAO = driverDAO;

@@ -1,5 +1,6 @@
 package Controlers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +20,10 @@ import java.util.Map;
 @RequestMapping("/m")
 @Secured("ROLE_ADMIN")
 public class ManagerController {
-    private ManagerDriverUtils driverUtils = new ManagerDriverUtils();
-    private ManagerTruckUtils truckUtils = new ManagerTruckUtils();
+    @Autowired
+    private ManagerDriverUtils driverUtils;
+    @Autowired
+    private ManagerTruckUtils truckUtils;
     private ManagerOrderUtils orderUtils = new ManagerOrderUtils();
 
     @RequestMapping("/")
@@ -70,4 +73,12 @@ public class ManagerController {
         return orderUtils.createOrder(requestParams);
     }
 
+
+    public ManagerDriverUtils getDriverUtils() {
+        return driverUtils;
+    }
+
+    public void setDriverUtils(ManagerDriverUtils driverUtils) {
+        this.driverUtils = driverUtils;
+    }
 }

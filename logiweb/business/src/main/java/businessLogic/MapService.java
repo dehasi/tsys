@@ -2,15 +2,30 @@ package businessLogic;
 
 import DAO.MapDAOImpl;
 import model.City;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Class represent business logic for map
  *
  */
+@Service
 public class MapService {
+    @Autowired
     private MapDAOImpl mapDAO;
 
     public MapService(MapDAOImpl mapDAO) {
+        this.mapDAO = mapDAO;
+    }
+
+    public MapService() {
+    }
+
+    public MapDAOImpl getMapDAO() {
+        return mapDAO;
+    }
+
+    public void setMapDAO(MapDAOImpl mapDAO) {
         this.mapDAO = mapDAO;
     }
 

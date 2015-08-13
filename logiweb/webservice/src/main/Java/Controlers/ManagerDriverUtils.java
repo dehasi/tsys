@@ -10,6 +10,8 @@ import model.User;
 import model.statuses.DriverStatus;
 import model.statuses.UserStatus;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -18,9 +20,16 @@ import java.util.*;
 /**
  * Controller for driver managering
  */
+@Component
 public class ManagerDriverUtils {
     Logger logger = Logger.getLogger(ManagerDriverUtils.class);
 
+    @Autowired
+    DriverService driverService; // = BusinessFactory.getInstance().getDriverLogic();
+    @Autowired
+    CityService cityService;
+    @Autowired
+    UserService userService;
 
     ModelAndView mainPage(Map<String,String> requestParams) throws IOException {
         logger.info("we are in manager driver");
@@ -55,7 +64,7 @@ public class ManagerDriverUtils {
         String show = requestParams.get("show");
 
         try {
-            DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
+           // DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
 
             Set<Driver> drivers ;
 
@@ -91,7 +100,7 @@ public class ManagerDriverUtils {
     private ModelAndView add() throws IOException {
         ModelAndView view = new ModelAndView("m/driverAdd");
         try {
-            CityService cityService = BusinessFactory.getInstance().getCityLogic();
+            //CityService cityService = BusinessFactory.getInstance().getCityLogic();
             Set<City> cities = cityService.getAllCities();
             view.addObject("cities",cities);
 
@@ -104,8 +113,8 @@ public class ManagerDriverUtils {
     private ModelAndView edit(Map<String, String> requestParams) throws IOException {
         ModelAndView view = new ModelAndView("m/driverEdit");
         try {
-            DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
-            CityService cityService = BusinessFactory.getInstance().getCityLogic();
+            //DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
+           // CityService cityService = BusinessFactory.getInstance().getCityLogic();
             Set<City> cities = cityService.getAllCities();
 
             view.addObject("cities",cities);
@@ -123,7 +132,7 @@ public class ManagerDriverUtils {
     private ModelAndView delete(Map<String, String> requestParams) throws IOException {
         ModelAndView view = new ModelAndView("redirect:/m/driver?action=show&show=all");
         try {
-            DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
+           // DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
 
             String id = requestParams.get("id");
             int driverId = Integer.parseInt(id);
@@ -147,8 +156,8 @@ public class ManagerDriverUtils {
             case "Add": {
 
                 try {
-                    DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
-                    CityService cityService = BusinessFactory.getInstance().getCityLogic();
+                 //   DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
+                //    CityService cityService = BusinessFactory.getInstance().getCityLogic();
                     Driver driver = new Driver();
                     String name = requestParams.get("name");
                     String lastName = requestParams.get("lastname");
@@ -170,7 +179,7 @@ public class ManagerDriverUtils {
                     user.setLogin(id.toString());
                     user.setPasswordHash("password".hashCode());
                     user.setStatus(UserStatus.DRIVER);
-                    UserService userService = BusinessFactory.getInstance().getUserLogic();
+                  //  UserService userService = BusinessFactory.getInstance().getUserLogic();
                     userService.addUser(user);
 
                 } catch (Exception e) {
@@ -180,8 +189,8 @@ public class ManagerDriverUtils {
             }
             case "Save" :{
                 try {
-                    DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
-                    CityService cityService = BusinessFactory.getInstance().getCityLogic();
+                   // DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
+                  //  CityService cityService = BusinessFactory.getInstance().getCityLogic();
                     String id = requestParams.get("id");
                     int driverId = Integer.parseInt(id);
                     Driver driver =  driverService.getById(driverId);

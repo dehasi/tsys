@@ -55,8 +55,9 @@
 
         <div class="container">
             <div class="col-xs-3">
-                <%--action = /login--%>
-        <form name="myForm"  method="post" action="/j_spring_security_check" onsubmit = "return validateForm()" class="form-signin" >
+                 <%--action = /login--%>
+                    <%--action="j_spring_security_check"--%>
+                    <form name="myForm"  action = "login" method="post" onsubmit = "return validateForm()" class="form-signin" >
             <h2 class="form-signin-heading" ><fmt:message key="main.title" bundle="${login}"/></h2>
             <input type="text" name="j_username" value="manager" placeholder="<fmt:message key="text.username" bundle="${login}"/>" class="form-control col-xs-3" size="5">
             <input type="password" name="j_password" value="secret" placeholder="<fmt:message key="text.password" bundle="${login}"/>" class="form-control col-xs-3">

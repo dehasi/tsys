@@ -1,12 +1,13 @@
 package Controlers;
 
-import businessLogic.BusinessFactory;
 import businessLogic.CityService;
 import businessLogic.TruckService;
 import model.City;
 import model.Truck;
 import model.statuses.TruckStatus;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -16,9 +17,14 @@ import java.util.Set;
 /**
  * Class for truck utils
  */
+@Component
 public class ManagerTruckUtils {
 
     private static Logger logger = Logger.getLogger(ManagerTruckUtils.class);
+    @Autowired
+    TruckService truckService;
+    @Autowired
+    CityService cityService;
 
     protected ModelAndView mainPage(Map<String,String> requestParams) throws IOException  {
 
@@ -50,7 +56,6 @@ public class ManagerTruckUtils {
 
     private ModelAndView delete(Map<String,String> requestParams) throws  IOException {
         try {
-            TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
             String id = requestParams.get("id");
             Truck truck = truckService.getTruckById(id);
             truckService.deleteTruck(truck);
@@ -62,8 +67,6 @@ public class ManagerTruckUtils {
 
     private ModelAndView edit(Map<String,String> requestParams) throws IOException {
         try {
-            TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
-            CityService cityService = BusinessFactory.getInstance().getCityLogic();
             Set<City> cities = cityService.getAllCities();
 
             ModelAndView view = new ModelAndView("m/truckEdit");
@@ -82,7 +85,6 @@ public class ManagerTruckUtils {
 
     private ModelAndView add() throws IOException {
         try {
-            CityService cityService = BusinessFactory.getInstance().getCityLogic();
             Set<City> cities = cityService.getAllCities();
             ModelAndView view = new ModelAndView("m/truckAdd");
             view.addObject("cities", cities);
@@ -97,11 +99,8 @@ public class ManagerTruckUtils {
         if(show == null) {
             show = "all";
         }
-//        req.setAttribute("show", show);
 
         try {
-            TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
-
             Set<Truck> trucks;
 
             switch (show){
@@ -148,8 +147,8 @@ public class ManagerTruckUtils {
         switch (action) {
             case "Add": {
                 try {
-                    TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
-                    CityService cityService = BusinessFactory.getInstance().getCityLogic();
+                  //  TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
+                //    CityService cityService = BusinessFactory.getInstance().getCityLogic();
                     Truck truck = new Truck();
 
                     String id = requestParams.get("tid");
@@ -175,8 +174,6 @@ public class ManagerTruckUtils {
             }
             case "Save" :{
                 try {
-                    TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
-                    CityService cityService = BusinessFactory.getInstance().getCityLogic();
                     String id = requestParams.get("tid");
                     String hiddenId = requestParams.get("hiddenid");
                     if(!id.equals(hiddenId)) {

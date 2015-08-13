@@ -5,6 +5,9 @@ import model.City;
 import model.Truck;
 import model.statuses.TruckStatus;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -15,9 +18,23 @@ import java.util.Set;
  * add, edit, delete, search and refactor tucks
  *
  */
+@Service
+@Transactional
 public class TruckService {
     private static Logger logger = Logger.getLogger(TruckService.class);
-    private TruckDAOImpl truckDAO = null;
+    @Autowired
+    private TruckDAOImpl truckDAO;
+
+    public TruckService() {
+    }
+
+    public TruckDAOImpl getTruckDAO() {
+        return truckDAO;
+    }
+
+    public void setTruckDAO(TruckDAOImpl truckDAO) {
+        this.truckDAO = truckDAO;
+    }
 
     /**
      * Construct TruckService class.

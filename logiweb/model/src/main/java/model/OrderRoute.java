@@ -10,7 +10,6 @@ import javax.persistence.*;
  * Created by Rafa on 25.06.2015.
  */
 @Entity
-@IdClass(OrderPK.class)
 @NamedQueries({
         @NamedQuery(
             name = "OrderRoute.getRoute",
@@ -36,28 +35,51 @@ import javax.persistence.*;
         )
 })
 public class OrderRoute implements Comparable<OrderRoute> {
-//    private int order;
-//    private int city;
-//    private int baggage;
-//    private int type;
-//    private int isDone;
-//    private int visitNumber;
-//    private int status;
-//    private String truck;
-//
+    @Id
+    private int id;
 
-
+    @Column(name = "order")
     private int order;
+
+    @JoinColumn(name = "city")
+    @ManyToOne
     private City city;
+
+    @JoinColumn(name = "baggage")
+    @ManyToOne
     private Baggage baggage;
+
+    @Basic
+    @Column(name = "type")
     private int type;
+
+    @Basic
+    @Column(name = "is_done")
     private int isDone;
+
+    @Basic
+    @Column(name = "visit_number")
     private int visitNumber;
+
+    @Basic
+    @Column(name = "status")
     private OrderStatus status;
+
+    @JoinColumn(name = "truck")
+    @ManyToOne
     private Truck truck;
 
-    @Id
-    @Column(name = "order")
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+
     public int getOrder() {
         return order;
     }
@@ -66,9 +88,8 @@ public class OrderRoute implements Comparable<OrderRoute> {
         this.order = order;
     }
 
-    @Id
-    @JoinColumn(name = "city")
-    @OneToMany
+
+
     public City getCity() {
         return city;
     }
@@ -77,9 +98,8 @@ public class OrderRoute implements Comparable<OrderRoute> {
         this.city = city;
     }
 
-    @Id
-    @JoinColumn(name = "baggage")
-    @OneToMany
+
+
     public Baggage getBaggage() {
         return baggage;
     }
@@ -88,8 +108,7 @@ public class OrderRoute implements Comparable<OrderRoute> {
         this.baggage = baggage;
     }
 
-    @Basic
-    @Column(name = "type")
+
     public int getType() {
         return type;
     }
@@ -98,8 +117,7 @@ public class OrderRoute implements Comparable<OrderRoute> {
         this.type = type;
     }
 
-    @Basic
-    @Column(name = "is_done")
+
     public int getIsDone() {
         return isDone;
     }
@@ -108,8 +126,7 @@ public class OrderRoute implements Comparable<OrderRoute> {
         this.isDone = isDone;
     }
 
-    @Basic
-    @Column(name = "visit_number")
+
     public int getVisitNumber() {
         return visitNumber;
     }
@@ -118,10 +135,6 @@ public class OrderRoute implements Comparable<OrderRoute> {
         this.visitNumber = visitNumber;
     }
 
-
-
-    @Basic
-    @Column(name = "status")
     public OrderStatus getStatus() {
         return status;
     }
@@ -130,8 +143,7 @@ public class OrderRoute implements Comparable<OrderRoute> {
         this.status = status;
     }
 
-    @JoinColumn(name = "truck")
-    @OneToMany
+
     public Truck getTruck() {
         return truck;
     }
@@ -140,16 +152,19 @@ public class OrderRoute implements Comparable<OrderRoute> {
         this.truck = truck;
     }
 
+
     @Override
     public String toString() {
         return "OrderRoute{" +
-                "order=" + order +
+                "id=" + id +
+                ", order=" + order +
                 ", city=" + city +
                 ", baggage=" + baggage +
                 ", type=" + type +
                 ", isDone=" + isDone +
                 ", visitNumber=" + visitNumber +
                 ", status=" + status +
+                ", truck=" + truck +
                 '}';
     }
 
