@@ -1,7 +1,7 @@
 package DAO;
 
 import model.OrderRoute;
-import model.statuses.OrderStatus;
+import model.statuses.DoneStatus;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -60,7 +60,7 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> implements Ord
      */
 
     @Override
-    public Set<OrderRoute> getOrdersByStaus(OrderStatus status) {
+    public Set<OrderRoute> getOrdersByStaus(DoneStatus status) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(OrderRoute.class)
                     .add(Restrictions.eq("status", status));

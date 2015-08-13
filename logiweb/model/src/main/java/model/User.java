@@ -1,12 +1,8 @@
 package model;
 
 import model.statuses.UserStatus;
-
 import javax.persistence.*;
 
-/**
- * Created by Rafa on 29.06.2015.
- */
 @Entity
 @Table(name = "user")
 public class User {

@@ -1,7 +1,7 @@
 package DAO;
 
 import model.OrderRoute;
-import model.statuses.OrderStatus;
+import model.statuses.DoneStatus;
 
 import java.util.Set;
 
@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public interface OrderRouteDAO extends GeneticDAO<OrderRoute> {
 
-    Set<OrderRoute> getOrdersByStaus(OrderStatus status);
+    Set<OrderRoute> getOrdersByStaus(DoneStatus status);
 
     Set<OrderRoute> getRouteByOrderId(int orderId);
 

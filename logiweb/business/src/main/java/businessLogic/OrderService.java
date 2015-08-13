@@ -5,7 +5,9 @@ import model.Baggage;
 import model.City;
 import model.OrderRoute;
 import model.statuses.BaggageStatus;
+import model.statuses.DoneStatus;
 import model.statuses.DriverStatus;
+import model.statuses.LoadStatus;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -231,8 +233,8 @@ public class OrderService {
             case DONE:{
                 int orderId = -1;
                 for (OrderRoute or : routes) {
-                    if (or.getType() == 1) {
-                        or.setIsDone(1);
+                    if (or.getLoadStatus() == LoadStatus.UNLOADING) {
+                        or.setIsBaggageDone(DoneStatus.NOT_DONE);
                         orderRouteDAO.update(or);
                         orderId = or.getOrder();
                         break;
@@ -253,8 +255,8 @@ public class OrderService {
             }
             case PRODUCED: {
                 for (OrderRoute or : routes) {
-                    if (or.getType() == 0) {
-                        or.setIsDone(1);
+                    if (or.getLoadStatus() == LoadStatus.LOADING) {
+                        or.setIsBaggageDone(DoneStatus.NOT_DONE);
                         orderRouteDAO.update(or);
                         break;
                     }
@@ -270,7 +272,7 @@ public class OrderService {
 
     private boolean isOrderDone(Set<OrderRoute> routes) {
         for(OrderRoute r : routes) {
-            if (r.getIsDone() == 0) {
+            if (r.getIsBaggageDone() == DoneStatus.DONE) {
                 return false;
             }
         }

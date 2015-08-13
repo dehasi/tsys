@@ -124,6 +124,7 @@ public class ManagerOrderUtils {
                 }
             }
             view.addObject("orders", orders);
+            //TODO: fix this exception
             return view;
 
         }  catch (Exception e) {
@@ -188,7 +189,7 @@ public class ManagerOrderUtils {
         return new ModelAndView("redirect:/m/order?action=show&show=all");
     }
 
-    public @ResponseBody //TODO: вынести в паблик метод, тогда пост метод стает проще
+    public @ResponseBody
     String getStuff(Map<String,String> requestParams) throws IOException {
         String jsonString = requestParams.get("jsdata");
         JsonElement root = new JsonParser().parse(jsonString);

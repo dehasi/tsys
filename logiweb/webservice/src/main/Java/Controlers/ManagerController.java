@@ -24,7 +24,8 @@ public class ManagerController {
     private ManagerDriverUtils driverUtils;
     @Autowired
     private ManagerTruckUtils truckUtils;
-    private ManagerOrderUtils orderUtils = new ManagerOrderUtils();
+    @Autowired
+    private ManagerOrderUtils orderUtils;
 
     @RequestMapping("/")
     public String mainPage() {
@@ -80,5 +81,21 @@ public class ManagerController {
 
     public void setDriverUtils(ManagerDriverUtils driverUtils) {
         this.driverUtils = driverUtils;
+    }
+
+    public ManagerTruckUtils getTruckUtils() {
+        return truckUtils;
+    }
+
+    public void setTruckUtils(ManagerTruckUtils truckUtils) {
+        this.truckUtils = truckUtils;
+    }
+
+    public ManagerOrderUtils getOrderUtils() {
+        return orderUtils;
+    }
+
+    public void setOrderUtils(ManagerOrderUtils orderUtils) {
+        this.orderUtils = orderUtils;
     }
 }

@@ -1,7 +1,7 @@
 package model;
 
-import model.pkey.OrderPK;
-import model.statuses.OrderStatus;
+import model.statuses.LoadStatus;
+import model.statuses.DoneStatus;
 
 import javax.persistence.*;
 
@@ -10,6 +10,7 @@ import javax.persistence.*;
  * Created by Rafa on 25.06.2015.
  */
 @Entity
+@Table(name = "orderroute")
 @NamedQueries({
         @NamedQuery(
             name = "OrderRoute.getRoute",
@@ -27,7 +28,7 @@ import javax.persistence.*;
 
         @NamedQuery(
             name = "OrderRoute.getOrderStatus",
-            query = "SELECT DISTINCT r.status FROM OrderRoute r  WHERE r.order = :id "
+            query = "SELECT DISTINCT r.orderStatus FROM OrderRoute r  WHERE r.order = :id "
         ),
         @NamedQuery(
                 name = "OrderRoute.maxId",
@@ -36,26 +37,27 @@ import javax.persistence.*;
 })
 public class OrderRoute implements Comparable<OrderRoute> {
     @Id
+    @Column(name = "id")
     private int id;
 
     @Column(name = "order")
     private int order;
 
-    @JoinColumn(name = "city")
     @ManyToOne
+    @JoinColumn(name="city")
     private City city;
 
-    @JoinColumn(name = "baggage")
     @ManyToOne
+    @JoinColumn(name="baggage")
     private Baggage baggage;
 
     @Basic
     @Column(name = "type")
-    private int type;
+    private LoadStatus loadStatus;    //* load unload
 
     @Basic
     @Column(name = "is_done")
-    private int isDone;
+    private DoneStatus isBaggageDone; //* is load or unload done
 
     @Basic
     @Column(name = "visit_number")
@@ -63,10 +65,10 @@ public class OrderRoute implements Comparable<OrderRoute> {
 
     @Basic
     @Column(name = "status")
-    private OrderStatus status;
+    private DoneStatus orderStatus; //* order status
 
-    @JoinColumn(name = "truck")
     @ManyToOne
+    @JoinColumn(name="truck")
     private Truck truck;
 
 
@@ -98,8 +100,6 @@ public class OrderRoute implements Comparable<OrderRoute> {
         this.city = city;
     }
 
-
-
     public Baggage getBaggage() {
         return baggage;
     }
@@ -107,25 +107,6 @@ public class OrderRoute implements Comparable<OrderRoute> {
     public void setBaggage(Baggage baggage) {
         this.baggage = baggage;
     }
-
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-
-    public int getIsDone() {
-        return isDone;
-    }
-
-    public void setIsDone(int isDone) {
-        this.isDone = isDone;
-    }
-
 
     public int getVisitNumber() {
         return visitNumber;
@@ -135,14 +116,29 @@ public class OrderRoute implements Comparable<OrderRoute> {
         this.visitNumber = visitNumber;
     }
 
-    public OrderStatus getStatus() {
-        return status;
+    public LoadStatus getLoadStatus() {
+        return loadStatus;
     }
 
-    public void setStatus(OrderStatus status) {
-        this.status = status;
+    public void setLoadStatus(LoadStatus loadStatus) {
+        this.loadStatus = loadStatus;
     }
 
+    public DoneStatus getIsBaggageDone() {
+        return isBaggageDone;
+    }
+
+    public void setIsBaggageDone(DoneStatus isBaggageDone) {
+        this.isBaggageDone = isBaggageDone;
+    }
+
+    public DoneStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(DoneStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
 
     public Truck getTruck() {
         return truck;
@@ -160,10 +156,10 @@ public class OrderRoute implements Comparable<OrderRoute> {
                 ", order=" + order +
                 ", city=" + city +
                 ", baggage=" + baggage +
-                ", type=" + type +
-                ", isDone=" + isDone +
+                ", loadStatus=" + loadStatus +
+                ", isBaggageDone=" + isBaggageDone +
                 ", visitNumber=" + visitNumber +
-                ", status=" + status +
+                ", orderStatus=" + orderStatus +
                 ", truck=" + truck +
                 '}';
     }
