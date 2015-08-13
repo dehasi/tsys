@@ -1,9 +1,8 @@
-import DAO.BaggageDAOImpl;
-import DAO.CityDAOImpl;
-import DAO.DriverDAOImpl;
+import DAO.*;
 import com.google.gson.Gson;
 import model.Baggage;
 import model.Driver;
+import model.Truck;
 import model.statuses.BaggageStatus;
 import org.apache.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -31,31 +30,36 @@ class Main {
 
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("META-INF/applicationContext.xml");
         System.out.println(ctx);
-        BaggageDAOImpl cargoDao = ctx.getBean(BaggageDAOImpl.class);
-        System.out.println((cargoDao).getMaxId());
-        System.out.println((cargoDao).getById(1));
+        BaggageDAO cargoDao = ctx.getBean(BaggageDAO.class);
+//        System.out.println((cargoDao).getMaxId());
+//        System.out.println((cargoDao).getById(2));
 //        System.out.println((cargoDao).getAll());
-        System.out.println((cargoDao).getById(1));
-        Baggage b = cargoDao.getById(1);
+//        System.out.println((cargoDao).getById(2));
+//        Baggage b = cargoDao.getById(2);
 //        b.setStatus(BaggageStatus.DONE);
 //        cargoDao.update(b);
-
+//
 //        Baggage baggage = new Baggage();
 //        baggage.setId(42);
 //        baggage.setStatus(BaggageStatus.DONE);
 //        baggage.setName("PIVO");
 //        baggage.setWeight(120);
-        cargoDao.delete(b);
-        System.out.println((cargoDao).getById(1));
+//        cargoDao.add(baggage);
+        System.out.println("After delete:");
+        System.out.println((cargoDao).getById(2));
 //        System.out.println((cargoDao).getBaggagesByStatus(BaggageStatus.PRODUCED));
 //        System.out.println((cargoDao).getAll());
         System.out.println((cargoDao).getAll());
 
 
-        DriverDAOImpl driverDAO = ctx.getBean(DriverDAOImpl.class);
+//        DriverDAOImpl driverDAO = ctx.getBean(DriverDAOImpl.class);
+//        System.out.println(driverDAO.getAll());
+//
+//        TruckDAOImpl truckDAO = ctx.getBean(TruckDAOImpl.class);
+//        System.out.println(truckDAO.getAll());
 
-        System.out.println(driverDAO.getAll());
-
+        TruckDAO truckDAO = ctx.getBean(TruckDAO.class);
+        System.out.println(truckDAO.getAll());
         System.out.println("Good bye!");
 
 

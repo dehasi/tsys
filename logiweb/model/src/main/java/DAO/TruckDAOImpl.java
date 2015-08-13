@@ -8,6 +8,8 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import utils.HibernateUtil;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -21,7 +23,8 @@ import java.util.Set;
  * Created by Rafa on 20.06.2015.
  */
 @Repository
-public class TruckDAOImpl extends GenericDAOImpl<Truck>{
+@Transactional(propagation= Propagation.REQUIRED)
+public class TruckDAOImpl extends GenericDAOImpl<Truck> implements TruckDAO {
 
     public TruckDAOImpl(Class<Truck> clazz) {
         super(clazz);
@@ -30,6 +33,7 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
         super();
     }
 
+    @Override
     public Set<Truck> getTrucksForOrder(int weight) {
 
         try {
@@ -51,6 +55,7 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
         return null;
     }
 
+    @Override
     public Truck getTruckById(String id) {
         Truck t = null;
         try  {
@@ -62,6 +67,7 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
         return t;
     }
 
+    @Override
     public Set<Truck> getTrucksByStatus(TruckStatus status) {
         try {
             CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
@@ -83,6 +89,7 @@ public class TruckDAOImpl extends GenericDAOImpl<Truck>{
 
 
 
+    @Override
     public Set<Truck> getFitTrucks(int weight, City city) {
 
         try {

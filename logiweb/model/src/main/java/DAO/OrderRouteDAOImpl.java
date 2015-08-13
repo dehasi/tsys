@@ -7,6 +7,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import utils.HibernateUtil;
 
 import java.util.HashSet;
@@ -17,7 +19,8 @@ import java.util.Set;
  * Created by Rafa on 30.06.2015.
  */
 @Repository
-public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
+@Transactional(propagation= Propagation.REQUIRED)
+public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> implements OrderRouteDAO {
     public OrderRouteDAOImpl(Class<OrderRoute> clazz) {
         super(clazz);
     }
@@ -56,6 +59,7 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
      }
      */
 
+    @Override
     public Set<OrderRoute> getOrdersByStaus(OrderStatus status) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(OrderRoute.class)
@@ -70,6 +74,7 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
     }
 
 
+    @Override
     public Set<OrderRoute> getRouteByOrderId(int orderId) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Query query = session.getNamedQuery("OrderRoute.getRoute")
@@ -82,6 +87,7 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
     }
 
 
+    @Override
     public String getTruckId(int orderId) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
 
@@ -95,6 +101,7 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
         return null;
     }
 
+    @Override
     public OrderRoute getOrderByTruckId(String truckId) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(OrderRoute.class)
@@ -109,6 +116,7 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
         return null;
     }
 
+    @Override
     public Set<Integer> getAllOrderIds() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Query query = session.getNamedQuery("OrderRoute.getAllId");
@@ -119,6 +127,7 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
         return null;
     }
 
+    @Override
     public int getOrderStatus(int orderId) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Query query = session.getNamedQuery("OrderRoute.getOrderStatus")
@@ -131,6 +140,7 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
         return 0;
     }
 
+    @Override
     public int getMaxId() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Query query = session.getNamedQuery("OrderRoute.maxId");
@@ -141,6 +151,7 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> {
         return -1;
     }
 
+    @Override
     public Set<OrderRoute> getRoutesByBaggageId(int baggageId) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(OrderRoute.class)

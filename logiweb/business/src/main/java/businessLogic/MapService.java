@@ -1,6 +1,6 @@
 package businessLogic;
 
-import DAO.MapDAOImpl;
+import DAO.MapDAO;
 import model.City;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,20 +12,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class MapService {
     @Autowired
-    private MapDAOImpl mapDAO;
+    private MapDAO mapDAO;
 
-    public MapService(MapDAOImpl mapDAO) {
+    public MapService(MapDAO mapDAO) {
         this.mapDAO = mapDAO;
     }
 
     public MapService() {
     }
 
-    public MapDAOImpl getMapDAO() {
+    public MapDAO getMapDAO() {
         return mapDAO;
     }
 
-    public void setMapDAO(MapDAOImpl mapDAO) {
+    public void setMapDAO(MapDAO mapDAO) {
         this.mapDAO = mapDAO;
     }
 

@@ -1,6 +1,5 @@
 package Controlers;
 
-import businessLogic.BusinessFactory;
 import businessLogic.DriverService;
 import businessLogic.OrderService;
 import businessLogic.OrderView;
@@ -34,11 +33,6 @@ public class DriverController {
     ModelAndView driverPage(HttpSession session) {
 
         int id = (int) session.getAttribute("id");
-
-
-//        driverService = BusinessFactory.getInstance().getDriverLogic();
-//        orderService = BusinessFactory.getInstance().getOrderLogic();
-
 
         Driver driver = driverService.getById(id);
         if(driver == null) {

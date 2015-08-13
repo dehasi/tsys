@@ -6,7 +6,7 @@
 -- TRUNCATE TABLE orderroute
 -- TRUNCATE TABLE 'user'
 
-INSERT INTO baggage VALUES (1, 'bg',        '0', '1200')
+INSERT INTO baggage VALUES (1, 'banana',     '0', '1200')
 INSERT INTO baggage VALUES (2, 'coffee',     '0', '990' )
 INSERT INTO baggage VALUES (3, 'cola',       '0', '100' )
 INSERT INTO baggage VALUES (4, 'vegetables', '0', '500' )

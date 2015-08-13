@@ -5,6 +5,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import utils.HibernateUtil;
 
@@ -23,9 +24,9 @@ import java.util.List;
 /**
  * Created by Rafa on 25.06.2015.
  */
-//@Transactional
-//@Repository
-public class GenericDAOImpl<T> implements GeneticDAO<T> {
+
+@Transactional(propagation= Propagation.REQUIRED)
+public abstract class GenericDAOImpl<T> implements GeneticDAO<T> {
     Logger logger = Logger.getLogger(GenericDAOImpl.class);
 
     public Class<T> getClazz() {
@@ -40,7 +41,7 @@ public class GenericDAOImpl<T> implements GeneticDAO<T> {
 
     @PersistenceContext
     @Autowired
-    private EntityManager em;
+    protected EntityManager entityManager;
 
     GenericDAOImpl(Class<T> clazz){
         this.clazz = clazz;
@@ -53,13 +54,8 @@ public class GenericDAOImpl<T> implements GeneticDAO<T> {
     @Override
     public void add(T t) throws SQLException {
         try {
-//            getEntityManager().persist(t);
-//            getEntityManager().flush();
-
-            EntityManager entityManager = getEntityManager().getEntityManagerFactory().createEntityManager();
-            Session session = (Session) entityManager.unwrap(Session.class);
             entityManager.persist(t);
-//            session.persist(t);
+            entityManager.flush();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             logger.error("Error in addition");
@@ -68,15 +64,16 @@ public class GenericDAOImpl<T> implements GeneticDAO<T> {
 
     }
     @Override
+
     public void update(T t) throws SQLException {
         try {
-            getEntityManager().getEntityManagerFactory().createEntityManager().merge(t);
-            getEntityManager().flush();
-//            getEntityManager().merge(t);
+            entityManager.merge(t);
+            entityManager.flush();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-                logger.error("Error in updating");
-                logger.error(e);
+            throw e;
+//            System.out.println(e.getMessage());
+//                logger.error("Error in updating");
+//                logger.error(e);
             }
     }
 
@@ -91,7 +88,7 @@ public class GenericDAOImpl<T> implements GeneticDAO<T> {
             return null;
         }
     }
-//
+
     @Override
     public Collection getAll() throws SQLException {
         List ts = new ArrayList<T>();
@@ -101,7 +98,7 @@ public class GenericDAOImpl<T> implements GeneticDAO<T> {
             CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
             CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
             Root<T> tRoot = query.from(clazz);
-            return em.createQuery(query.select(tRoot)).getResultList();
+            return entityManager.createQuery(query.select(tRoot)).getResultList();
         }  catch (Exception e) {
             logger.error("Error in getAll");
             logger.error(e);
@@ -110,16 +107,17 @@ public class GenericDAOImpl<T> implements GeneticDAO<T> {
     }
 
     @Override
-//    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public void delete(T t) throws SQLException {
-//        getEntityManager().remove(t);
-//        getEntityManager().flush();
+        t = entityManager.merge(t); // merge and assign a to the attached entity
+        entityManager.remove(t); //
 
         try {
             getEntityManager().remove(t);
         } catch (Exception e) {
-            logger.error("Error in deleting");
-            logger.error(e);
+            throw e;
+//            logger.error("Error in deleting");
+//            logger.error(e);
         }
     }
 
@@ -133,16 +131,13 @@ public class GenericDAOImpl<T> implements GeneticDAO<T> {
         }
     }
 
-    public EntityManager getEm() {
-        return em;
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
-//    @Transactional
+    //    @Transactional
     public EntityManager getEntityManager() {
-        return em;
+        return entityManager;
     }
     public GenericDAOImpl() {
         Type t = getClass().getGenericSuperclass();

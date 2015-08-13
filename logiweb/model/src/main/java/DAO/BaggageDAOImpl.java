@@ -7,6 +7,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import utils.HibernateUtil;
 
 import javax.persistence.TypedQuery;
@@ -19,7 +21,8 @@ import java.util.Set;
 
 
 @Repository
-public class BaggageDAOImpl extends  GenericDAOImpl<Baggage> {
+@Transactional(propagation= Propagation.REQUIRED)
+public class BaggageDAOImpl extends  GenericDAOImpl<Baggage> implements BaggageDAO {
 
     public BaggageDAOImpl(Class<Baggage> clazz) {
         super(clazz);
@@ -29,6 +32,7 @@ public class BaggageDAOImpl extends  GenericDAOImpl<Baggage> {
         super();
     }
 
+    @Override
     public Set<Baggage> getBaggagesByStatus(BaggageStatus status) {
         try {
             CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
@@ -47,6 +51,7 @@ public class BaggageDAOImpl extends  GenericDAOImpl<Baggage> {
         return null;
     }
 
+    @Override
     public int getMaxId() {
         try {
             TypedQuery<Integer> query =  getEntityManager().createNamedQuery("Baggage.getMaxId", Integer.class);

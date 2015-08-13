@@ -1,6 +1,6 @@
 package businessLogic;
 
-import DAO.DriverDAOImpl;
+import DAO.DriverDAO;
 import model.City;
 import model.Driver;
 import model.statuses.DriverStatus;
@@ -23,20 +23,20 @@ public class DriverService {
     private static Logger logger = Logger.getLogger(DriverService.class);
     private static int MEDUIM_SPEED = 90;
     @Autowired
-    private DriverDAOImpl driverDAO;
+    private DriverDAO driverDAO;
 
     public DriverService() {
     }
 
-    public DriverDAOImpl getDriverDAO() {
+    public DriverDAO getDriverDAO() {
         return driverDAO;
     }
 
-    public void setDriverDAO(DriverDAOImpl driverDAO) {
+    public void setDriverDAO(DriverDAO driverDAO) {
         this.driverDAO = driverDAO;
     }
 
-    public DriverService(DriverDAOImpl driverDAO) {
+    public DriverService(DriverDAO driverDAO) {
         this.driverDAO = driverDAO;
     }
 

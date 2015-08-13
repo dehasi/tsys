@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Rafa on 20.06.2015.
  */
 @Repository
-public class CityDAOImpl extends GenericDAOImpl<City> {
+public class CityDAOImpl extends GenericDAOImpl<City> implements CityDAO {
 
     public CityDAOImpl(Class<City> clazz) {
         super(clazz);
@@ -26,6 +26,7 @@ public class CityDAOImpl extends GenericDAOImpl<City> {
         super();
     }
 
+    @Override
     public City getCityByName(String name) {
         try{
 

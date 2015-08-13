@@ -25,15 +25,15 @@ public class OrderService {
 
     private static Logger logger = Logger.getLogger(OrderService.class);
     @Autowired
-    BaggageDAOImpl baggageDAO;
+    BaggageDAO baggageDAO;
     @Autowired
-    OrderRouteDAOImpl orderRouteDAO;
+    OrderRouteDAO orderRouteDAO;
     @Autowired
-    CityDAOImpl cityDAO;
+    CityDAO cityDAO;
     @Autowired
-    MapDAOImpl mapDAO;
+    MapDAO mapDAO;
     @Autowired
-    DriverDAOImpl driverDAO;
+    DriverDAO driverDAO;
 
     /**
      * Constructor. creates instance of class
@@ -43,8 +43,8 @@ public class OrderService {
      * @param mapDAO DAO for map work
      * @param driverDAO DAO for driver work
      */
-    public OrderService(BaggageDAOImpl baggageDAO, OrderRouteDAOImpl orderRouteDAO,
-                        CityDAOImpl cityDAO, MapDAOImpl mapDAO, DriverDAOImpl driverDAO) {
+    public OrderService(BaggageDAO baggageDAO, OrderRouteDAO orderRouteDAO,
+                        CityDAO cityDAO, MapDAO mapDAO, DriverDAO driverDAO) {
         this.baggageDAO = baggageDAO;
         this.orderRouteDAO = orderRouteDAO;
         this.cityDAO = cityDAO;
@@ -278,43 +278,43 @@ public class OrderService {
     }
 
 
-    public BaggageDAOImpl getBaggageDAO() {
+    public BaggageDAO getBaggageDAO() {
         return baggageDAO;
     }
 
-    public void setBaggageDAO(BaggageDAOImpl baggageDAO) {
+    public void setBaggageDAO(BaggageDAO baggageDAO) {
         this.baggageDAO = baggageDAO;
     }
 
-    public OrderRouteDAOImpl getOrderRouteDAO() {
+    public OrderRouteDAO getOrderRouteDAO() {
         return orderRouteDAO;
     }
 
-    public void setOrderRouteDAO(OrderRouteDAOImpl orderRouteDAO) {
+    public void setOrderRouteDAO(OrderRouteDAO orderRouteDAO) {
         this.orderRouteDAO = orderRouteDAO;
     }
 
-    public CityDAOImpl getCityDAO() {
+    public CityDAO getCityDAO() {
         return cityDAO;
     }
 
-    public void setCityDAO(CityDAOImpl cityDAO) {
+    public void setCityDAO(CityDAO cityDAO) {
         this.cityDAO = cityDAO;
     }
 
-    public MapDAOImpl getMapDAO() {
+    public MapDAO getMapDAO() {
         return mapDAO;
     }
 
-    public void setMapDAO(MapDAOImpl mapDAO) {
+    public void setMapDAO(MapDAO mapDAO) {
         this.mapDAO = mapDAO;
     }
 
-    public DriverDAOImpl getDriverDAO() {
+    public DriverDAO getDriverDAO() {
         return driverDAO;
     }
 
-    public void setDriverDAO(DriverDAOImpl driverDAO) {
+    public void setDriverDAO(DriverDAO driverDAO) {
         this.driverDAO = driverDAO;
     }
 }

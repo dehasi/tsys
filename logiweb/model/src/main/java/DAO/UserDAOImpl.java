@@ -5,13 +5,16 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import utils.HibernateUtil;
 
 /**
  * Created by Rafa on 29.06.2015.
  */
 @Repository
-public class UserDAOImpl extends  GenericDAOImpl<User>{
+@Transactional(propagation= Propagation.REQUIRED)
+public class UserDAOImpl extends  GenericDAOImpl<User> implements UserDAO {
 
     public UserDAOImpl(Class<User> clazz) {
         super(clazz);
@@ -20,6 +23,7 @@ public class UserDAOImpl extends  GenericDAOImpl<User>{
         super();
     }
 
+    @Override
     public Long getUserPasswordHash(String login) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(User.class)
@@ -35,6 +39,7 @@ public class UserDAOImpl extends  GenericDAOImpl<User>{
         return null;
     }
 
+    @Override
     public User getByLogin(String login) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(User.class)

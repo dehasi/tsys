@@ -6,6 +6,8 @@ import model.City;
 import model.Driver;
 import model.Truck;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,9 +22,64 @@ import java.util.Set;
 /**
  * Class represents util functions for order work
  */
+@Component
 public class ManagerOrderUtils {
 
     private static Logger logger = Logger.getLogger(ManagerOrderUtils.class);
+
+    @Autowired
+    OrderService orderService;
+    @Autowired
+    CityService cityService;
+    @Autowired
+    TruckService truckService;
+    @Autowired
+    DriverService driverService;
+    @Autowired
+    MapService mapService;
+
+    public ManagerOrderUtils() {
+    }
+
+    public OrderService getOrderService() {
+        return orderService;
+    }
+
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
+    public CityService getCityService() {
+        return cityService;
+    }
+
+    public void setCityService(CityService cityService) {
+        this.cityService = cityService;
+    }
+
+    public TruckService getTruckService() {
+        return truckService;
+    }
+
+    public void setTruckService(TruckService truckService) {
+        this.truckService = truckService;
+    }
+
+    public DriverService getDriverService() {
+        return driverService;
+    }
+
+    public void setDriverService(DriverService driverService) {
+        this.driverService = driverService;
+    }
+
+    public MapService getMapService() {
+        return mapService;
+    }
+
+    public void setMapService(MapService mapService) {
+        this.mapService = mapService;
+    }
 
     protected ModelAndView mainPage(Map<String,String> requestParams) throws IOException {
 
@@ -47,7 +104,6 @@ public class ManagerOrderUtils {
             show = "all";
         }
         try {
-            OrderService orderService = BusinessFactory.getInstance().getOrderLogic();
             Set<OrderRouteView> orders;
 
             switch (show){
@@ -81,7 +137,6 @@ public class ManagerOrderUtils {
     protected ModelAndView doGet(Map<String,String> requestParams) throws  IOException {
         try {
             int count = Integer.parseInt( requestParams.get("count"));
-            CityService cityService = BusinessFactory.getInstance().getCityLogic();
             Set<City> cities = cityService.getAllCities();
             ModelAndView view = new ModelAndView("m/orderCreate");
 
@@ -120,7 +175,6 @@ public class ManagerOrderUtils {
                     drivers.add(i);
                 }
 
-                OrderService orderService = BusinessFactory.getInstance().getOrderLogic();
                 try {
                     orderService.createOrder(tickets, drivers, truckId);
                 } catch (SQLException e) {
@@ -156,10 +210,7 @@ public class ManagerOrderUtils {
         int statCityId = road.get(0);
 
         try {
-            TruckService truckService = BusinessFactory.getInstance().getTruckLogic();
-            DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
-            CityService cityService = BusinessFactory.getInstance().getCityLogic();
-            MapService mapService = BusinessFactory.getInstance().getMapLogic();
+
             City city = cityService.getCityById(statCityId);
 
 

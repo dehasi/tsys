@@ -1,6 +1,6 @@
 package businessLogic;
 
-import DAO.TruckDAOImpl;
+import DAO.TruckDAO;
 import model.City;
 import model.Truck;
 import model.statuses.TruckStatus;
@@ -23,16 +23,18 @@ import java.util.Set;
 public class TruckService {
     private static Logger logger = Logger.getLogger(TruckService.class);
     @Autowired
-    private TruckDAOImpl truckDAO;
+    private TruckDAO truckDAO;
+    @Autowired
+    OrderService orderService;
 
     public TruckService() {
     }
 
-    public TruckDAOImpl getTruckDAO() {
+    public TruckDAO getTruckDAO() {
         return truckDAO;
     }
 
-    public void setTruckDAO(TruckDAOImpl truckDAO) {
+    public void setTruckDAO(TruckDAO truckDAO) {
         this.truckDAO = truckDAO;
     }
 
@@ -40,7 +42,7 @@ public class TruckService {
      * Construct TruckService class.
      * @param truckDAO Truck DAO class
      */
-    public TruckService(TruckDAOImpl truckDAO) {
+    public TruckService(TruckDAO truckDAO) {
         this.truckDAO = truckDAO;
     }
 
@@ -153,7 +155,7 @@ public class TruckService {
             return truck;
         }
 
-        truck.setOrderId(BusinessFactory.getInstance().getOrderLogic().getOrderIdByTruck(truck.getId()));
+        truck.setOrderId(orderService.getOrderIdByTruck(truck.getId()));
 
         return truck;
     }

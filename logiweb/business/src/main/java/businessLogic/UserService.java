@@ -1,6 +1,6 @@
 package businessLogic;
 
-import DAO.UserDAOImpl;
+import DAO.UserDAO;
 import model.User;
 import model.statuses.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +15,20 @@ import java.sql.SQLException;
 @Service
 public class UserService {
     @Autowired
-    protected UserDAOImpl userDAO;
+    protected UserDAO userDAO;
 
     public UserService() {
     }
 
-    public UserDAOImpl getUserDAO() {
+    public UserDAO getUserDAO() {
         return userDAO;
     }
 
-    public void setUserDAO(UserDAOImpl userDAO) {
+    public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 
-    public UserService(UserDAOImpl userDAO) {
+    public UserService(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 

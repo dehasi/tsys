@@ -5,6 +5,8 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import utils.HibernateUtil;
 
 import java.util.List;
@@ -14,7 +16,8 @@ import java.util.List;
  */
 
 @Repository
-public class MapDAOImpl extends GenericDAOImpl<Map> {
+@Transactional(propagation= Propagation.REQUIRED)
+public class MapDAOImpl extends GenericDAOImpl<Map> implements MapDAO {
 
     public MapDAOImpl(Class<Map> clazz) { super(clazz); }
     public MapDAOImpl() { super(); }
@@ -22,6 +25,7 @@ public class MapDAOImpl extends GenericDAOImpl<Map> {
 
 
 
+    @Override
     public Integer getDistance(int a, int b) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(Map.class)

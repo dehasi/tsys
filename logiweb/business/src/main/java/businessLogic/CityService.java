@@ -1,6 +1,6 @@
 package businessLogic;
 
-import DAO.CityDAOImpl;
+import DAO.CityDAO;
 import model.City;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +17,9 @@ import java.util.Set;
 @Service
 public class CityService {
     @Autowired
-    private CityDAOImpl cityDAO;
+    private CityDAO cityDAO;
 
-    public CityService(CityDAOImpl cityDAO) {
+    public CityService(CityDAO cityDAO) {
         this.cityDAO = cityDAO;
     }
 
@@ -40,11 +40,11 @@ public class CityService {
     public CityService() {
     }
 
-    public CityDAOImpl getCityDAO() {
+    public CityDAO getCityDAO() {
         return cityDAO;
     }
 
-    public void setCityDAO(CityDAOImpl cityDAO) {
+    public void setCityDAO(CityDAO cityDAO) {
         this.cityDAO = cityDAO;
     }
 }

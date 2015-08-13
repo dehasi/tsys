@@ -8,6 +8,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import utils.HibernateUtil;
 
 import java.util.HashSet;
@@ -18,7 +20,8 @@ import java.util.Set;
  * Created by Rafa on 21.06.2015.
  */
 @Repository
-public class DriverDAOImpl extends GenericDAOImpl<Driver> {
+@Transactional(propagation= Propagation.REQUIRED)
+public class DriverDAOImpl extends GenericDAOImpl<Driver> implements DriverDAO {
     static final int MAX_WORK_HOURS = 176;
 
     public DriverDAOImpl(Class<Driver> clazz) {
@@ -28,6 +31,7 @@ public class DriverDAOImpl extends GenericDAOImpl<Driver> {
         super();
     }
 
+    @Override
     public Set<Driver> getDriversByCity(City city){
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(Driver.class)
@@ -42,6 +46,7 @@ public class DriverDAOImpl extends GenericDAOImpl<Driver> {
         return null;
     }
 
+    @Override
     public Set<Driver> getDriversByStatus(DriverStatus status) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(Driver.class)
@@ -56,6 +61,7 @@ public class DriverDAOImpl extends GenericDAOImpl<Driver> {
         return null;
     }
 
+    @Override
     public Set<Driver> getDriversByOrderId(Long orderId) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(Driver.class)
@@ -70,6 +76,7 @@ public class DriverDAOImpl extends GenericDAOImpl<Driver> {
         return null;
     }
 
+    @Override
     public Set<Driver> getDriversForOrder(City city, int hoursWorked) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Criteria crit = session.createCriteria(Driver.class)
@@ -86,6 +93,7 @@ public class DriverDAOImpl extends GenericDAOImpl<Driver> {
         return null;
     }
 
+    @Override
     public Set<Driver> getDriverFriends(int id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Query query = session.getNamedQuery("Driver.getDriverFriends")
@@ -97,6 +105,7 @@ public class DriverDAOImpl extends GenericDAOImpl<Driver> {
         return null;
     }
 
+    @Override
     public Set<Driver> getInOrderDrivers() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
             Query query = session.getNamedQuery("Driver.getInOrder");
@@ -107,6 +116,7 @@ public class DriverDAOImpl extends GenericDAOImpl<Driver> {
         return null;
     }
 
+    @Override
     public Set<Driver> getFreeDrivers() {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
