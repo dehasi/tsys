@@ -4,7 +4,7 @@ package model.statuses;
  * Created by Rafa on 21.06.2015.
  */
 public enum DoneStatus {
-    DONE(0), NOT_DONE(1);
+    DONE(1), NOT_DONE(0);
 
     DoneStatus(long l) {
     }

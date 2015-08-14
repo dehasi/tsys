@@ -20,7 +20,7 @@ import java.util.Set;
  * Created by Rafa on 21.06.2015.
  */
 @Repository
-@Transactional(propagation= Propagation.REQUIRED)
+@Transactional//(propagation= Propagation.REQUIRED)
 public class DriverDAOImpl extends GenericDAOImpl<Driver> implements DriverDAO {
     static final int MAX_WORK_HOURS = 176;
 

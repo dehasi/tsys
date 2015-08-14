@@ -38,37 +38,38 @@ import javax.persistence.*;
 public class OrderRoute implements Comparable<OrderRoute> {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "order")
     private int order;
 
     @ManyToOne
-    @JoinColumn(name="city")
+    @JoinColumn(name="city", referencedColumnName = "id")
     private City city;
 
     @ManyToOne
-    @JoinColumn(name="baggage")
+    @JoinColumn(name="baggage" , referencedColumnName = "id")
     private Baggage baggage;
 
     @Basic
-    @Column(name = "type")
+    @Column(name = "loadStatus")
     private LoadStatus loadStatus;    //* load unload
 
     @Basic
-    @Column(name = "is_done")
+    @Column(name = "isBaggageDone")
     private DoneStatus isBaggageDone; //* is load or unload done
 
     @Basic
-    @Column(name = "visit_number")
+    @Column(name = "visitNumber")
     private int visitNumber;
 
     @Basic
-    @Column(name = "status")
+    @Column(name = "orderStatus")
     private DoneStatus orderStatus; //* order status
 
     @ManyToOne
-    @JoinColumn(name="truck")
+    @JoinColumn(name="truck", referencedColumnName = "id")
     private Truck truck;
 
 

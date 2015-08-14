@@ -57,10 +57,13 @@ public class Driver implements Comparable<Driver>{
     @JoinColumn(name = "city")
     private City city;
 
-    @JoinColumn(name = "order", nullable = true)
-    @OneToOne
+//    @JoinColumn(name = "order", nullable = true, referencedColumnName = "order")
+//    @ManyToMany
 //    private List<OrderRoute> orderRoute;
-    private OrderRoute orderRoute;
+    @Basic
+    @Column(name = "order", nullable = true)
+    private Integer orderRoute;
+//    private OrderRoute orderRoute;
 
     public City getCity() {
         return city;
@@ -117,11 +120,11 @@ public class Driver implements Comparable<Driver>{
         this.status = status;
     }
 
-    public OrderRoute getOrderRoute() {
+    public Integer getOrderRoute() {
         return orderRoute;
     }
 
-    public void setOrderRoute(OrderRoute orderRoute) {
+    public void setOrderRoute(Integer orderRoute) {
         this.orderRoute = orderRoute;
     }
 

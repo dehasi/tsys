@@ -77,7 +77,8 @@ public class DriverUtils {
         DriverView driverView = new DriverView();
         driverView.setDriver(driver);
 
-        Integer orderId = driver.getOrderRoute().getOrder();
+        //TODO: fix this shit
+        Integer orderId = null; //driver.getOrderRoute().getOrder();
 
         if(orderId != null) {
             List<Driver> friends = new ArrayList<>();

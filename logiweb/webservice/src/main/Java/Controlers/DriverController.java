@@ -41,7 +41,8 @@ public class DriverController {
         }
 
 //        Integer orderId = driver.getOrderRoute();
-        Integer orderId = driver.getOrderRoute().getOrder();
+        //TODO: fix this shit
+        Integer orderId = null; //driver.getOrderRoute().getOrder();
         ModelAndView view = new ModelAndView("driver/driver");
         if(orderId != null) {
             List<Driver> friends = new ArrayList<>();
