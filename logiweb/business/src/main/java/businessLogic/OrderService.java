@@ -173,7 +173,7 @@ public class OrderService {
         for (Ticket t : tickets) {
             OrderRoute oLoad = new OrderRoute();
             OrderRoute oUnLoad = new OrderRoute();
-            //TODO: fix this shit [done?]
+
             oLoad.setId(++oId);
             oLoad.setOrder(orderId);
             oLoad.setCity(cityDAO.getById(t.loadId));
@@ -205,7 +205,6 @@ public class OrderService {
         logger.info("begin updete driver status");
         for(int ids : driverIds){
             model.Driver driver = driverDAO.getById(ids);
-            //TODO: fix this shit [done?]
             driver.setOrderRoute(orderId);
             driver.setStatus(DriverStatus.WORK);
             driverDAO.update(driver);

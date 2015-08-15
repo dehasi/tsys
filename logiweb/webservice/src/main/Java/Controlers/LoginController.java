@@ -20,7 +20,8 @@ public class LoginController {
 
     @Autowired
     UserService userService;
-    @RequestMapping(value = "/login") //, method = RequestMethod.POST
+
+    @RequestMapping(value = "/login")
     String login(HttpSession session, @RequestParam String j_username, @RequestParam String j_password) {
         session.setAttribute("locale", "EN");
 
@@ -43,16 +44,16 @@ public class LoginController {
                 }
                 default: {
                     logger.error("wrong login");
-                    return "redirect:login";
+                    return "redirect:login.jsp";
                 }
             }
         }else {
-            return "redirect:login";
+            return "redirect:login.jsp";
         }
     }
     @RequestMapping(value = "/logout")
     ModelAndView logout() {
-        return new ModelAndView("redirect:");
+        return new ModelAndView("redirect:login.jsp");
     }
 
     public LoginController() {
