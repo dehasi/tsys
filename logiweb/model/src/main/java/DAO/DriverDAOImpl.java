@@ -3,25 +3,27 @@ package DAO;
 import model.City;
 import model.Driver;
 import model.statuses.DriverStatus;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import utils.HibernateUtil;
 
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Rafa on 21.06.2015.
+ * Data access class for working with Driver entity
  */
 @Repository
-@Transactional//(propagation= Propagation.REQUIRED)
+@Transactional(propagation= Propagation.REQUIRED)
 public class DriverDAOImpl extends GenericDAOImpl<Driver> implements DriverDAO {
+    Logger logger = Logger.getLogger(DriverDAOImpl.class);
+
     static final int MAX_WORK_HOURS = 176;
 
     public DriverDAOImpl(Class<Driver> clazz) {
@@ -33,100 +35,106 @@ public class DriverDAOImpl extends GenericDAOImpl<Driver> implements DriverDAO {
 
     @Override
     public Set<Driver> getDriversByCity(City city){
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Criteria crit = session.createCriteria(Driver.class)
-                    .add(Restrictions.eq("city", city.getId()));
-            crit.setMaxResults(50);
-            List<Driver> drivers = crit.list();
+        try {
+            CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<Driver> criteriaQuery = criteriaBuilder.createQuery(Driver.class);
+            Root<Driver> driverRoot =criteriaQuery.from(Driver.class);
+            List<Driver> drivers = getEntityManager().createQuery(criteriaQuery.select(driverRoot)
+                    .where(criteriaBuilder.equal(driverRoot.get("city"), city )))
+                    .getResultList();
 
             return new HashSet<>(drivers);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         }
         return null;
     }
 
     @Override
     public Set<Driver> getDriversByStatus(DriverStatus status) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Criteria crit = session.createCriteria(Driver.class)
-                    .add(Restrictions.eq("status", status));
-            crit.setMaxResults(50);
-            List<Driver> drivers = crit.list();
+        try {
+            CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<Driver> criteriaQuery = criteriaBuilder.createQuery(Driver.class);
+            Root<Driver> driverRoot = criteriaQuery.from(Driver.class);
+            List<Driver> drivers = getEntityManager().createQuery(criteriaQuery.select(driverRoot)
+                    .where(criteriaBuilder.equal(driverRoot.get("status"), status)))
+                    .getResultList();
 
             return new HashSet<>(drivers);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         }
         return null;
     }
 
     @Override
     public Set<Driver> getDriversByOrderId(Long orderId) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Criteria crit = session.createCriteria(Driver.class)
-                    .add(Restrictions.eq("order_id", orderId));
-            crit.setMaxResults(50);
-            List<Driver> drivers = crit.list();
+        try {
+            CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<Driver> criteriaQuery = criteriaBuilder.createQuery(Driver.class);
+            Root<Driver> driverRoot = criteriaQuery.from(Driver.class);
+            List<Driver> drivers = getEntityManager().createQuery(criteriaQuery.select(driverRoot).
+                    where(criteriaBuilder.equal(driverRoot.get("orderRoute"), orderId
+                    ))).getResultList();
 
             return new HashSet<>(drivers);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         }
         return null;
     }
 
     @Override
     public Set<Driver> getDriversForOrder(City city, int hoursWorked) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Criteria crit = session.createCriteria(Driver.class)
-                    .add(Restrictions.isNull("orderRoute"))
-                    .add(Restrictions.eq("city", city))
-                    .add(Restrictions.le("hoursWorked", MAX_WORK_HOURS - hoursWorked));
-            crit.setMaxResults(50);
-            List<Driver> drivers = crit.list();
+        try {
+            CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<Driver> criteriaQuery = criteriaBuilder.createQuery(Driver.class);
+            Root<Driver> driverRoot = criteriaQuery.from(Driver.class);
+            List<Driver> drivers = getEntityManager().createQuery(criteriaQuery.select(driverRoot).
+                    where(criteriaBuilder.isNull(driverRoot.get("orderRoute")),
+                            criteriaBuilder.equal(driverRoot.get("city"), city),
+                            criteriaBuilder.le(driverRoot.get("hoursWorked"),MAX_WORK_HOURS - hoursWorked )
+                    )).getResultList();
 
             return new HashSet<>(drivers);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         }
         return null;
     }
 
     @Override
-    public Set<Driver> getDriverFriends(int id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Query query = session.getNamedQuery("Driver.getDriverFriends")
-                    .setString("did", String.valueOf(id));
-            return new HashSet<>(query.list());
+    public Set<Driver> getDriverFriends(Integer id) {
+        try {
+            TypedQuery<Driver> query =  getEntityManager().createNamedQuery("Driver.getDriverFriends", Driver.class);
+            query.setParameter("did", id);
+            return new HashSet<>(query.getResultList());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         }
         return null;
     }
 
     @Override
     public Set<Driver> getInOrderDrivers() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Query query = session.getNamedQuery("Driver.getInOrder");
-            return new HashSet<>(query.list());
+        try {
+            TypedQuery<Driver> query =  getEntityManager().createNamedQuery("Driver.getInOrder", Driver.class);
+            return new HashSet<>(query.getResultList());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         }
         return null;
     }
 
     @Override
     public Set<Driver> getFreeDrivers() {
-
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Query query = session.getNamedQuery("Driver.getFree");
-            return new HashSet<>(query.list());
+        try {
+            TypedQuery<Driver> query =  getEntityManager().createNamedQuery("Driver.getFree", Driver.class);
+            return new HashSet<>(query.getResultList());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         }
         return null;
     }
-
 
 }

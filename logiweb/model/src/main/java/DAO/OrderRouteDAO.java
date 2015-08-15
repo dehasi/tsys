@@ -1,22 +1,23 @@
 package DAO;
 
 import model.OrderRoute;
+import model.Truck;
 import model.statuses.DoneStatus;
 
 import java.util.Set;
 
 /**
- * Created by Rafa on 14.08.2015.
+ * Interface for working with orders and routes
  */
 public interface OrderRouteDAO extends GeneticDAO<OrderRoute> {
 
-    Set<OrderRoute> getOrdersByStaus(DoneStatus status);
+    Set<OrderRoute> getOrdersByStatus(DoneStatus status);
 
     Set<OrderRoute> getRouteByOrderId(int orderId);
 
     String getTruckId(int orderId);
 
-    OrderRoute getOrderByTruckId(String truckId);
+    OrderRoute getOrderByTruck(Truck truck);
 
     Set<Integer> getAllOrderIds();
 

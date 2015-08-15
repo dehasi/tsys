@@ -14,12 +14,12 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(
             name = "OrderRoute.getRoute",
-            query = "SELECT r FROM OrderRoute r WHERE r.order = :id"
+            query = "SELECT r FROM OrderRoute r WHERE r.order = :oid"
         ),
 
         @NamedQuery(
             name = "OrderRoute.getTruck",
-            query = "SELECT r.truck FROM OrderRoute r WHERE r.order = :id"
+            query = "SELECT r.truck FROM OrderRoute r WHERE r.order = :oid"
         ),
         @NamedQuery(
             name = "OrderRoute.getAllId",
@@ -28,7 +28,7 @@ import javax.persistence.*;
 
         @NamedQuery(
             name = "OrderRoute.getOrderStatus",
-            query = "SELECT DISTINCT r.orderStatus FROM OrderRoute r  WHERE r.order = :id "
+            query = "SELECT DISTINCT r.orderStatus FROM OrderRoute r  WHERE r.order = :oid "
         ),
         @NamedQuery(
                 name = "OrderRoute.maxId",

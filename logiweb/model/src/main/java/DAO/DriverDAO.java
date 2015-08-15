@@ -7,7 +7,7 @@ import model.statuses.DriverStatus;
 import java.util.Set;
 
 /**
- * Created by Rafa on 14.08.2015.
+ * Data access interface for working with Driver entity
  */
 public interface DriverDAO extends GeneticDAO<Driver> {
     Set<Driver> getDriversByCity(City city);
@@ -18,7 +18,7 @@ public interface DriverDAO extends GeneticDAO<Driver> {
 
     Set<Driver> getDriversForOrder(City city, int hoursWorked);
 
-    Set<Driver> getDriverFriends(int id);
+    Set<Driver> getDriverFriends(Integer id);
 
     Set<Driver> getInOrderDrivers();
 

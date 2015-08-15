@@ -4,7 +4,8 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 /**
- * Created by Rafa on 25.06.2015.
+ * Generic DAO interface
+ * represent simple CRUD operations
  */
 public interface GeneticDAO <T> {
     void add(T t) throws SQLException;

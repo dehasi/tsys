@@ -1,26 +1,28 @@
 package DAO;
 
 import model.OrderRoute;
+import model.Truck;
 import model.statuses.DoneStatus;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import utils.HibernateUtil;
-
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Rafa on 30.06.2015.
+ *  implemantation orderRouteDAO
  */
 @Repository
 @Transactional(propagation= Propagation.REQUIRED)
 public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> implements OrderRouteDAO {
+    Logger logger = Logger.getLogger(OrderRouteDAOImpl.class);
+
     public OrderRouteDAOImpl(Class<OrderRoute> clazz) {
         super(clazz);
     }
@@ -28,60 +30,31 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> implements Ord
         super();
     }
 
-
-    /**
-     public Set<Baggage> getBaggagesByStatus(BaggageStatus status) {
-     try {
-     CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-     CriteriaQuery<Baggage> criteriaQuery = criteriaBuilder.createQuery(Baggage.class);
-
-     Root<Baggage> baggageRoot =criteriaQuery.from(Baggage.class);
-
-     List<Baggage> bg = getEntityManager().createQuery(criteriaQuery.select(baggageRoot).where(criteriaBuilder.equal(
-     baggageRoot.get("status"), status
-     ))).getResultList();
-
-     return new HashSet<>(bg);
-     } catch (Exception e) {
-     System.out.println(e.getMessage());
-     }
-     return null;
-     }
-
-     public int getMaxId() {
-     try {
-     TypedQuery<Integer> query =  getEntityManager().createNamedQuery("Baggage.getMaxId", Integer.class);
-     return  query.getResultList().get(0);
-     }catch (Exception e) {
-     return -1;
-     }
-
-     }
-     */
-
     @Override
-    public Set<OrderRoute> getOrdersByStaus(DoneStatus status) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Criteria crit = session.createCriteria(OrderRoute.class)
-                    .add(Restrictions.eq("status", status));
-            crit.setMaxResults(50);
-            List trucks = crit.list();
-            return new HashSet<>(trucks);
+    public Set<OrderRoute> getOrdersByStatus(DoneStatus status) {
+        try {
+            CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<OrderRoute> criteriaQuery = criteriaBuilder.createQuery(OrderRoute.class);
+            Root<OrderRoute> routeRoot = criteriaQuery.from(OrderRoute.class);
+            List<OrderRoute> routes = getEntityManager().createQuery(criteriaQuery.select(routeRoot)
+                    .where(criteriaBuilder.equal(routeRoot.get("orderStatus"), status)))
+                    .getResultList();
+            return new HashSet<>(routes);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         }
         return null;
     }
 
-
     @Override
     public Set<OrderRoute> getRouteByOrderId(int orderId) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Query query = session.getNamedQuery("OrderRoute.getRoute")
-                    .setString("id", String.valueOf(orderId));
-            return new HashSet<>(query.list());
+        try {
+            TypedQuery<OrderRoute> query =  getEntityManager()
+                    .createNamedQuery("OrderRoute.getRoute", OrderRoute.class);
+            query.setParameter("oid", orderId);
+            return new HashSet<>(query.getResultList());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         }
         return null;
     }
@@ -89,82 +62,85 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> implements Ord
 
     @Override
     public String getTruckId(int orderId) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-
-            Query query = session.getNamedQuery("OrderRoute.getTruck")
-                    .setString("id", String.valueOf(orderId));
-            String id = (String) query.list().get(0);
-            return id;
+        try {
+            TypedQuery<Truck> query =  getEntityManager()
+                    .createNamedQuery("OrderRoute.getTruck", Truck.class);
+            query.setParameter("oid", orderId);
+            return query.getResultList().get(0).getId();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         }
         return null;
     }
 
     @Override
-    public OrderRoute getOrderByTruckId(String truckId) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Criteria crit = session.createCriteria(OrderRoute.class)
-                    .add(Restrictions.eq("truck", truckId));
-            crit.setMaxResults(50);
-
-            List trucks = crit.list();
-            return (OrderRoute) new HashSet<>(trucks).iterator().next();
+    public OrderRoute getOrderByTruck(Truck truck) {
+        try {
+            CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<OrderRoute> criteriaQuery = criteriaBuilder.createQuery(OrderRoute.class);
+            Root<OrderRoute> routeRoot = criteriaQuery.from(OrderRoute.class);
+            List<OrderRoute> routes = getEntityManager().createQuery(criteriaQuery.select(routeRoot)
+                    .where(criteriaBuilder.equal(routeRoot.get("truck"), truck)))
+                    .getResultList();
+            return routes.get(0);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         }
         return null;
     }
 
     @Override
     public Set<Integer> getAllOrderIds() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Query query = session.getNamedQuery("OrderRoute.getAllId");
-            return new HashSet<>(query.list());
+        try {
+            TypedQuery<Integer> query =  getEntityManager()
+                    .createNamedQuery("OrderRoute.getAllId", Integer.class);
+            return new HashSet<>(query.getResultList());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         }
         return null;
     }
 
     @Override
     public int getOrderStatus(int orderId) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Query query = session.getNamedQuery("OrderRoute.getOrderStatus")
-                    .setString("order", String.valueOf(orderId));
-            List stat = query.list();
-            return (int) stat.get(0);
+        try {
+            TypedQuery<DoneStatus> query =  getEntityManager()
+                    .createNamedQuery("OrderRoute.getOrderStatus", DoneStatus.class);
+            query.setParameter("oid", orderId);
+
+            return  query.getResultList().get(0) == DoneStatus.DONE?1:0;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         }
         return 0;
     }
 
     @Override
     public int getMaxId() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Query query = session.getNamedQuery("OrderRoute.maxId");
-            return  (int)query.list().get(0);
+        try {
+            TypedQuery<Integer> query =  getEntityManager()
+                    .createNamedQuery("OrderRoute.maxId", Integer.class);
+            return  query.getResultList().get(0);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         }
         return -1;
     }
 
     @Override
     public Set<OrderRoute> getRoutesByBaggageId(int baggageId) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            Criteria crit = session.createCriteria(OrderRoute.class)
-                    .add(Restrictions.eq("baggage", baggageId));
-            crit.setMaxResults(50);
-
-            List routes = crit.list();
+        try {
+            CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<OrderRoute> criteriaQuery = criteriaBuilder.createQuery(OrderRoute.class);
+            Root<OrderRoute> routeRoot = criteriaQuery.from(OrderRoute.class);
+            List<OrderRoute> routes = getEntityManager().createQuery(criteriaQuery.select(routeRoot)
+                    .where(criteriaBuilder.equal(routeRoot.get("baggage"), baggageId)))
+                    .getResultList();
             return new HashSet<>(routes);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         }
         return null;
     }
-
 
 }

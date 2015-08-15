@@ -93,7 +93,7 @@ public class OrderService {
     }
 
     public Integer getOrderIdByTruck(String truckId) {
-        OrderRoute route =  orderRouteDAO.getOrderByTruckId(truckId);
+        OrderRoute route =  orderRouteDAO.getOrderByTruck(truckId);
         if(route != null) {
             return route.getOrder();
         }
