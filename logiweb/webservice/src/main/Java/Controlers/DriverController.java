@@ -40,9 +40,9 @@ public class DriverController {
             return new ModelAndView("redirect:error");
         }
 
-//        Integer orderId = driver.getOrderRoute();
-        //TODO: fix this shit
-        Integer orderId = null; //driver.getOrderRoute().getOrder();
+        Integer orderId = driver.getOrderRoute();
+        //TODO: fi
+
         ModelAndView view = new ModelAndView("driver/driver");
         if(orderId != null) {
             List<Driver> friends = new ArrayList<>();

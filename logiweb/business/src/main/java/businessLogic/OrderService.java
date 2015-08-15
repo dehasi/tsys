@@ -77,12 +77,11 @@ public class OrderService {
                 OrderView view = new OrderView(route.getOrder(),
                         city,
                         route.getBaggage(),
-                        route.getIsBaggageDone() ,
+                        route.getLoadStatus() ,
                         route.getVisitNumber(),
-                        route.getOrderStatus(),
+                        route.getIsBaggageDone(),
                         route.getTruck());
                 views.add(view);
-           // throw new RuntimeException("Shouldn't work");
         }
         sort(views);
         return views;

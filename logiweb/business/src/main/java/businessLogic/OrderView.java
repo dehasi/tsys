@@ -4,6 +4,7 @@ import model.Baggage;
 import model.City;
 import model.Truck;
 import model.statuses.DoneStatus;
+import model.statuses.LoadStatus;
 
 /**
  * Just POJO class
@@ -13,7 +14,7 @@ import model.statuses.DoneStatus;
 public class OrderView implements Comparable<OrderView>{
     private int orderId;
     private City city;
-    private DoneStatus baggageStatus;
+    private LoadStatus baggageStatus;
     private Baggage baggage;
     private DoneStatus isDone;
 
@@ -21,7 +22,7 @@ public class OrderView implements Comparable<OrderView>{
 
     private Truck truck;
 
-    public OrderView(int orderId, City city, Baggage baggage, DoneStatus baggageStatus, int number, DoneStatus isDone, Truck truck) {
+    public OrderView(int orderId, City city, Baggage baggage, LoadStatus baggageStatus, int number, DoneStatus isDone, Truck truck) {
         this.orderId = orderId;
         this.city = city;
         this.baggage = baggage;
@@ -56,11 +57,11 @@ public class OrderView implements Comparable<OrderView>{
         this.city = city;
     }
 
-    public DoneStatus getBaggageStatus() {
+    public LoadStatus getBaggageStatus() {
         return baggageStatus;
     }
 
-    public void setBaggageStatus(DoneStatus baggageStatus) {
+    public void setBaggageStatus(LoadStatus baggageStatus) {
         this.baggageStatus = baggageStatus;
     }
 

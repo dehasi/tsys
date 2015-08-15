@@ -56,27 +56,29 @@
                 <c:forEach var = "p" items="${route}">
                     <tr>
                         <td>${p.number}</td>
-                        <td>${p.city}</td>
-                        <td>${p.baggageId} (${p.baggage.name})</td>
+                        <td>${p.city.name}</td>
+                        <td>${p.baggage.id} (${p.baggage.name})</td>
                         <td>
-                            <c:choose>
-                                <c:when test="${p.baggageStatus == 0}">
-                                    load
-                                </c:when>
-                            <c:otherwise>
-                                unload
-                            </c:otherwise>
-                            </c:choose>
+                            ${p.baggageStatus}
+                            <%--<c:choose>--%>
+                                <%--<c:when test="${p.baggageStatus == 0}">--%>
+                                    <%--load--%>
+                                <%--</c:when>--%>
+                            <%--<c:otherwise>--%>
+                                <%--unload--%>
+                            <%--</c:otherwise>--%>
+                            <%--</c:choose>--%>
                         </td>
                         <td>
-                            <c:choose>
-                                <c:when test="${p.isDone == 0}">
-                                    NO
-                                </c:when>
-                                <c:otherwise>
-                                    YES
-                                </c:otherwise>
-                            </c:choose>
+                            ${p.isDone}
+                            <%--<c:choose>--%>
+                                <%--<c:when test="${p.isDone == 0}">--%>
+                                    <%--NO--%>
+                                <%--</c:when>--%>
+                                <%--<c:otherwise>--%>
+                                    <%--YES--%>
+                                <%--</c:otherwise>--%>
+                            <%--</c:choose>--%>
                         </td>
                     </tr>
                 </c:forEach>
