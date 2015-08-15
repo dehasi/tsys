@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
  * utils for rest requests
  */
 @Component
+@Transactional
 public class DriverUtils {
 
     Logger logger = Logger.getLogger(DriverUtils.class);
@@ -57,13 +59,16 @@ public class DriverUtils {
 
     public String getDriverViewJSON(String iD) {
         DriverView view = getDriverView(iD);
-        Gson gson = new Gson();
-        Driver d = view.getDriver();
+        logger.info("getDriverViewJSON");
+        if (view == null)
+            return null;
         String res;
         try {
+            Gson gson = new Gson();
             res = gson.toJson(view);
-        } catch (Exception ignore) {
-            res = view.toString();
+        } catch (Exception e) {
+            logger.error(e);
+            res = "ERROR! " + view.toString();
         }
         return res;
     }
@@ -94,5 +99,21 @@ public class DriverUtils {
             driverView.setTruckId(truckId);
         }
         return driverView;
+    }
+
+    public DriverService getDriverService() {
+        return driverService;
+    }
+
+    public void setDriverService(DriverService driverService) {
+        this.driverService = driverService;
+    }
+
+    public OrderService getOrderService() {
+        return orderService;
+    }
+
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
     }
 }

@@ -24,7 +24,8 @@ import java.sql.Driver;
 public class RemoteServiceController {
     private static Logger logger = Logger.getLogger(RemoteServiceController.class);
 
-    private DriverUtils driverUtils = new DriverUtils();
+    @Autowired
+    private DriverUtils driverUtils;
 
     @RequestMapping(value = "/driver/status")
     ResponseEntity<String> updateDriverStatus(@RequestParam String id, @RequestParam String status) {
@@ -50,4 +51,11 @@ public class RemoteServiceController {
     }
 
 
+    public DriverUtils getDriverUtils() {
+        return driverUtils;
+    }
+
+    public void setDriverUtils(DriverUtils driverUtils) {
+        this.driverUtils = driverUtils;
+    }
 }

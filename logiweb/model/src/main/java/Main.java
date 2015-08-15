@@ -25,8 +25,8 @@ class Main {
         BaggageDAO baggageDAO = ctx.getBean(BaggageDAO.class);
         City city = cityDAO.getById(1);
         DriverDAO driverDAO = ctx.getBean(DriverDAO.class);
-        System.out.println(driverDAO.getFreeDrivers().size());
-        System.out.println(driverDAO.getAll());
+        System.out.println(driverDAO.getById(1));
+//        System.out.println(driverDAO.getAll());
         System.out.println("Good bye!");
     }
 
