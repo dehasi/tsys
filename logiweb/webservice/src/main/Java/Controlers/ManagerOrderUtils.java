@@ -124,7 +124,6 @@ public class ManagerOrderUtils {
                 }
             }
             view.addObject("orders", orders);
-            //TODO: fix this exception
             return view;
 
         }  catch (Exception e) {

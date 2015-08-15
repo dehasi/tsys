@@ -24,6 +24,7 @@ public interface OrderRouteDAO extends GeneticDAO<OrderRoute> {
     int getOrderStatus(int orderId);
 
     int getMaxId();
+    int getMaxOrderId();
 
     Set<OrderRoute> getRoutesByBaggageId(int baggageId);
 }

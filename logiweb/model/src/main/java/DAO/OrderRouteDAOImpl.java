@@ -128,6 +128,18 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> implements Ord
     }
 
     @Override
+    public int getMaxOrderId() {
+        try {
+            TypedQuery<Integer> query =  getEntityManager()
+                    .createNamedQuery("OrderRoute.maxOrderId", Integer.class);
+            return  query.getResultList().get(0);
+        } catch (Exception e) {
+            logger.error(e);
+        }
+        return -1;
+    }
+
+    @Override
     public Set<OrderRoute> getRoutesByBaggageId(int baggageId) {
         try {
             CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();

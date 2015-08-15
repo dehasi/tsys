@@ -155,7 +155,7 @@ public class TruckService {
             return truck;
         }
 
-        truck.setOrderId(orderService.getOrderIdByTruck(truck.getId()));
+        truck.setOrderId(orderService.getOrderIdByTruck(truck));
 
         return truck;
     }

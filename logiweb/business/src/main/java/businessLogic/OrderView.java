@@ -1,6 +1,10 @@
 package businessLogic;
 
 import model.Baggage;
+import model.City;
+import model.Truck;
+import model.statuses.DoneStatus;
+
 /**
  * Just POJO class
  * Class contains all info about order
@@ -8,25 +12,23 @@ import model.Baggage;
  */
 public class OrderView implements Comparable<OrderView>{
     private int orderId;
-    private String city;
-    private int baggageId;
-    private int baggageStatus;
+    private City city;
+    private DoneStatus baggageStatus;
     private Baggage baggage;
-    private int isDone;
+    private DoneStatus isDone;
 
     private int number;
 
-    private String truckId;
+    private Truck truck;
 
-    public OrderView(int orderId, String city, int baggageId, int baggageStatus, Baggage baggage, int number, int isDone, String truckId) {
+    public OrderView(int orderId, City city, Baggage baggage, DoneStatus baggageStatus, int number, DoneStatus isDone, Truck truck) {
         this.orderId = orderId;
         this.city = city;
-        this.baggageId = baggageId;
-        this.baggageStatus = baggageStatus;
         this.baggage = baggage;
+        this.baggageStatus = baggageStatus;
         this.number = number;
         this.isDone = isDone;
-        this.truckId = truckId;
+        this.truck = truck;
     }
 
     public int getNumber() {
@@ -46,27 +48,19 @@ public class OrderView implements Comparable<OrderView>{
         this.orderId = orderId;
     }
 
-    public String getCity() {
+    public City getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(City city) {
         this.city = city;
     }
 
-    public int getBaggageId() {
-        return baggageId;
-    }
-
-    public void setBaggageId(int baggageId) {
-        this.baggageId = baggageId;
-    }
-
-    public int getBaggageStatus() {
+    public DoneStatus getBaggageStatus() {
         return baggageStatus;
     }
 
-    public void setBaggageStatus(int baggageStatus) {
+    public void setBaggageStatus(DoneStatus baggageStatus) {
         this.baggageStatus = baggageStatus;
     }
 
@@ -83,20 +77,20 @@ public class OrderView implements Comparable<OrderView>{
         return(number - d.number);
     }
 
-    public int getIsDone() {
+    public DoneStatus getIsDone() {
         return isDone;
     }
 
-    public void setIsDone(int isDone) {
+    public void setIsDone(DoneStatus isDone) {
         this.isDone = isDone;
     }
 
-    public String getTruckId() {
-        return truckId;
+    public Truck getTruck() {
+        return truck;
     }
 
-    public void setTruckId(String truckId) {
-        this.truckId = truckId;
+    public void setTruck(Truck truck) {
+        this.truck = truck;
     }
 
     @Override
@@ -104,12 +98,12 @@ public class OrderView implements Comparable<OrderView>{
         return "OrderView{" +
                 "orderId=" + orderId +
                 ", city='" + city + '\'' +
-                ", baggageId=" + baggageId +
+                ", baggageId=" + baggage +
                 ", baggageStatus=" + baggageStatus +
                 ", baggage=" + baggage +
                 ", isDone=" + isDone +
                 ", number=" + number +
-                ", truckId='" + truckId + '\'' +
+                ", truckId='" + truck + '\'' +
                 '}';
     }
 }

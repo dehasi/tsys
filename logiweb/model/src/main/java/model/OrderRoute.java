@@ -32,13 +32,17 @@ import javax.persistence.*;
         ),
         @NamedQuery(
                 name = "OrderRoute.maxId",
-                query = "SELECT MAX (r.order) FROM OrderRoute r  "
+                query = "SELECT MAX (r.id) FROM OrderRoute r  "
+        ),
+        @NamedQuery(
+             name = "OrderRoute.maxOrderId",
+             query = "SELECT MAX (r.order) FROM OrderRoute r  "
         )
 })
 public class OrderRoute implements Comparable<OrderRoute> {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "order")

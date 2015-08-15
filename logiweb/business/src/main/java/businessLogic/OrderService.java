@@ -4,6 +4,7 @@ import DAO.*;
 import model.Baggage;
 import model.City;
 import model.OrderRoute;
+import model.Truck;
 import model.statuses.BaggageStatus;
 import model.statuses.DoneStatus;
 import model.statuses.DriverStatus;
@@ -36,6 +37,8 @@ public class OrderService {
     MapDAO mapDAO;
     @Autowired
     DriverDAO driverDAO;
+    @Autowired
+    TruckDAO truckDAO;
 
     /**
      * Constructor. creates instance of class
@@ -71,15 +74,15 @@ public class OrderService {
             Baggage baggage = route.getBaggage();
             City city = route.getCity();
 
-//                OrderView view = new OrderView(route.getOrder(),
-//                        city.getName(),
-//                        route.getBaggage(),
-//                        route.getType(),
-//                        baggage,
-//                        route.getVisitNumber(),
-//                        route.getIsDone(), route.getTruck());
-//                views.add(view);
-            throw new RuntimeException("Shouldn't work");
+                OrderView view = new OrderView(route.getOrder(),
+                        city,
+                        route.getBaggage(),
+                        route.getIsBaggageDone() ,
+                        route.getVisitNumber(),
+                        route.getOrderStatus(),
+                        route.getTruck());
+                views.add(view);
+           // throw new RuntimeException("Shouldn't work");
         }
         sort(views);
         return views;
@@ -92,8 +95,8 @@ public class OrderService {
         return orderRouteDAO.getTruckId(orderId);
     }
 
-    public Integer getOrderIdByTruck(String truckId) {
-        OrderRoute route =  orderRouteDAO.getOrderByTruck(truckId);
+    public Integer getOrderIdByTruck(Truck truck) {
+        OrderRoute route =  orderRouteDAO.getOrderByTruck(truck);
         if(route != null) {
             return route.getOrder();
         }
@@ -142,7 +145,7 @@ public class OrderService {
 
     private int countOrderStatus( List<OrderView> list) {
         for (OrderView o : list) {
-            if(o.getIsDone() == 0){
+            if(o.getIsDone() == DoneStatus.NOT_DONE){
                 return 0;
             }
         }
@@ -162,7 +165,8 @@ public class OrderService {
         for(Baggage b : baggages){
             baggageDAO.add(b);
         }
-        int orderId = orderRouteDAO.getMaxId() + 1;
+        int orderId = orderRouteDAO.getMaxOrderId() + 1;
+        int oId = orderRouteDAO.getMaxId() + 1;
         List<OrderRoute> routes = new ArrayList<>();
 
         int baxIndex = 0;
@@ -170,38 +174,40 @@ public class OrderService {
         for (Ticket t : tickets) {
             OrderRoute oLoad = new OrderRoute();
             OrderRoute oUnLoad = new OrderRoute();
-            //TODO: fix this shit
-            /*oLoad.setOrder(orderId);
-            oLoad.setCity(t.loadId);
-            oLoad.setBaggage(baggages.get(baxIndex).getId());
-            oLoad.setIsDone(0);
-            oLoad.setStatus(0);
-            oLoad.setType(0); // load
+            //TODO: fix this shit [done?]
+            oLoad.setId(++oId);
+            oLoad.setOrder(orderId);
+            oLoad.setCity(cityDAO.getById(t.loadId));
+            oLoad.setBaggage(baggages.get(baxIndex));
+            oLoad.setIsBaggageDone(DoneStatus.NOT_DONE);
+            oLoad.setOrderStatus(DoneStatus.NOT_DONE);
+            oLoad.setLoadStatus(LoadStatus.LOADING); // load
             oLoad.setVisitNumber(++visitNumber);
-            oLoad.setTruck(truckId);
+            oLoad.setTruck(truckDAO.getTruckById(truckId));
 
+            oUnLoad.setId(++oId);
             oUnLoad.setOrder(orderId);
-            oUnLoad.setCity(t.unloadId);
-            oUnLoad.setBaggage(baggages.get(baxIndex).getId());
-            oUnLoad.setIsDone(0);
-            oUnLoad.setStatus(0);
-            oUnLoad.setType(1); // unload
+            oUnLoad.setCity(cityDAO.getById(t.unloadId));
+            oUnLoad.setBaggage(baggages.get(baxIndex));
+            oUnLoad.setIsBaggageDone(DoneStatus.NOT_DONE);
+            oUnLoad.setOrderStatus(DoneStatus.NOT_DONE);
+            oUnLoad.setLoadStatus(LoadStatus.UNLOADING);
             oUnLoad.setVisitNumber(++visitNumber);
-            oUnLoad.setTruck(truckId);*/
-
+            oUnLoad.setTruck(truckDAO.getTruckById(truckId));
             routes.add(oLoad);
             routes.add(oUnLoad);
             ++baxIndex;
         }
 
+        logger.info("begin add routes");
         for (OrderRoute r : routes) {
             orderRouteDAO.add(r);
         }
-
+        logger.info("begin updete driver status");
         for(int ids : driverIds){
             model.Driver driver = driverDAO.getById(ids);
-            //TODO: fix this shit
-//            driver.setOrderRoute(orderId);
+            //TODO: fix this shit [done?]
+            driver.setOrderRoute(orderId);
             driver.setStatus(DriverStatus.WORK);
             driverDAO.update(driver);
         }

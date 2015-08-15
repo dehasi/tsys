@@ -55,16 +55,12 @@
 
           <c:forEach var="route" items="${order.routes}" step="2" varStatus="vs">
             <tr>
-              <%--<td>${route.number}</td>--%>
               <td>${order.orderId}</td>
               <td>${order.turckId}</td>
-
-              <td>${route.baggageId}</td>
+              <td>${route.baggage.id}</td>
               <td>${route.baggage.name}</td>
-              <td>${route.city}</td>
-              <td>${order.routes[vs.index+1].city}</td>
-
-
+              <td>${route.city.name}</td>
+              <td>${order.routes[vs.index+1].city.name}</td>
                 <td>
                  <c:choose>
                    <c:when test="${order.status == 1}">
