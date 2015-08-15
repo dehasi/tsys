@@ -47,14 +47,16 @@
             <td>${driver.status} </td>
 
 
-            <td><a href="#"> ${driver.orderRoute}</a> </td>
+
 
             <c:choose>
               <c:when test="${driver.orderRoute == null }">
+                <td><a href="#"> ${driver.orderRoute}</a> </td>
                 <td> <a href="driver?action=edit&id=${driver.id}">Edit</a> </td>
                 <td> <a href="driver?action=delete&id=${driver.id}">Delete</a> </td>
               </c:when>
               <c:otherwise>
+                <td><a href="#"> ${driver.orderRoute}</a> </td>
                 <td>Edit </td>
                 <td>Delete </td>
               </c:otherwise>

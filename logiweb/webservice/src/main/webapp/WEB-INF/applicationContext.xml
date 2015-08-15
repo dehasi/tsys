@@ -33,7 +33,7 @@
                <prop key="hibernate.connection.password">password</prop>
                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                <prop key="hibernate.show_sql">true</prop>
-               <prop key="hibernate.hbm2ddl.auto">update</prop>
+               <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
                <prop key="hibernate.hbm2ddl.import_files">import.sql</prop>
            </props>
        </property>
@@ -70,19 +70,19 @@
     <mvc:resources mapping="/css/**" location="/css/"/>
     <mvc:resources mapping="/js/**" location="/js/"/>
 
-    <!--<bean id="roleHierarchy"-->
-                <!--class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">-->
-        <!--<property name="hierarchy">-->
-            <!--<value>-->
-                <!--ROLE_ADMIN > ROLE_MANAGER-->
-                <!--ROLE_MANAGER > ROLE_ANONYMOUS-->
-            <!--</value>-->
-        <!--</property>-->
-    <!--</bean>-->
+    <bean id="roleHierarchy"
+                class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+        <property name="hierarchy">
+            <value>
+                ROLE_ADMIN > ROLE_MANAGER
+                ROLE_MANAGER > ROLE_ANONYMOUS
+            </value>
+        </property>
+    </bean>
 
 
-    <!--<bean id="roleVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">-->
-        <!--<constructor-arg ref="roleHierarchy" />-->
-    <!--</bean>-->
+    <bean id="roleVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">
+        <constructor-arg ref="roleHierarchy" />
+    </bean>
 
 </beans>

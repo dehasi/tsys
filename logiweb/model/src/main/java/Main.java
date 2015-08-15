@@ -24,21 +24,9 @@ class Main {
         CityDAO cityDAO = ctx.getBean(CityDAO.class);
         BaggageDAO baggageDAO = ctx.getBean(BaggageDAO.class);
         City city = cityDAO.getById(1);
-
-//        System.out.println(truckDAO.getFitTrucks(8, city));
-
-        OrderRoute oLoad = new OrderRoute();
-        //TODO: fix this shit [done?]
-        oLoad.setOrder(4);
-        oLoad.setCity(cityDAO.getById(2));
-        oLoad.setBaggage(baggageDAO.getById(4));
-        oLoad.setIsBaggageDone(DoneStatus.NOT_DONE);
-        oLoad.setOrderStatus(DoneStatus.NOT_DONE);
-        oLoad.setLoadStatus(LoadStatus.LOADING); // load
-        oLoad.setVisitNumber(1);
-        oLoad.setTruck(truckDAO.getTruckById("AB12345"));
-        routeDAO.add(oLoad);
-        System.out.println(routeDAO.getAll());
+        DriverDAO driverDAO = ctx.getBean(DriverDAO.class);
+        System.out.println(driverDAO.getFreeDrivers().size());
+        System.out.println(driverDAO.getAll());
         System.out.println("Good bye!");
     }
 

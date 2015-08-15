@@ -128,6 +128,7 @@ public class Driver implements Comparable<Driver>{
         this.orderRoute = orderRoute;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -137,19 +138,23 @@ public class Driver implements Comparable<Driver>{
 
         if (id != driver.id) return false;
         if (hoursWorked != driver.hoursWorked) return false;
+        if (!name.equals(driver.name)) return false;
+        if (!lastName.equals(driver.lastName)) return false;
         if (status != driver.status) return false;
-        if (name != null ? !name.equals(driver.name) : driver.name != null) return false;
-        return !(lastName != null ? !lastName.equals(driver.lastName) : driver.lastName != null);
+        if (!city.equals(driver.city)) return false;
+        return !(orderRoute != null ? !orderRoute.equals(driver.orderRoute) : driver.orderRoute != null);
 
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + name.hashCode();
+        result = 31 * result + lastName.hashCode();
         result = 31 * result + hoursWorked;
-
+        result = 31 * result + status.hashCode();
+        result = 31 * result + city.hashCode();
+        result = 31 * result + (orderRoute != null ? orderRoute.hashCode() : 0);
         return result;
     }
 

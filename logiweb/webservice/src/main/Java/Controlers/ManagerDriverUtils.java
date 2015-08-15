@@ -32,7 +32,7 @@ public class ManagerDriverUtils {
 
     ModelAndView mainPage(Map<String,String> requestParams) throws IOException {
         logger.info("we are in manager driver");
-        ModelAndView view;  // = new ModelAndView("manager/driver");
+        ModelAndView view;
         String action = requestParams.get("action");
         switch (action) {
             case "show" :{
@@ -63,8 +63,6 @@ public class ManagerDriverUtils {
         String show = requestParams.get("show");
 
         try {
-           // DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
-
             Set<Driver> drivers ;
 
             switch (show){
@@ -112,8 +110,6 @@ public class ManagerDriverUtils {
     private ModelAndView edit(Map<String, String> requestParams) throws IOException {
         ModelAndView view = new ModelAndView("m/driverEdit");
         try {
-            //DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
-           // CityService cityService = BusinessFactory.getInstance().getCityLogic();
             Set<City> cities = cityService.getAllCities();
 
             view.addObject("cities",cities);
@@ -131,8 +127,6 @@ public class ManagerDriverUtils {
     private ModelAndView delete(Map<String, String> requestParams) throws IOException {
         ModelAndView view = new ModelAndView("redirect:/m/driver?action=show&show=all");
         try {
-           // DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
-
             String id = requestParams.get("id");
             int driverId = Integer.parseInt(id);
             Driver driver =  driverService.getById(driverId);
@@ -155,8 +149,6 @@ public class ManagerDriverUtils {
             case "Add": {
 
                 try {
-                 //   DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
-                //    CityService cityService = BusinessFactory.getInstance().getCityLogic();
                     Driver driver = new Driver();
                     String name = requestParams.get("name");
                     String lastName = requestParams.get("lastname");
@@ -178,7 +170,6 @@ public class ManagerDriverUtils {
                     user.setLogin(id.toString());
                     user.setPasswordHash("password".hashCode());
                     user.setStatus(UserStatus.DRIVER);
-                  //  UserService userService = BusinessFactory.getInstance().getUserLogic();
                     userService.addUser(user);
 
                 } catch (Exception e) {
@@ -188,8 +179,6 @@ public class ManagerDriverUtils {
             }
             case "Save" :{
                 try {
-                   // DriverService driverService = BusinessFactory.getInstance().getDriverLogic();
-                  //  CityService cityService = BusinessFactory.getInstance().getCityLogic();
                     String id = requestParams.get("id");
                     int driverId = Integer.parseInt(id);
                     Driver driver =  driverService.getById(driverId);

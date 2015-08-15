@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -70,8 +71,9 @@ public class DriverService {
     }
 
     public Set<Driver> getAllDrivers() throws SQLException {
-
-        return new HashSet<>(driverDAO.getAll());
+        List<Driver> driverList = (List<Driver>) driverDAO.getAll();
+        Set<Driver> drivers = new HashSet<>(driverList);
+        return drivers;
     }
 
     /**
