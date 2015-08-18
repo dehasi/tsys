@@ -49,12 +49,13 @@ public class OrderService {
      * @param driverDAO DAO for driver work
      */
     public OrderService(BaggageDAO baggageDAO, OrderRouteDAO orderRouteDAO,
-                        CityDAO cityDAO, MapDAO mapDAO, DriverDAO driverDAO) {
+                        CityDAO cityDAO, MapDAO mapDAO, DriverDAO driverDAO, TruckDAO truckDAO) {
         this.baggageDAO = baggageDAO;
         this.orderRouteDAO = orderRouteDAO;
         this.cityDAO = cityDAO;
         this.mapDAO = mapDAO;
         this.driverDAO = driverDAO;
+        this.truckDAO = truckDAO;
 
     }
 
