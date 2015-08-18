@@ -227,6 +227,7 @@ public class OrderService {
         return baggages;
     }
 
+    //TODO: fix
     public void changeBaggageStatus (int baggageId, BaggageStatus status) throws SQLException {
         Baggage baggage = baggageDAO.getById(baggageId);
         baggage.setStatus(status);
@@ -237,30 +238,29 @@ public class OrderService {
             case DONE:{
                 int orderId = -1;
                 for (OrderRoute or : routes) {
-                    if (or.getLoadStatus() == LoadStatus.UNLOADING) {
-                        or.setIsBaggageDone(DoneStatus.NOT_DONE);
+//                    if (or.getLoadStatus() == LoadStatus.UNLOADING) {
+                        or.setIsBaggageDone(DoneStatus.DONE);
                         orderRouteDAO.update(or);
                         orderId = or.getOrder();
-                        break;
-                    }
+//                        break;
+//                    }
                 }
 
                 if (orderId != -1) {
                     Set<OrderRoute> routeSet = getRoute(orderId);
                     if(isOrderDone(routeSet)) {
                         for (OrderRoute r : routeSet) {
-//                            r.setStatus(1);
+                            r.setIsBaggageDone(DoneStatus.DONE);
                             orderRouteDAO.update(r);
                         }
                     }
                 }
-
                 break;
             }
             case PRODUCED: {
                 for (OrderRoute or : routes) {
                     if (or.getLoadStatus() == LoadStatus.LOADING) {
-                        or.setIsBaggageDone(DoneStatus.NOT_DONE);
+                        or.setIsBaggageDone(DoneStatus.DONE);
                         orderRouteDAO.update(or);
                         break;
                     }
