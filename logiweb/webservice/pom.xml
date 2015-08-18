@@ -16,9 +16,9 @@
     <packaging>pom</packaging>
     <name>webservice Maven Webapp</name>
     <url>http://maven.apache.org</url>
-    <modules>
-        <module>../client</module>
-    </modules>
+    <!--<modules>-->
+        <!--<module>../client</module>-->
+    <!--</modules>-->
 
     <dependencies>
 

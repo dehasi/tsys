@@ -1,6 +1,7 @@
 package classes;
 
-import classes.data.DriverView;
+import businessLogic.*;
+import model.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

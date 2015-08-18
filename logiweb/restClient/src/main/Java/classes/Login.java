@@ -1,9 +1,8 @@
 package classes;
 
-import classes.data.DriverView;
-import classes.data.OrderView;
-import classes.data.statuses.DoneStatus;
-import classes.data.statuses.DriverStatus;
+import businessLogic.*;
+import model.*;
+import model.statuses.*;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
