@@ -8,6 +8,7 @@ import model.statuses.TruckStatus;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.util.Set;
  * Class for truck utils
  */
 @Component
+@Transactional
 public class ManagerTruckUtils {
 
     private static Logger logger = Logger.getLogger(ManagerTruckUtils.class);
@@ -59,7 +61,7 @@ public class ManagerTruckUtils {
             String id = requestParams.get("id");
             Truck truck = truckService.getTruckById(id);
             truckService.deleteTruck(truck);
-            return new ModelAndView("redirect:m/truck?action=show&show=all");
+            return new ModelAndView("redirect:truck?action=show&show=all");
         } catch (Exception e) {
             return UtilsController.handleError(e);
         }
@@ -170,6 +172,7 @@ public class ManagerTruckUtils {
                 }  catch (Exception e) {
                     return UtilsController.handleError(e);
                 }
+                break;
 
             }
             case "Save" :{
@@ -203,8 +206,10 @@ public class ManagerTruckUtils {
                 }  catch (Exception e) {
                     return UtilsController.handleError(e);
                 }
+                break;
             }
+
         }
-        return new ModelAndView("redirect:/m/truck?action=show&show=all");
+        return new ModelAndView("redirect:truck?action=show&show=all");
     }
 }

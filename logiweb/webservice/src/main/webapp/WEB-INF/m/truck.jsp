@@ -54,16 +54,14 @@
           <td>${truck.status}</td>
 
           <td>
-            <c:if test="${truck.orderId != null}">
-              <a href="/private/manager/order?action=show&show=id&id=${truck.orderId}">${truck.orderId}</a>
-            </c:if>
+             ${truck.orderId}
           </td>
 
           <td>${truck.city.name}</td>
           <c:choose>
             <c:when test="${truck.orderId == null }">
-              <td> <a href="truck?action=edit&id=${truck.id}">Edit</a> </td>
-              <td> <a href="truck?action=delete&id=${truck.id}">Delete</a> </td>
+              <td> <a href="?action=edit&id=${truck.id}">Edit</a> </td>
+              <td> <a href="?action=delete&id=${truck.id}">Delete</a> </td>
             </c:when>
             <c:otherwise>
               <td>Edit </td>

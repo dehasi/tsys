@@ -15,7 +15,7 @@
 
     <properties>
         <!--<hibernate.version4>4.3.11.Final</hibernate.version4>-->
-        <!--<hibernate.version5>5.0.0.CR2</hibernate.version5>-->
+        <!--<hibernate.version>5.0.0.CR2</hibernate.version>-->
         <!--<hibernate.version5>5.2.1.Final</hibernate.version5>-->
         <hibernate.version>4.3.11.Final</hibernate.version>
     </properties>

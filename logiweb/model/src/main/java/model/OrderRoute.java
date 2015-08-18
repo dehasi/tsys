@@ -9,7 +9,7 @@ import javax.persistence.*;
 /**
  * Created by Rafa on 25.06.2015.
  */
-@Entity
+//@Entity
 @Table(name = "orderroute")
 @NamedQueries({
         @NamedQuery(

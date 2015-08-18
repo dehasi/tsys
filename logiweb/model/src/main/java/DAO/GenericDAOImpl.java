@@ -48,6 +48,7 @@ public abstract class GenericDAOImpl<T> implements GeneticDAO<T> {
     }
 
     @Override
+//    @Transactional(propagation = Propagation.REQUIRED)
     public void add(T t) throws SQLException {
         try {
             entityManager.persist(t);
@@ -97,13 +98,11 @@ public abstract class GenericDAOImpl<T> implements GeneticDAO<T> {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
+//    @Transactional(propagation = Propagation.REQUIRED)
     public void delete(T t) throws SQLException {
-        t = entityManager.merge(t); // merge and assign a to the attached entity
-        entityManager.remove(t);
-
         try {
-            getEntityManager().remove(t);
+            entityManager.remove(entityManager.contains(t) ? t : entityManager.merge(t));
+//            getEntityManager().remove(t);
         } catch (Exception e) {
             logger.error("Error in deleting");
             logger.error(e);

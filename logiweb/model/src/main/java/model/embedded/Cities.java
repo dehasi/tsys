@@ -43,4 +43,23 @@ public class Cities implements Serializable {
                 ", cityB=" + cityB +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cities cities = (Cities) o;
+
+        if (cityA != cities.cityA) return false;
+        return cityB == cities.cityB;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (cityA ^ (cityA >>> 32));
+        result = 31 * result + (int) (cityB ^ (cityB >>> 32));
+        return result;
+    }
 }

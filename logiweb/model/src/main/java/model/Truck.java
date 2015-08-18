@@ -3,10 +3,11 @@ package model;
 import model.statuses.TruckStatus;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "truck")
-public class Truck {
+public class Truck implements Serializable{
     @Id
     @Column(name = "id")
     private String id;

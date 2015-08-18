@@ -62,7 +62,8 @@ public class OrderServiceTest {
 
     @Test
     public void getOrderViewTest() throws SQLException {
-        OrderService service = new OrderService(mockBaggageDAO, mockRouteDAO, mockCityDAO, mockMapDAO,mockDriverDAO, mockTruckDAO);
+        OrderService service = new OrderService(mockBaggageDAO, mockRouteDAO, mockCityDAO, mockMapDAO,mockDriverDAO,
+                mockTruckDAO);
         Mockito.when(mockRouteDAO.getRouteByOrderId(1)).thenReturn(routes);
         Mockito.when(mockCityDAO.getById(1)).thenReturn(this.city);
         Mockito.when(mockBaggageDAO.getById(1)).thenReturn(this.baggage);
@@ -71,7 +72,8 @@ public class OrderServiceTest {
 
     @Test
     public void createOrderTest() throws SQLException {
-        OrderService service = new OrderService(mockBaggageDAO, mockRouteDAO, mockCityDAO, mockMapDAO,mockDriverDAO, mockTruckDAO);
+        OrderService service = new OrderService(mockBaggageDAO, mockRouteDAO, mockCityDAO, mockMapDAO,mockDriverDAO,
+                mockTruckDAO);
         Ticket ticket = new Ticket("dog", 1, 1, 1);
         List<Ticket> tickets = new ArrayList<>();
         tickets.add(ticket);

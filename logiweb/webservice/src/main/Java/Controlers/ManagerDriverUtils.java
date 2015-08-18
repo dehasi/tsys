@@ -125,7 +125,7 @@ public class ManagerDriverUtils {
     }
 
     private ModelAndView delete(Map<String, String> requestParams) throws IOException {
-        ModelAndView view = new ModelAndView("redirect:/m/driver?action=show&show=all");
+        ModelAndView view = new ModelAndView("redirect:driver?action=show&show=all");
         try {
             String id = requestParams.get("id");
             int driverId = Integer.parseInt(id);
@@ -196,8 +196,9 @@ public class ManagerDriverUtils {
                 }  catch (Exception e) {
                     return UtilsController.handleError(e);
                 }
+                break;
             }
         }
-        return new ModelAndView("redirect:/m/driver?action=show&show=all");
+        return new ModelAndView("redirect:driver?action=show&show=all");
     }
 }

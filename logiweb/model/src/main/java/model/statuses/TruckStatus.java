@@ -16,7 +16,7 @@ public enum TruckStatus {
             case 1:
                 return TruckStatus.DEFECTIVE;
             default:
-                return null;
+                return TruckStatus.DEFECTIVE;
         }
     }
 }
