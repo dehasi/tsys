@@ -61,7 +61,7 @@ public class Driver implements Comparable<Driver>{
 //    @ManyToMany
 //    private List<OrderRoute> orderRoute;
     @Basic
-    @Column(name = "order", nullable = true)
+    @Column(name = "orderId", nullable = true)
     private Integer orderRoute;
 //    private OrderRoute orderRoute;
 

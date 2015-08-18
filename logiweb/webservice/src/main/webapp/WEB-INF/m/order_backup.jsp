@@ -20,15 +20,15 @@
   <%@include  file="header.jsp" %>
   <table class="table">
     <tr class="info">
-      <td> <a href="order?action=show&show=all">all</a> </td>
-      <td> <a href="order?action=show&show=done">done</a> </td>
-      <td> <a href="order?action=show&show=notdone">notdone</a> </td>
+      <td> <a href="orderId?action=show&show=all">all</a> </td>
+      <td> <a href="orderId?action=show&show=done">done</a> </td>
+      <td> <a href="orderId?action=show&show=notdone">notdone</a> </td>
     </tr>
   </table>
   <br>
 
   <form id = "create" name="createOrder" method="get" action="/private/manager/createorder"   onsubmit = "return validateBaggageCount()" >
-    create order with:
+    create orderId with:
     <input type = "text" id = "bgcnt" size="5" value="1" name = "count" class="form-horizontal">  baggages
     <input type="submit" id="createButton" value="create" class="btn btn-success">
   </form>
@@ -38,8 +38,8 @@
   <c:choose>
     <c:when test="${orders != null}" >
 
-      <c:forEach var="order" items="${orders}" >
-        <label> OrderId = ${order.orderId} TruckId = ${order.turckId}</label>
+      <c:forEach var="orderId" items="${orders}" >
+        <label> OrderId = ${orderId.orderId} TruckId = ${orderId.turckId}</label>
         <table class="table  table-bordered">
           <tr class="active">
             <th>#</th>
@@ -48,19 +48,19 @@
             <th>isDone</th>
             <th>unload city</th>
             <th>isDone</th>
-            <th>order status</th>
+            <th>orderId status</th>
           </tr>
 
-          <c:forEach var="route" items="${order.routes}" step="2" varStatus="vs">
+          <c:forEach var="route" items="${orderId.routes}" step="2" varStatus="vs">
             <tr>
               <td>${route.number}</td>
               <td>${route.baggageId} (${route.baggage.name})</td>
               <td>${route.city}</td>
               <td>${route.isDone}</td>
 
-              <td>${order.routes[vs.index+1].city}</td>
-              <td>${order.routes[vs.index+1].isDone}</td>
-              <td>${order.status}</td>
+              <td>${orderId.routes[vs.index+1].city}</td>
+              <td>${orderId.routes[vs.index+1].isDone}</td>
+              <td>${orderId.status}</td>
             </tr>
           </c:forEach>
         </table>

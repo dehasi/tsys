@@ -9,26 +9,26 @@ import javax.persistence.*;
 /**
  * Created by Rafa on 25.06.2015.
  */
-//@Entity
+@Entity
 @Table(name = "orderroute")
 @NamedQueries({
         @NamedQuery(
             name = "OrderRoute.getRoute",
-            query = "SELECT r FROM OrderRoute r WHERE r.order = :oid"
+            query = "SELECT r FROM OrderRoute r WHERE r.orderId = :oid"
         ),
 
         @NamedQuery(
             name = "OrderRoute.getTruck",
-            query = "SELECT r.truck FROM OrderRoute r WHERE r.order = :oid"
+            query = "SELECT r.truck FROM OrderRoute r WHERE r.orderId = :oid"
         ),
         @NamedQuery(
             name = "OrderRoute.getAllId",
-            query = "SELECT DISTINCT r.order FROM OrderRoute r "
+            query = "SELECT DISTINCT r.orderId FROM OrderRoute r "
         ),
 
         @NamedQuery(
             name = "OrderRoute.getOrderStatus",
-            query = "SELECT DISTINCT r.orderStatus FROM OrderRoute r  WHERE r.order = :oid "
+            query = "SELECT DISTINCT r.orderStatus FROM OrderRoute r  WHERE r.orderId = :oid "
         ),
         @NamedQuery(
                 name = "OrderRoute.maxId",
@@ -36,7 +36,7 @@ import javax.persistence.*;
         ),
         @NamedQuery(
              name = "OrderRoute.maxOrderId",
-             query = "SELECT MAX (r.order) FROM OrderRoute r  "
+             query = "SELECT MAX (r.orderId) FROM OrderRoute r  "
         )
 })
 public class OrderRoute implements Comparable<OrderRoute> {
@@ -45,8 +45,8 @@ public class OrderRoute implements Comparable<OrderRoute> {
 //    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "order")
-    private int order;
+    @Column(name = "orderId")
+    private int orderId;
 
     @ManyToOne
     @JoinColumn(name="city", referencedColumnName = "id")
@@ -70,7 +70,7 @@ public class OrderRoute implements Comparable<OrderRoute> {
 
     @Basic
     @Column(name = "orderStatus")
-    private DoneStatus orderStatus; //* order status
+    private DoneStatus orderStatus; //* orderId status
 
     @ManyToOne
     @JoinColumn(name="truck", referencedColumnName = "id")
@@ -87,12 +87,12 @@ public class OrderRoute implements Comparable<OrderRoute> {
 
 
 
-    public int getOrder() {
-        return order;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setOrder(int order) {
-        this.order = order;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
 
@@ -158,7 +158,7 @@ public class OrderRoute implements Comparable<OrderRoute> {
     public String toString() {
         return "OrderRoute{" +
                 "id=" + id +
-                ", order=" + order +
+                ", orderId=" + orderId +
                 ", city=" + city +
                 ", baggage=" + baggage +
                 ", loadStatus=" + loadStatus +
@@ -171,10 +171,10 @@ public class OrderRoute implements Comparable<OrderRoute> {
 
     @Override
     public int compareTo(OrderRoute o) {
-        if (order == o.order) {
+        if (orderId == o.orderId) {
             return visitNumber - o.visitNumber;
         }else {
-            return order - o.order;
+            return orderId - o.orderId;
         }
     }
 }

@@ -75,7 +75,7 @@ public class OrderService {
             Baggage baggage = route.getBaggage();
             City city = route.getCity();
 
-                OrderView view = new OrderView(route.getOrder(),
+                OrderView view = new OrderView(route.getOrderId(),
                         city,
                         route.getBaggage(),
                         route.getLoadStatus() ,
@@ -98,7 +98,7 @@ public class OrderService {
     public Integer getOrderIdByTruck(Truck truck) {
         OrderRoute route =  orderRouteDAO.getOrderByTruck(truck);
         if(route != null) {
-            return route.getOrder();
+            return route.getOrderId();
         }
         return null;
     }
@@ -176,7 +176,7 @@ public class OrderService {
             OrderRoute oUnLoad = new OrderRoute();
 
             oLoad.setId(++oId);
-            oLoad.setOrder(orderId);
+            oLoad.setOrderId(orderId);
             oLoad.setCity(cityDAO.getById(t.loadId));
             oLoad.setBaggage(baggages.get(baxIndex));
             oLoad.setIsBaggageDone(DoneStatus.NOT_DONE);
@@ -186,7 +186,7 @@ public class OrderService {
             oLoad.setTruck(truckDAO.getTruckById(truckId));
 
             oUnLoad.setId(++oId);
-            oUnLoad.setOrder(orderId);
+            oUnLoad.setOrderId(orderId);
             oUnLoad.setCity(cityDAO.getById(t.unloadId));
             oUnLoad.setBaggage(baggages.get(baxIndex));
             oUnLoad.setIsBaggageDone(DoneStatus.NOT_DONE);
@@ -242,7 +242,7 @@ public class OrderService {
 //                    if (or.getLoadStatus() == LoadStatus.UNLOADING) {
                         or.setIsBaggageDone(DoneStatus.DONE);
                         orderRouteDAO.update(or);
-                        orderId = or.getOrder();
+                        orderId = or.getOrderId();
 //                        break;
 //                    }
                 }

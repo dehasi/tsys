@@ -25,7 +25,7 @@ class Main {
 
         Class<? extends EntityManager> entityManagerInterface = bean.getEntityManagerInterface();
 
-
+        System.out.println(entityManagerInterface);
 
         OrderRouteDAO routeDAO = ctx.getBean(OrderRouteDAO.class);
         TruckDAO truckDAO = ctx.getBean(TruckDAO.class);
