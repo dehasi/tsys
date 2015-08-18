@@ -34,7 +34,7 @@ function getDriverAndTruck() {
     validateData(jsdata);
     alert("sending data")
     $.ajax({
-        url: "/m/createorder/get/", //context+
+        url: "createorder/get/", //context+
         type: "POST",
         data: {do:"getStuff", jsdata:jsdata},
         success: function(data) {
@@ -247,7 +247,7 @@ function createOrder() {
         data : {do:"createOrder", jsdata:jsdata, truckId:truckId, drivers:drivers},
         success: function(response) {
             alert("order created")
-            sendRedirect("/m/order?action=show&show=all","GET")
+            sendRedirect("order?action=show&show=all","GET")
         }
     });
 

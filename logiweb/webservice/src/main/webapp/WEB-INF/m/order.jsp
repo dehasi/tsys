@@ -28,7 +28,7 @@
   </table>
 <br>
 
-<form id = "create" name="createOrder" method="get" action="/m/createorder"   onsubmit = "return validateBaggageCount()" >
+<form id = "create" name="createOrder" method="get" action="createorder"   onsubmit = "return validateBaggageCount()" >
   create order with:
   <input type = "text" id = "bgcnt" size="5" value="1" name = "count" class="form-horizontal">  baggages
   <input type="submit" id="createButton" value="create" class="btn btn-success">

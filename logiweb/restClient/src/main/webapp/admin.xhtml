@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:p="http://java.sun.com/jsf/html">
+<h:head>
+    <title>Facelet Title</title>
+</h:head>
+<h:body>
+    <h:form>
+
+        <h:commandLink action="#{login.logout}" value="Logout"></h:commandLink>
+
+        <p>Welcome #{login.driverView.driver.name}</p>
+
+        <h:outputLabel value="#{login.driverView.driver.status}" />
+        <c:if test="#{login.driverView.route != null}">
+        <p:commandButton action="#{login.changeDriverStatus(login.driverView.driver.status)}"
+                                   value="change"></p:commandButton>
+        </c:if>
+
+        <p:dataTable>
+            <p:column> <h:outputLabel value="Order id:"/> </p:column>
+            <p:column><h:outputLabel value="#{login.driverView.orderId}" /></p:column>
+        </p:dataTable>
+
+
+        <h:dataTable>
+            <h:column>Truck ID </h:column>
+            <h:column><h:outputLabel value="#{login.driverView.truckId}" /></h:column>
+        </h:dataTable>
+
+        <h:dataTable value="#{login.driverView.friends}" var="friend">
+            <h:column> <h:outputLabel value="#{friend.id}" />     </h:column>
+            <h:column> <h:outputLabel value="#{friend.name}" />   </h:column>
+            <h:column> <h:outputLabel value="#{friend.status}" /> </h:column>
+        </h:dataTable>
+
+
+        <h:dataTable value="#{login.driverView.route}" var="route">
+            <h:column> <h:outputLabel value="#{route.number}" />        </h:column>
+            <h:column> <h:outputLabel value="#{route.baggage.name}" />  </h:column>
+            <h:column> <h:outputLabel value="#{route.city.name}" />     </h:column>
+            <h:column> <h:outputLabel value="#{route.baggageStatus}" /> </h:column>
+            <h:column> <h:outputLabel value="#{route.isDone}" />        </h:column>
+            <h:column><h:commandButton action="#{login.changeBaggageStatus(route.number)}"
+                                       value="change"></h:commandButton>        </h:column>
+
+        </h:dataTable>
+    </h:form>
+</h:body>
+</html>
