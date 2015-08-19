@@ -80,7 +80,8 @@ public class OrderRouteDAOImpl extends GenericDAOImpl<OrderRoute> implements Ord
             CriteriaQuery<OrderRoute> criteriaQuery = criteriaBuilder.createQuery(OrderRoute.class);
             Root<OrderRoute> routeRoot = criteriaQuery.from(OrderRoute.class);
             List<OrderRoute> routes = getEntityManager().createQuery(criteriaQuery.select(routeRoot)
-                    .where(criteriaBuilder.equal(routeRoot.get("truck"), truck)))
+                    .where(criteriaBuilder.equal(routeRoot.get("truck"), truck),
+                           criteriaBuilder.equal(routeRoot.get("orderStatus"), DoneStatus.NOT_DONE)))
                     .getResultList();
             return routes.get(0);
         } catch (Exception e) {

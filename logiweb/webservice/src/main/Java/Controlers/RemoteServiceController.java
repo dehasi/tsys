@@ -19,8 +19,6 @@ import java.sql.Driver;
  */
 @RestController
 @RequestMapping("/rest")
-//@Produces(MediaType.APPLICATION_JSON)
-//@Consumes(MediaType.APPLICATION_JSON)
 public class RemoteServiceController {
     private static Logger logger = Logger.getLogger(RemoteServiceController.class);
 
@@ -34,18 +32,17 @@ public class RemoteServiceController {
     }
 
     @RequestMapping(value = "/baggage/status")
-    ResponseEntity<String> updateBaggageStatus(@RequestParam String id,@RequestParam String status) {
+    ResponseEntity<String> updateBaggageStatus(@RequestParam String id,
+                                               @RequestParam String visitNumber,
+                                               @RequestParam String status) {
         logger.info("requested /baggage/status");
-        return driverUtils.changeOrderStatus(id, status);
+        return driverUtils.changeOrderStatus(id, visitNumber, status);
     }
 
     @RequestMapping(value = "/driver/view")
     @ResponseBody
     String getDriverView(@RequestParam String login, @RequestParam String password) {
         logger.info("requested /driver/view");
-//        DriverView view =driverUtils.getDriverView(login);
-
-//        logger.info(view);
         String res = driverUtils.getDriverViewJSON(login);
         return  res;
     }

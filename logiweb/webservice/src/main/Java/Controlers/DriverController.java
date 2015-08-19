@@ -41,7 +41,6 @@ public class DriverController {
         }
 
         Integer orderId = driver.getOrderRoute();
-        //TODO: fi
 
         ModelAndView view = new ModelAndView("driver/driver");
         if(orderId != null) {

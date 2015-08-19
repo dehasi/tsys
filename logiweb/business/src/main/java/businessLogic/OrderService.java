@@ -1,10 +1,7 @@
 package businessLogic;
 
 import DAO.*;
-import model.Baggage;
-import model.City;
-import model.OrderRoute;
-import model.Truck;
+import model.*;
 import model.statuses.BaggageStatus;
 import model.statuses.DoneStatus;
 import model.statuses.DriverStatus;
@@ -228,50 +225,48 @@ public class OrderService {
         return baggages;
     }
 
-    //TODO: fix
-    public void changeBaggageStatus (int baggageId, BaggageStatus status) throws SQLException {
-        Baggage baggage = baggageDAO.getById(baggageId);
-        baggage.setStatus(status);
-        baggageDAO.update(baggage);
-        Set<OrderRoute> routes = orderRouteDAO.getRoutesByBaggageId(baggageId);
-//PRODUCED(0), SHIPPED(1), DONE(2);
+    public void changeBaggageStatus (int orderId, int visitNumber, DoneStatus status) throws SQLException {
+
+        Set<OrderRoute> routes = orderRouteDAO.getRouteByOrderId(orderId);
         switch (status) {
             case DONE:{
-                int orderId = -1;
                 for (OrderRoute or : routes) {
-//                    if (or.getLoadStatus() == LoadStatus.UNLOADING) {
+                    if (or.getVisitNumber() == visitNumber) {
                         or.setIsBaggageDone(DoneStatus.DONE);
-                        orderRouteDAO.update(or);
-                        orderId = or.getOrderId();
-//                        break;
-//                    }
-                }
-
-                if (orderId != -1) {
-                    Set<OrderRoute> routeSet = getRoute(orderId);
-                    if(isOrderDone(routeSet)) {
-                        for (OrderRoute r : routeSet) {
-                            r.setIsBaggageDone(DoneStatus.DONE);
-                            orderRouteDAO.update(r);
-                        }
-                    }
-                }
-                break;
-            }
-            case PRODUCED: {
-                for (OrderRoute or : routes) {
-                    if (or.getLoadStatus() == LoadStatus.LOADING) {
                         or.setIsBaggageDone(DoneStatus.DONE);
                         orderRouteDAO.update(or);
                         break;
                     }
                 }
-                break;
-            }
-            case SHIPPED: {
+
+                for (OrderRoute or : routes) {
+                    if (or.getIsBaggageDone() == DoneStatus.NOT_DONE){
+                        return;
+                    }
+                }
+                Truck truck;
+                for (OrderRoute or : routes) {
+                    or.setOrderStatus(DoneStatus.DONE);
+                    truck = or.getTruck();
+                    truck.setOrderId(null);
+                    or.setTruck(truck);
+                    truckDAO.update(truck);
+                    orderRouteDAO.update(or);
+                }
+
+                 Set<Driver> drivers =  driverDAO.getDriversByOrderId((long) orderId);
+                for (Driver d : drivers) {
+                    d.setOrderRoute(null);
+                    d.setStatus(DriverStatus.REST);
+                    driverDAO.update(d);
+                }
 
                 break;
             }
+            case NOT_DONE: {
+                break;
+            }
+
         }
     }
 

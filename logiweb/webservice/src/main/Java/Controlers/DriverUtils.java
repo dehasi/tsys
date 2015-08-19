@@ -4,6 +4,7 @@ import businessLogic.*;
 import com.google.gson.Gson;
 import model.Driver;
 import model.statuses.BaggageStatus;
+import model.statuses.DoneStatus;
 import model.statuses.DriverStatus;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +44,13 @@ public class DriverUtils {
         }
     }
 
-    public ResponseEntity<String> changeOrderStatus(String id,String status) {
+    public ResponseEntity<String> changeOrderStatus(String id,String visit, String status) {
 
         try {
-            int baggageId = Integer.parseInt(id);
-            BaggageStatus baggageStatus = BaggageStatus.fromString(status);
-            orderService.changeBaggageStatus(baggageId, baggageStatus);
+            int orderId = Integer.parseInt(id);
+            DoneStatus orderStatus = DoneStatus.fromString(status);
+            int visitNumber = Integer.parseInt(visit);
+            orderService.changeBaggageStatus(orderId, visitNumber, orderStatus);
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e) {
