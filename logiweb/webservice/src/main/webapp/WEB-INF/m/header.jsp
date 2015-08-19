@@ -13,7 +13,7 @@
       <td><a id = "truckLink" href="truck?action=show&show=all">Trucks</a></td>
       <td><a id = "driverLink" href="driver?action=show&show=all">Divers</a></td>
       <td><a id = "orderLink" href="order?action=show&show=all">Orders</a></td>
-      <td><a id = "logout" href="/logout">Logout</a></td>
+      <td><a id = "logout" href="/webservice/logout">Logout</a></td>
     </tr>
   </table>
 </div>
