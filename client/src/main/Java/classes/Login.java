@@ -79,18 +79,16 @@ public class Login implements Serializable {
         return "login";
     }
 
-    public String changeBaggageStatus (int baggageId) {
-        int id = 0;
+    public String changeBaggageStatus (int visitNum) {
         List<OrderView> routes =  driverView.getRoute();
         for (int i = 0; i <  routes.size(); i++) {
-            if (routes.get(i).getNumber() == baggageId) {
-                id = routes.get(i).getOrderId();
+            if (routes.get(i).getNumber() == visitNum) {
                 routes.get(i).setIsDone(DoneStatus.DONE);
                 break;
             }
         }
-        if( LoginDAO.changeBaggageStatus(Integer.toString(id),"done"))
-            driverView.setRoute(routes);
+        if( LoginDAO.changeBaggageStatus(driverView.getOrderId().toString(), Integer.toString(visitNum),"done"))
+            driverView = LoginDAO.validate(user, pwd);
         return "admin";
     }
 
@@ -117,7 +115,7 @@ public class Login implements Serializable {
         int id = driverView.getDriver().getId();
 
         if( LoginDAO.changeDriverStatus(Integer.toString(id), status.toString()))
-            driverView.getDriver().setStatus(status);
+            driverView = LoginDAO.validate(user, pwd);
         return "admin";
     }
 }

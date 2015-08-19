@@ -14,21 +14,7 @@ public class DriverView {
     Integer orderId;
 
 
-    public String getTruckId() {
-        return truckId;
-    }
 
-    public void setTruckId(String truckId) {
-        this.truckId = truckId;
-    }
-
-    public Integer getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
 
     public List<OrderView> getRoute() {
         return route;
@@ -54,6 +40,22 @@ public class DriverView {
         this.friends = friends;
     }
 
+
+    public String getTruckId() {
+        return truckId;
+    }
+
+    public void setTruckId(String truckId) {
+        this.truckId = truckId;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
 
     @Override
     public String toString() {

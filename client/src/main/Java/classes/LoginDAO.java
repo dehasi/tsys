@@ -17,7 +17,10 @@ public class LoginDAO {
             JsonParser parser = new JsonParser();
             JsonObject o = (JsonObject)parser.parse(responce);
 
-            return gson.fromJson(o, DriverView.class);
+
+            DriverView view =  gson.fromJson(o, DriverView.class);
+            System.out.println(view);
+            return view;
 
         } catch (Exception ignore) {
             return null;
@@ -72,10 +75,12 @@ public class LoginDAO {
         }
         return true;
     }
-    public static boolean changeBaggageStatus(String id, String status){
+    public static boolean changeBaggageStatus(String orderId, String visitNumber, String status){
         String url = "http://localhost:8080/webservice/rest/baggage/status?" +
-                "id="+ id
-                + "&status=" + status;
+                "id=" + orderId +
+                "&visitNumber=" + visitNumber +
+                "&status=" + status;
+
         WebResource webResource = client.resource(url);
         ClientResponse response = webResource.get(ClientResponse.class);
         System.out.println(response);
