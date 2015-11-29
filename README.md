@@ -3,115 +3,95 @@
 # logiweb
 logiweb task
 
-В задании требуется написать приложение, моделирующее работу информационной системы некоторой компании, осуществляющей перевозку грузов. Ниже более подробно описаны предметная область и технические требования.
+The task is to write an application that simulates the work of the information system of a company engaged in the carriage of goods. Below is a more detailed subject area and technical requirements.
 
 DB schema:
 
 <img src="model.png"/>
 
-##Предметная область
-Существуют следующие виды сущностей:
-- Фура
-  - Рег. номер (2 лат.буквы + 5 цифр)
-  - Размер смены водителей
-  - Вместимость (тонн)
-  - Состояние (исправен, неисправен)
-- Водитель
-  - Имя
-  - Фамилия
-  - Личный номер
-  - Отработано часов в этом месяце
-  - Статус (отдых, в смене, за рулем)
-  - Текущая фура
-- Заказ
-  - Уникальный номер
-  - Выполнен (да/нет)
-  - Список грузов
-  - Фура назначенная выполнять заказ
-  - Список водителей, которые выполняют заказ
-- Груз
-  - Номер груза
-  - Наименование
-  - Масса (в кг)
-  - Статус (подготовлен, отгружен, доставлен)
-  
-  
-##Приложение должно обеспечивать следующую функциональность:
-- Для сотрудников компании (через UI-интерфейс):
-  - <b>просмотр списка, добавление,</b> редактирование и <b>удаление фур, водителей;</b>
-  - <b>просмотр списка и добавление новых заказов</b>
-  - <b>просмотр состояния заказов </b> и грузов;
-  - <b>вывод списка фур, которые подходят для доставки заказа, если:
-    - фура находится в исправном состоянии;
-    - фура подходит по вместимости;
-    - фура не выполняет в данный момент никаких заказов;</b>
-  - <b>подбор и назначение водителей на основании</b> размера смены и <b>используемой фуры</b>:
-    - лимит времени за месяц (176 часов) для каждого из водителей в смене 
-    - <b>водителем не выполняет сейчас другие заказы;</b>
-<b>
-- Для водителей (через UI-интерфейс):
-  - получить данных о своих назначениях, указав свой личный номер:
-    - личный номер водителя
-    - личные номера ко-водителей
-    - рег. номер фуры
-    - номер заказа
-    - список грузов
-</b>
+## Subject area
 
-- Для водителей (через ws/rs-интерфейс), фиксируется фактическое время работы:
-  - водитель заступил на смену:
-    - личный номер водителя;
-    - статус (основной водитель, отдых);
-  - водитель изменил статус:
-    - личный номер водителя;
-    - статус (основной водитель, отдых);
-  - водитель окончил смену;
-    - личный номер водителя;
-  - статус заказа изменился:
-    - номер груза;
-    - статус (отгружен, доставлен).
+The following types of entities:
+- Truck
+  - Reg. number (2 letters +5 digits)
+  - Size driver shift
+  - Capacity 
+  - Condition (defective, faulty)
+- Driver
+  - First name
+  - Last name
+  - Personal number
+  - Hours of operation this month
+  - Status (rest, work, driving)
+  - Current truck
+- Order
+  - Unique number
+  - Completed (yes / no)
+  - List of baggage
+  - Truck appointed to carry out the order
+  - The list of drivers who carry out the order
+- Baggage
+  - Unique number
+  - Name
+  - Weight (kg)
+  - Status (prepared, shipped, delivered)
+- Map
+  - Cities
+  - Distances
 
-## Технические требования
-В итоге требуется получить многопользовательское приложение с клиентом для сотрудников компании, удаленным сервером (соединение по сети) и открытыми (на сервере) WS/RS интерфейсами для сторонних систем водителя.
-Все данные хранятся на стороне сервера. Каждый клиент может загружать некоторые данные, после каждой операции изменения данные должны быть синхронизованы с сервером.
-Клиент должен иметь графический интерфейс (консольный интерфейс допускается, но не рекомендуется).
-Для WS/RS интерфейсов дополнительный клиент не требуется. Должно быть возможно вызвать сервисы стандартными средствами типа SoapUI или RestConsole.
-Приложение должно обрабатывать аппаратные и программные ошибки. 
+## The application must provide the following functionality:
+- For the employees of the company (through UI-interface):
+  - View the list, add, edit and delete trucks, drivers;
+  - View the list and adding new orders;
+  - View the status of orders and freight;
+  - Displays a list of trucks that are suitable for delivery of the order if:
+    - Truck is in good condition;
+    - Truck is suitable for capacity;
+    - Truck does not perform at the moment no orders;
+  - Selection and appointment of the drivers on the basis of the size of the change and used trucks:
+    - Time limit per month (176 hours) for each of the drivers in the change
+    - Now the driver does not perform other orders;
 
-### Используемые технологии:
-1 часть: <br> 
-- IDE - Any (Eclipse, IDEA)
-- Tomcat 8.0.x
+<br>
+- For drivers (via UI-interface):
+  - Obtain data on their appointments, providing your personal number:
+  - Personal number of the driver
+  - Personal numbers to drivers
+  - Truck number
+  - Order number
+  - List of baggage
+
+
+- For drivers (via ws / rs-interface), the actual recorded time:
+  - Driver atonement replaced:
+    - Personal number of the driver;
+    - Status (the main driver, and leisure);
+  - Driver has changed status:
+    - Personal number of the driver;
+    - Status (the main driver, and leisure);
+  - Driver finished the shift;
+    - Personal number of the driver;
+  - Status of the order has changed:
+    - Number of baggage;
+    - Status (shipped, delivered).
+
+
+## Technical requirements
+As a result, required a multi-user application with the client for the company's employees, the remote server (network connection) and open (on the server) WS/RS systems, interfaces to third-party driver systems. All data stored on the server side. 
+Each client may download some data, after each change, the data must be synchronized with the server. The client must have a graphical user interface (console interface is allowed but not recommended). For WS / RS additional client interface is required. It should be possible to call services via REST interface. The application must handle the hardware and software errors.
+
+
+### Technologies to be used:
+1 part: <br>
+- DE - Intellij IDEA
+- mcat 8.0.x
 - Servlet/JSP
 - DB – MySQL 5.6
 - Maven 3.*
-- JPA 2.0
+- JPA 2.0 (Hibernate)
 
-2 часть (включая предыдущие): <br>
-- AS – Glassfish 4.0/WildFly 8.x
-- JAX-WS/RS
-
-- EJB 3.x
-- JSF 2.x
- или
+2 part (including previous): <br>
+- AS – Glassfish 4.0
+- JAX-WS/RS (Jersey)
+- JSF 2.x 
 - Spring Framework
-
-##Критерии успешного выполнения:
-1. Функциональность работает (обязательно наличие UI и сервисов)
-2. Maven-based проект, разбитый на модули (билд одной командой, деплой одной командой)
-3. Описаны интерфейсы предметной области
-4. Подключена БД MySQL
-5. Созданы сущности предметной области; маппинг на таблицы в БД
-6. Работа с сущностями через DAO
-7. Приложение развернуто на AS Glassfish/Wildfly* (актуально для 2й части)
-8. Реализована обработка исключений
-9. Подключено логгирование
-10. Наличие technical solution description
-11. Наличие unit-тестов на бизнес логику
-
-
-Подключение любого фреймворка/библиотеки принимаются в зачет только при условии выполнения пунктов, описанных выше.
-
-При наличии дополнительного времени будут плюсом моковые клиенты для вызова сервисов со стороны водителя.
-
-
